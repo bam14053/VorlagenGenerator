@@ -5,8 +5,7 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.TemplateAuswahlController" fx:id="view">
+<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.TemplateAuswahlController">
    <children>
       <Label layoutX="43.0" layoutY="26.0" text="SWITCHAUSWAHL">
          <font>
@@ -26,5 +25,6 @@
             <MenuItem mnemonicParsing="false" text="Action 2" />
          </items>
       </MenuButton>
+      <Button layoutX="43.0" layoutY="197.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" text="ZURÜCK" onAction="#zurückzumHauptFenster" />
    </children>
 </Pane>

@@ -14,13 +14,13 @@ import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 
 /**
- * @author abigale
+ * 
  *
  */
 public class Main extends Application{
 
 	/**
-	 * @param args
+	 * 
 	 */
 	public static void main(String[] args) {
 		Application.launch(Main.class, (java.lang.String[])null);				

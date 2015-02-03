@@ -11,7 +11,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 
 /**
- * @author abigale
+ *
  *
  */
 public class HauptfensterController extends ScreensAbstract {
