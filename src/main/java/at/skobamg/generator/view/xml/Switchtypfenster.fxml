@@ -5,31 +5,31 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="227.0" prefWidth="369.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.SwitchtypController">
+<Pane fx:id="view" prefHeight="227.0" prefWidth="369.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.SwitchtypController">
    <children>
-      <Label layoutX="45.0" layoutY="27.0" text="SWITCHTYP DEKLARIEREN">
+      <Label layoutX="45.0" layoutY="27.0" text="Neuen Switchtyp deklarien">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <TextField layoutX="175.0" layoutY="83.0" />
       <TextField layoutX="175.0" layoutY="116.0" />
-      <Label layoutX="45.0" layoutY="82.0" text="SWITCHNAME">
+      <Label layoutX="45.0" layoutY="82.0" text="Switchname">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="67.0" layoutY="115.0" text="OIS Version">
+      <Label layoutX="67.0" layoutY="115.0" text="IOS Version">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="213.0" layoutY="172.0" mnemonicParsing="false" text="ÜBERNEHMEN">
+      <Button layoutX="213.0" layoutY="172.0" mnemonicParsing="false" text="Übernehmen" onAction="#neuenSwitchtyp">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="45.0" layoutY="172.0" mnemonicParsing="false" text="ZURÜCK" onAction="#zurückzumHauptFenster">
+      <Button layoutX="45.0" layoutY="172.0" mnemonicParsing="false" text="Zurück" onAction="#zurückzumHauptFenster">
          <font>
             <Font size="14.0" />
          </font>

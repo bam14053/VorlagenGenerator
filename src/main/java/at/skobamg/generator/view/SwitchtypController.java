@@ -18,5 +18,9 @@ public class SwitchtypController extends ScreensAbstract {
 	public void zurückzumHauptFenster(ActionEvent event){
 		mediator.zumHauptfenster();
 	}
+	
+	public void neuenSwitchtyp(){
+		
+	}
 
 }
