@@ -11,6 +11,8 @@ import javafx.fxml.FXMLLoader;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
+import at.skobamg.generator.mediator.EventMediator;
+import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.SwitchtypController;
 import at.skobamg.generator.view.TemplateAuswahlController;
@@ -36,12 +38,17 @@ public class MainAppFactory {
 		return (TemplateAuswahlController)controllerLaden(Main.class.getResource("view/xml/TemplateAuswahlFenster.fxml"));
 	}
 	
+	@Bean
+	public IEventMediator iEventMediator(){
+		return new EventMediator();
+	}
+	
 	protected Object controllerLaden(URL url){
 		FXMLLoader loader = new FXMLLoader(url);
 		try {
 			loader.load();
 		} catch (IOException e) {
-			System.out.println("Program konnte nicht geladen werden");
+			e.printStackTrace();
 		}
 		return loader.getController();
 	}
