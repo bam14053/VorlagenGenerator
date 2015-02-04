@@ -12,24 +12,24 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField layoutX="175.0" layoutY="83.0" />
-      <TextField layoutX="175.0" layoutY="116.0" />
+      <TextField fx:id="switchname" layoutX="175.0" layoutY="83.0" />
+      <TextField fx:id="iosversion" layoutX="175.0" layoutY="116.0" />
       <Label layoutX="45.0" layoutY="82.0" text="Switchname">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Label layoutX="67.0" layoutY="115.0" text="IOS Version">
+      <Label layoutX="46.0" layoutY="115.0" text="IOS Version">
          <font>
             <Font size="18.0" />
          </font>
       </Label>
-      <Button layoutX="213.0" layoutY="172.0" mnemonicParsing="false" text="Übernehmen" onAction="#neuenSwitchtyp">
+      <Button layoutX="213.0" layoutY="172.0" mnemonicParsing="false" onAction="#neuenSwitchtyp" text="Übernehmen">
          <font>
             <Font size="14.0" />
          </font>
       </Button>
-      <Button layoutX="45.0" layoutY="172.0" mnemonicParsing="false" text="Zurück" onAction="#zurückzumHauptFenster">
+      <Button layoutX="45.0" layoutY="172.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" text="Zurück">
          <font>
             <Font size="14.0" />
          </font>
