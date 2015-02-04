@@ -3,19 +3,18 @@
  */
 package at.skobamg.generator;
 
+import org.hamcrest.core.IsSame;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 
-import com.sun.javafx.stage.ScreenHelper.ScreenAccessor;
-
 import at.skobamg.generator.mediator.IEventMediator;
+import at.skobamg.generator.service.ISwitchtyp;
+import at.skobamg.generator.service.Verzeichnisse;
 import at.skobamg.generator.view.HauptfensterController;
-import at.skobamg.generator.view.ScreensAbstract;
-import at.skobamg.generator.view.SwitchtypController;
 import javafx.application.Application;
-import javafx.fxml.FXMLLoader;
+import javafx.event.EventHandler;
 import javafx.scene.Scene;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+import javafx.stage.WindowEvent;
 
 /**
  * 
@@ -35,10 +34,26 @@ public class Main extends Application{
 		//Get all the bean components
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainAppFactory.class);
 		HauptfensterController mainController = context.getBean(HauptfensterController.class);
-		IEventMediator mediator = context.getBean(IEventMediator.class);				
+		IEventMediator mediator = context.getBean(IEventMediator.class);	
+		ISwitchtyp iSwitchtyp = context.getBean(ISwitchtyp.class);		
+		//Load the switchtypes into the program
+		new Thread(new Runnable() {			
+			@Override
+			public void run() {
+				Verzeichnisse.verzeichnisseErstellen();
+				iSwitchtyp.laden();
+			}
+		}).start();	
+		//Save all the data in memory before closing
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
+			@Override
+			public void handle(WindowEvent arg0) {
+				iSwitchtyp.speichern();
+			}
+		});
 		//Close and get required instances
 		context.close();
-		mediator.setStage(stage);
+		mediator.setStage(stage);		
 		//Start the window
 		Scene scene = new Scene(mainController.getView());	
 		stage.setScene(scene);

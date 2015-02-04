@@ -26,5 +26,10 @@ public interface IEventMediator {
 	 * @param stage
 	 */
 	void setStage(Stage stage);
-	void neuenSwitchtyp(String switchV, String IOSv);
+	boolean neuenSwitchtyp(String switchV, String IOSv);
+	/**
+	 * Display a new window displaying an error message
+	 * @param error
+	 */
+	void nachrichtAnzeigen(String nachricht);
 }

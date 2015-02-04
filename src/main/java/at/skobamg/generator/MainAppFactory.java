@@ -13,6 +13,8 @@ import org.springframework.context.annotation.Configuration;
 
 import at.skobamg.generator.mediator.EventMediator;
 import at.skobamg.generator.mediator.IEventMediator;
+import at.skobamg.generator.service.ISwitchtyp;
+import at.skobamg.generator.service.Switchtyp;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.SwitchtypController;
 import at.skobamg.generator.view.TemplateAuswahlController;
@@ -41,6 +43,11 @@ public class MainAppFactory {
 	@Bean
 	public IEventMediator iEventMediator(){
 		return new EventMediator();
+	}
+	
+	@Bean
+	public ISwitchtyp iSwitchtyp(){
+		return new Switchtyp();
 	}
 	
 	protected Object controllerLaden(URL url){
