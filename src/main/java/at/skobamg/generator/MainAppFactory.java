@@ -20,24 +20,23 @@ import at.skobamg.generator.view.SwitchtypController;
 import at.skobamg.generator.view.TemplateAuswahlController;
 
 /**
- * @author abi
  *
  */
 @Configuration
 public class MainAppFactory {
 	@Bean
 	public HauptfensterController mainController(){
-		return (HauptfensterController)controllerLaden(Main.class.getResource("view/xml/Hauptfenster.fxml"));	
+		return (HauptfensterController)controllerLaden(Main.class.getResource("view/xml/Hauptfenster.fxml"));	// Hauptfenster.xml 
 	}
 	
 	@Bean
 	public SwitchtypController switchMenuView(){
-		return (SwitchtypController)controllerLaden(Main.class.getResource("view/xml/Switchtypfenster.fxml"));
-	}
+		return (SwitchtypController)controllerLaden(Main.class.getResource("view/xml/Switchtypfenster.fxml")); //Switchtypfenser.xml
+ 	}
 	
 	@Bean
 	public TemplateAuswahlController templateAuswahlController(){
-		return (TemplateAuswahlController)controllerLaden(Main.class.getResource("view/xml/TemplateAuswahlFenster.fxml"));
+		return (TemplateAuswahlController)controllerLaden(Main.class.getResource("view/xml/TemplateAuswahlFenster.fxml")); //TemplateAuswahlFenster.fxml
 	}
 	
 	@Bean

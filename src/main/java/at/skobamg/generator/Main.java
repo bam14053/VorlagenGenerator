@@ -29,16 +29,16 @@ public class Main extends Application{
 		Application.launch(Main.class, (java.lang.String[])null);				
 	}
 
-	@Override
+	
 	public void start(Stage stage) throws Exception {
 		//Get all the bean components
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainAppFactory.class);
 		HauptfensterController mainController = context.getBean(HauptfensterController.class);
 		IEventMediator mediator = context.getBean(IEventMediator.class);	
-		ISwitchtyp iSwitchtyp = context.getBean(ISwitchtyp.class);		
+		final ISwitchtyp iSwitchtyp = context.getBean(ISwitchtyp.class);		
 		//Load the switchtypes into the program
 		new Thread(new Runnable() {			
-			@Override
+			
 			public void run() {
 				Verzeichnisse.verzeichnisseErstellen();
 				iSwitchtyp.laden();
@@ -46,7 +46,7 @@ public class Main extends Application{
 		}).start();	
 		//Save all the data in memory before closing
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			@Override
+			
 			public void handle(WindowEvent arg0) {
 				iSwitchtyp.speichern();
 			}
@@ -58,8 +58,8 @@ public class Main extends Application{
 		Scene scene = new Scene(mainController.getView());	
 		stage.setScene(scene);
 		stage.setResizable(false);
-		stage.setTitle("Vorlagengenerator");
-		stage.show();
+		stage.setTitle("Vorlagengenerator"); // Title of program
+		stage.show(); // Show the Mainwindow
 	}
 
 }

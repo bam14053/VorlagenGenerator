@@ -5,9 +5,9 @@ import java.util.HashMap;
 
 public interface ISwitchtyp {
 	/**
-	 * Lädt alle gespeicherten Switchtypen
+	 * Load all saved Switchtypes
 	 */
-	boolean speichern();
+	boolean speichern(); 
 	boolean laden();
 	boolean neuenSwitchTyp(String switchname, String iOSVerison);
 	String[] getIOSVersionen(String switchtyp);

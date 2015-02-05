@@ -10,7 +10,7 @@ public class Verzeichnisse {
 	public static boolean verzeichnisseErstellen(){
 		if(!new File(vorlagenVerzeichnis).exists())
 			return new File(vorlagenVerzeichnis).mkdir();
-		return true;
+		return true; 
 	}
 	
 	public static boolean checkTypDateiExists(){
