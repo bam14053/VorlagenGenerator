@@ -32,4 +32,6 @@ public interface IEventMediator {
 	 * @param error
 	 */
 	void nachrichtAnzeigen(String nachricht);
+	String[] getSwitchNamen();
+	String[] getIOSVersionen(String switchnamen);
 }

@@ -13,18 +13,8 @@
          </font>
       </Label>
       <Button layoutX="155.0" layoutY="197.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" text="ÜBERHNEHMEN" />
-      <MenuButton layoutX="43.0" layoutY="84.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="SWITCHNAME:">
-        <items>
-          <MenuItem mnemonicParsing="false" text="Action 1" />
-          <MenuItem mnemonicParsing="false" text="Action 2" />
-        </items>
-      </MenuButton>
-      <MenuButton layoutX="43.0" layoutY="131.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="144.0" text="OSIV.">
-         <items>
-            <MenuItem mnemonicParsing="false" text="Action 1" />
-            <MenuItem mnemonicParsing="false" text="Action 2" />
-         </items>
-      </MenuButton>
-      <Button layoutX="43.0" layoutY="197.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="83.0" text="ZURÜCK" onAction="#zurückzumHauptFenster" />
+      <Button layoutX="43.0" layoutY="197.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="ZURÜCK" />
+      <ComboBox fx:id="switchname" layoutX="41.0" layoutY="85.0" prefHeight="25.0" prefWidth="251.0" promptText="Switch aussuchen" />
+      <ComboBox fx:id="iosversion" layoutX="37.0" layoutY="131.0" prefHeight="25.0" prefWidth="251.0" promptText="IOS Version aussuchen" />
    </children>
 </Pane>

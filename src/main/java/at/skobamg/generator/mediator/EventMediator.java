@@ -12,7 +12,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.SwitchtypController;
@@ -86,6 +88,16 @@ public class EventMediator implements IEventMediator {
 		stage.initOwner(this.stage);
 		stage.setResizable(false);
 		stage.show();
+	}
+
+	@Override
+	public String[] getSwitchNamen() {
+		return switchtyp.getSwitchNamen();
+	}
+
+	@Override
+	public String[] getIOSVersionen(String switchnamen) {
+		return switchtyp.getIOSVersionen(switchnamen);
 	}
 
 }

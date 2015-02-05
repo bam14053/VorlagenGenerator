@@ -11,12 +11,12 @@ import java.util.HashMap;
 public class Switchtyp implements ISwitchtyp{
 	HashMap<String, ArrayList<String>> switchtypen = new HashMap<String, ArrayList<String>>();
 
-	public String[] getIOSVersionen(String switchtyp) {
-		return (String[]) switchtypen.get(switchtyp).toArray();
+	public String[] getIOSVersionen(String switchnamen) {
+		return switchtypen.get(switchnamen).toArray(new String[switchtypen.size()]);
 	}
 
 	public String[] getSwitchNamen() {
-		return (String[]) switchtypen.keySet().toArray();
+		return switchtypen.keySet().toArray(new String[switchtypen.size()]);
 	}
 
 	public HashMap<String, ArrayList<String>> getSwitchtypen() {
