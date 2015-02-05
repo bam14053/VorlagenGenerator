@@ -5,16 +5,23 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="309.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.TemplateAuswahlController">
+<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.TemplateAuswahlController">
    <children>
-      <Label layoutX="43.0" layoutY="26.0" text="SWITCHAUSWAHL">
+      <Label layoutX="56.0" layoutY="26.0" text="SWITCHAUSWAHL">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
       <Button layoutX="155.0" layoutY="197.0" mnemonicParsing="false" prefHeight="35.0" prefWidth="126.0" text="ÜBERHNEHMEN" />
-      <Button layoutX="43.0" layoutY="197.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="ZURÜCK" />
-      <ComboBox fx:id="switchname" layoutX="41.0" layoutY="85.0" prefHeight="25.0" prefWidth="251.0" promptText="Switch aussuchen" />
-      <ComboBox fx:id="iosversion" layoutX="37.0" layoutY="131.0" prefHeight="25.0" prefWidth="251.0" promptText="IOS Version aussuchen" />
+      <Button layoutX="30.0" layoutY="197.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="ZURÜCK" />
+      <ComboBox fx:id="switchname" layoutX="29.0" layoutY="74.0" prefHeight="35.0" prefWidth="251.0" promptText="Switch aussuchen" />
+      <ComboBox fx:id="iosversion" layoutX="30.0" layoutY="120.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS Version aussuchen" />
+      <RadioButton layoutX="68.0" layoutY="166.0" mnemonicParsing="false" text="User">
+         <toggleGroup>
+            <ToggleGroup fx:id="BH2" />
+         </toggleGroup>
+      </RadioButton>
+      <RadioButton layoutX="121.0" layoutY="166.0" mnemonicParsing="false" text="Root" toggleGroup="$BH2" />
+      <RadioButton layoutX="177.0" layoutY="166.0" mnemonicParsing="false" text="Admin" toggleGroup="$BH2" />
    </children>
 </Pane>
