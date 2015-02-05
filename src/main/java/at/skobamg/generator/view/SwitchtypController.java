@@ -7,6 +7,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.Pane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,6 +29,15 @@ public class SwitchtypController extends ScreensAbstract {
 		mediator.zumHauptfenster();
 	}
 	
+	@Override
+	public Pane getView() {
+		switchname.getItems().clear();
+		switchname.setVisibleRowCount(4);
+		for(String s : mediator.getSwitchNamen())
+			switchname.getItems().add(s);
+		return super.getView();
+	}
+
 	public void neuenSwitchtyp(){
 		if(switchname.getSelectionModel().getSelectedItem().isEmpty() || iosversion.getText().isEmpty())
 			mediator.nachrichtAnzeigen("Bitte geben Sie alle erforderlichen Werte ein");

@@ -5,14 +5,14 @@ package at.skobamg.generator.model;
 /**
  *
  */
-public class Switchtyp implements ISwitchtyp{
+public class Template{
 	private String switchName;
 	private String iOSVersion;
 	private Berechtigung berechtigung;	
+	private String xmlString;
 	
-	public Switchtyp(String switchName, String iOSVersion,
+	public Template(String switchName, String iOSVersion,
 			Berechtigung berechtigung) {
-		super();
 		this.switchName = switchName;
 		this.iOSVersion = iOSVersion;
 		this.berechtigung = berechtigung;
@@ -40,5 +40,19 @@ public class Switchtyp implements ISwitchtyp{
 
 	public void setBerechtigung(Berechtigung berechtigung) {
 		this.berechtigung = berechtigung;
+	}
+
+	/**
+	 * @return the xmlString
+	 */
+	public String getXmlString() {
+		return xmlString;
+	}
+
+	/**
+	 * @param xmlString the xmlString to set
+	 */
+	public void setXmlString(String xmlString) {
+		this.xmlString = xmlString;
 	}
 }
