@@ -2,25 +2,12 @@
  * 
  */
 package at.skobamg.generator.view;
-
-import java.util.Collection;
-import java.util.Iterator;
-import java.util.List;
-import java.util.ListIterator;
-
-import javafx.beans.InvalidationListener;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.collections.ListChangeListener;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
 import javafx.scene.layout.Pane;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import at.skobamg.generator.mediator.IEventMediator;
 
 /**
