@@ -12,11 +12,10 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <TextField fx:id="switchname" layoutX="175.0" layoutY="83.0" />
       <TextField fx:id="iosversion" layoutX="175.0" layoutY="116.0" />
       <Label layoutX="45.0" layoutY="82.0" text="Switchname">
          <font>
-            <Font size="18.0"/>
+            <Font size="18.0" />
          </font>
       </Label>
       <Label layoutX="46.0" layoutY="115.0" text="IOS Version">
@@ -34,5 +33,6 @@
             <Font size="14.0" />
          </font>
       </Button>
+      <ComboBox fx:id="switchname" editable="true" layoutX="174.0" layoutY="83.0" prefWidth="150.0" promptText="Switch eingeben oder wählen" />
    </children>
 </Pane>
