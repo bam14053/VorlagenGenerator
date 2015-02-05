@@ -50,10 +50,12 @@ public class TemplateAuswahlController extends ScreensAbstract {
 			public void changed(ObservableValue<? extends String> arg0,
 					String arg1, String arg2) {
 				if(arg2 == null) return;
-				iosversion.getItems().clear();
+				iosversion.getItems().clear();		
+				iosversion.getSelectionModel().select(null);
 				for(String s : mediator.getIOSVersionen(arg2))
 					iosversion.getItems().add(s);
-				System.out.println(iosversion.getItems().size());
+				iosversion.setValue(null);
+				iosversion.setPromptText("IOS Version aussuchen");				
 			}
 		});
 		return super.getView();

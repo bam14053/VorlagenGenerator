@@ -12,7 +12,7 @@ public class Switchtyp implements ISwitchtyp{
 	HashMap<String, ArrayList<String>> switchtypen = new HashMap<String, ArrayList<String>>();
 
 	public String[] getIOSVersionen(String switchnamen) {
-		return switchtypen.get(switchnamen).toArray(new String[switchtypen.size()]);
+		return switchtypen.get(switchnamen).toArray(new String[switchtypen.get(switchnamen).size()]);
 	}
 
 	public String[] getSwitchNamen() {
