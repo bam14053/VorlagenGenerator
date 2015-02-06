@@ -14,7 +14,7 @@
       </Label>
       <Button layoutX="198.0" layoutY="180.0" mnemonicParsing="false" onAction="#neuerTemplate" prefHeight="35.0" prefWidth="83.0" text="Weiter" />
       <Button layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="Abbrechen" />
-      <ComboBox fx:id="switchname" layoutX="29.0" layoutY="74.0" prefHeight="35.0" prefWidth="251.0" promptText="Switch aussuchen" />
+      <ComboBox fx:id="switchname" editable="true" layoutX="29.0" layoutY="74.0" prefHeight="35.0" prefWidth="251.0" promptText="Switch aussuchen/eintippen" />
       <TextField layoutX="30.0" layoutY="121.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS-Version" />
    </children>
 </Pane>
