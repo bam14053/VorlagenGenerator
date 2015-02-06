@@ -37,7 +37,7 @@
                                     <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="Schließen" />
+                              <MenuItem text="Schließen" onAction="#programschließen" />
                         </items>
                            <accelerator>
                               <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="UP" />

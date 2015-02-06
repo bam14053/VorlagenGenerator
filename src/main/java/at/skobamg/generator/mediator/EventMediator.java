@@ -101,7 +101,8 @@ public class EventMediator implements IEventMediator {
 			tempStage.initModality(Modality.WINDOW_MODAL);
 			tempStage.initOwner(this.stage);
 			tempStage.setResizable(false);
-		}				
+		}
+		neuesTemplateController.getView();
 		tempStage.show();
 	}
 
@@ -111,9 +112,8 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public void neuenTemplateErstellen(String switchname, String iosversion) {
-		switchtyp.switchHinzufügen(switchname);
-		
+	public void neuenTemplateErstellen(String switchname, String iosversion) {		
+		switchtyp.switchHinzufügen(switchname);		
 	}
 
 }

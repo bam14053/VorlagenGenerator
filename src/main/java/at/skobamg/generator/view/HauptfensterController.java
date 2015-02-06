@@ -25,5 +25,8 @@ public class HauptfensterController implements IScreens{
 	public void neuesTemplate(){
 		mediator.zumNeuenTemplateFenster();
 	}
-	
+
+	public void programschließen() {
+		mediator.exit();
+	}
 }

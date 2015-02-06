@@ -25,7 +25,7 @@ public class NeuesTemplateController extends ScreensAbstract {
 	private TextField iosversion;
 
 	public void templateErstellen(){
-		mediator.zumHauptfenster();
+		mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
 	}
 	
 	public void zumHauptFenster(ActionEvent actionEvent) {
@@ -35,6 +35,7 @@ public class NeuesTemplateController extends ScreensAbstract {
 	@Override
 	public Pane getView() {
 		switchname.getItems().clear();
+		iosversion.setText("");
 		switchname.setVisibleRowCount(4);
 		for(String s : mediator.getSwitchNamen())
 			switchname.getItems().add(s);

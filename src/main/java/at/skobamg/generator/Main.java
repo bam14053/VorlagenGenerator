@@ -45,8 +45,7 @@ public class Main extends Application{
 			}
 		}).start();	
 		//Save all the data in memory before closing
-		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {
-			
+		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {			
 			public void handle(WindowEvent arg0) {
 				iSwitchtyp.speichern();
 			}
