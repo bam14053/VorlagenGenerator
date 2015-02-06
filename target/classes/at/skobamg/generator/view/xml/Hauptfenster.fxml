@@ -5,23 +5,28 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="239.0" prefWidth="194.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.HauptfensterController">
+<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.HauptfensterController">
    <children>
-      <Button layoutX="46.0" layoutY="94.0" mnemonicParsing="false" text="Template" onAction="#neueVorlage">
+      <PasswordField layoutX="64.0" layoutY="135.0" promptText="Passwort">
          <font>
-            <Font size="18.0" />
+            <Font size="14.0" />
          </font>
-      </Button>
-      <Label layoutX="49.0" layoutY="28.0" text="Menü">
+      </PasswordField>
+      <Label layoutX="58.0" layoutY="61.0" text="Bitte Zugangsdaten eingeben:" textFill="#fc0a0a">
          <font>
-            <Font size="36.0" />
+            <Font size="14.0" />
          </font>
       </Label>
-      <Button layoutX="46.0" layoutY="150.0" mnemonicParsing="false" prefHeight="39.0" prefWidth="98.0" text="Switch" onAction="#neuenSwitchtyp">
+      <Label layoutX="44.0" layoutY="14.0" text="Template-Generator">
          <font>
-            <Font size="18.0" />
+            <Font size="24.0" />
          </font>
-      </Button>
+      </Label>
+      <Button layoutX="212.0" layoutY="179.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="62.0" text="LOGIN" />
+      <TextField layoutX="64.0" layoutY="94.0" prefHeight="30.0" prefWidth="175.0" promptText="Username">
+         <font>
+            <Font size="14.0" />
+         </font>
+      </TextField>
    </children>
 </Pane>
