@@ -6,8 +6,12 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Toggle;
+import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import at.skobamg.generator.mediator.IEventMediator;
 
 /**
@@ -21,6 +25,8 @@ public class TemplateAuswahlController extends ScreensAbstract {
 	private ComboBox<String> switchname;
 	@FXML
 	private ComboBox<String> iosversion;
+	@FXML
+	private ToggleGroup berechtigung;
 
 	public void zurückzumHauptFenster(){
 		mediator.zumHauptfenster();
@@ -48,5 +54,8 @@ public class TemplateAuswahlController extends ScreensAbstract {
 		return super.getView();
 	}
 	
+	public void neuerTemplate(){
+		//berechtigung.getSelectedToggle().toString().split("'")[1]
+	}
 	
 }
