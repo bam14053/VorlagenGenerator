@@ -100,4 +100,9 @@ public class EventMediator implements IEventMediator {
 		stage.show();
 	}
 
+	@Override
+	public void exit() {
+		stage.close();
+	}
+
 }

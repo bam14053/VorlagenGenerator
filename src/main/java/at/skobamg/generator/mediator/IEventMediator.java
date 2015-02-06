@@ -24,4 +24,5 @@ public interface IEventMediator {
 	void nachrichtAnzeigen(String nachricht);
 	void login(String username, String passwort);
 	ArrayList<String> getSwitchNamen();
+	void exit();
 }
