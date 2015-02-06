@@ -5,23 +5,16 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="262.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.NeuesTemplateController">
+<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.NeuesTemplateController">
    <children>
       <Label layoutX="56.0" layoutY="26.0" text="SWITCHAUSWAHL">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="155.0" layoutY="197.0" mnemonicParsing="false" onAction="#neuerTemplate" prefHeight="35.0" prefWidth="126.0" text="Übernehmen" />
-      <Button layoutX="30.0" layoutY="197.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="Zurück" />
+      <Button layoutX="198.0" layoutY="180.0" mnemonicParsing="false" onAction="#neuerTemplate" prefHeight="35.0" prefWidth="83.0" text="Weiter" />
+      <Button layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="Abbrechen" />
       <ComboBox fx:id="switchname" layoutX="29.0" layoutY="74.0" prefHeight="35.0" prefWidth="251.0" promptText="Switch aussuchen" />
-      <ComboBox fx:id="iosversion" layoutX="30.0" layoutY="120.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS Version aussuchen" />
-      <RadioButton layoutX="68.0" layoutY="166.0" mnemonicParsing="false" text="User" toggleGroup="$berechtigung">
-         <toggleGroup>
-            <ToggleGroup fx:id="berechtigung" />
-         </toggleGroup>
-      </RadioButton>
-      <RadioButton layoutX="121.0" layoutY="166.0" mnemonicParsing="false" text="Root" toggleGroup="$berechtigung" />
-      <RadioButton layoutX="177.0" layoutY="166.0" mnemonicParsing="false" text="Admin" toggleGroup="$berechtigung" />
+      <TextField layoutX="30.0" layoutY="121.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS-Version" />
    </children>
 </Pane>
