@@ -2,13 +2,14 @@
  * 
  */
 package at.skobamg.generator.view;
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.ToggleGroup;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
-
+import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import at.skobamg.generator.mediator.IEventMediator;
 
 /**
@@ -21,12 +22,14 @@ public class NeuesTemplateController extends ScreensAbstract {
 	@FXML
 	private ComboBox<String> switchname;
 	@FXML
-	private ComboBox<String> iosversion;
-	@FXML
-	private ToggleGroup berechtigung;
+	private TextField iosversion;
 
-	public void zurückzumHauptFenster(){
+	public void templateErstellen(){
 		mediator.zumHauptfenster();
+	}
+	
+	public void zumHauptFenster(ActionEvent actionEvent) {
+		((Stage)(((Node)actionEvent.getSource()).getScene().getWindow())).hide();
 	}
 
 	@Override

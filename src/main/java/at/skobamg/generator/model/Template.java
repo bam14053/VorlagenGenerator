@@ -8,14 +8,11 @@ package at.skobamg.generator.model;
 public class Template{
 	private String switchName;
 	private String iOSVersion;
-	private Berechtigung berechtigung;	
 	private String xmlString;
 	
-	public Template(String switchName, String iOSVersion,
-			Berechtigung berechtigung) {
+	public Template(String switchName, String iOSVersion) {
 		this.switchName = switchName;
 		this.iOSVersion = iOSVersion;
-		this.berechtigung = berechtigung;
 	}
 
 	public String getSwitchName() {
@@ -33,15 +30,6 @@ public class Template{
 	public void setIOSVersion(String iOSVersion) {
 		this.iOSVersion = iOSVersion;
 	}
-
-	public Berechtigung getBerechtigung() {
-		return berechtigung;
-	}
-
-	public void setBerechtigung(Berechtigung berechtigung) {
-		this.berechtigung = berechtigung;
-	}
-
 	/**
 	 * @return the xmlString
 	 */

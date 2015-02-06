@@ -15,6 +15,7 @@ public interface IEventMediator {
 	 * Navigieren zum Hauptfenster
 	 */
 	void zumHauptfenster();
+	void neuenTemplateErstellen(String switchname, String iosversion);
 	void zumNeuenTemplateFenster();
 	void setStage(Stage stage);
 	/**

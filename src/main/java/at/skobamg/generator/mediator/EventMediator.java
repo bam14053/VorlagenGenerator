@@ -3,6 +3,7 @@
  */
 package at.skobamg.generator.mediator;
 import java.util.ArrayList;
+
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -13,7 +14,9 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.NeuesTemplateController;
@@ -29,6 +32,7 @@ public class EventMediator implements IEventMediator {
 	private HauptfensterController hauptfensterController;
 	@Autowired
 	private ISwitchtyp switchtyp;
+	private Stage tempStage = new Stage();
 	private Stage stage;
 
 	public void zumHauptfenster() {
@@ -92,17 +96,24 @@ public class EventMediator implements IEventMediator {
 
 	@Override
 	public void zumNeuenTemplateFenster() {
-		Stage stage = new Stage();
-		stage.setScene(new Scene(neuesTemplateController.getView()));
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(this.stage);
-		stage.setResizable(false);
-		stage.show();
+		if(tempStage.getScene() == null) {
+			tempStage.setScene(new Scene(neuesTemplateController.getView()));
+			tempStage.initModality(Modality.WINDOW_MODAL);
+			tempStage.initOwner(this.stage);
+			tempStage.setResizable(false);
+		}				
+		tempStage.show();
 	}
 
 	@Override
 	public void exit() {
 		stage.close();
+	}
+
+	@Override
+	public void neuenTemplateErstellen(String switchname, String iosversion) {
+		switchtyp.switchHinzufügen(switchname);
+		
 	}
 
 }

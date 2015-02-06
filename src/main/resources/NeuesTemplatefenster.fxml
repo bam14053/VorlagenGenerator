@@ -7,14 +7,14 @@
 
 <Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="233.0" prefWidth="310.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.NeuesTemplateController">
    <children>
-      <Label layoutX="56.0" layoutY="26.0" text="SWITCHAUSWAHL">
+      <Label layoutX="56.0" layoutY="26.0" text="Neues Template">
          <font>
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="198.0" layoutY="180.0" mnemonicParsing="false" onAction="#neuerTemplate" prefHeight="35.0" prefWidth="83.0" text="Weiter" />
-      <Button layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#zurückzumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="Abbrechen" />
+      <Button layoutX="198.0" layoutY="180.0" mnemonicParsing="false" onAction="#templateErstellen" prefHeight="35.0" prefWidth="83.0" text="Weiter" />
+      <Button layoutX="29.0" layoutY="180.0" mnemonicParsing="false" onAction="#zumHauptFenster" prefHeight="35.0" prefWidth="83.0" text="Abbrechen" />
       <ComboBox fx:id="switchname" editable="true" layoutX="29.0" layoutY="74.0" prefHeight="35.0" prefWidth="251.0" promptText="Switch aussuchen/eintippen" />
-      <TextField layoutX="30.0" layoutY="121.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS-Version" />
+      <TextField layoutX="30.0" layoutY="121.0" prefHeight="35.0" prefWidth="251.0" promptText="IOS-Version" fx:id="iosversion"/>
    </children>
 </Pane>
