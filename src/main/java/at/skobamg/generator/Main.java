@@ -9,7 +9,7 @@ import org.springframework.context.annotation.AnnotationConfigApplicationContext
 import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.service.Verzeichnisse;
-import at.skobamg.generator.view.HauptfensterController;
+import at.skobamg.generator.view.LoginfensterController;
 import javafx.application.Application;
 import javafx.event.EventHandler;
 import javafx.scene.Scene;
@@ -33,7 +33,7 @@ public class Main extends Application{
 	public void start(Stage stage) throws Exception {
 		//Get all the bean components
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainAppFactory.class);
-		HauptfensterController mainController = context.getBean(HauptfensterController.class);
+		LoginfensterController mainController = context.getBean(LoginfensterController.class);
 		IEventMediator mediator = context.getBean(IEventMediator.class);	
 		final ISwitchtyp iSwitchtyp = context.getBean(ISwitchtyp.class);		
 		//Load the switchtypes into the program

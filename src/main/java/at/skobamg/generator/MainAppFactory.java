@@ -16,8 +16,8 @@ import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.service.Switchtyp;
 import at.skobamg.generator.view.HauptfensterController;
-import at.skobamg.generator.view.SwitchtypController;
-import at.skobamg.generator.view.TemplateAuswahlController;
+import at.skobamg.generator.view.LoginfensterController;
+import at.skobamg.generator.view.NeuesTemplateController;
 
 /**
  *
@@ -25,18 +25,18 @@ import at.skobamg.generator.view.TemplateAuswahlController;
 @Configuration
 public class MainAppFactory {
 	@Bean
-	public HauptfensterController mainController(){
-		return (HauptfensterController)controllerLaden(Main.class.getResource("view/xml/Hauptfenster.fxml"));	// Hauptfenster.xml 
+	public LoginfensterController loginfensterController(){
+		return (LoginfensterController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Loginfenster.fxml")); 
 	}
 	
 	@Bean
-	public SwitchtypController switchMenuView(){
-		return (SwitchtypController)controllerLaden(Main.class.getResource("view/xml/Switchtypfenster.fxml")); //Switchtypfenser.xml
- 	}
+	public NeuesTemplateController neuesTemplateController(){
+		return (NeuesTemplateController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("NeuesTemplatefenster.fxml"));
+	}
 	
 	@Bean
-	public TemplateAuswahlController templateAuswahlController(){
-		return (TemplateAuswahlController)controllerLaden(Main.class.getResource("view/xml/TemplateAuswahlFenster.fxml")); //TemplateAuswahlFenster.fxml
+	public HauptfensterController hauptfensterController() {
+		return (HauptfensterController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Hauptfenster.fxml"));
 	}
 	
 	@Bean

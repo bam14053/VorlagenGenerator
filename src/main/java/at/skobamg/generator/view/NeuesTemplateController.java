@@ -2,11 +2,8 @@
  * 
  */
 package at.skobamg.generator.view;
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
-import javafx.scene.control.Toggle;
 import javafx.scene.control.ToggleGroup;
 import javafx.scene.layout.Pane;
 
@@ -18,7 +15,7 @@ import at.skobamg.generator.mediator.IEventMediator;
  * @author abi
  *
  */
-public class TemplateAuswahlController extends ScreensAbstract {
+public class NeuesTemplateController extends ScreensAbstract {
 	@Autowired
 	private IEventMediator mediator;
 	@FXML
@@ -37,25 +34,11 @@ public class TemplateAuswahlController extends ScreensAbstract {
 		switchname.getItems().clear();
 		switchname.setVisibleRowCount(4);
 		for(String s : mediator.getSwitchNamen())
-			switchname.getItems().add(s);		
-		switchname.valueProperty().addListener(new ChangeListener<String>() {
-			@Override
-			public void changed(ObservableValue<? extends String> arg0,
-					String arg1, String arg2) {
-				if(arg2 == null) return;
-				iosversion.getItems().clear();		
-				iosversion.getSelectionModel().select(null);
-				for(String s : mediator.getIOSVersionen(arg2))
-					iosversion.getItems().add(s);
-				iosversion.setValue(null);
-				iosversion.setPromptText("IOS Version aussuchen");				
-			}
-		});
+			switchname.getItems().add(s);
 		return super.getView();
 	}
 	
 	public void neuerTemplate(){
-		//berechtigung.getSelectedToggle().toString().split("'")[1]
 	}
 	
 }

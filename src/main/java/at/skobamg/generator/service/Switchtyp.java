@@ -9,18 +9,10 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Switchtyp implements ISwitchtyp{
-	HashMap<String, ArrayList<String>> switchtypen = new HashMap<String, ArrayList<String>>();
+	ArrayList<String> switchnamen = new ArrayList<String>();
 
-	public String[] getIOSVersionen(String switchnamen) {
-		return switchtypen.get(switchnamen).toArray(new String[switchtypen.get(switchnamen).size()]);
-	}
-
-	public String[] getSwitchNamen() {
-		return switchtypen.keySet().toArray(new String[switchtypen.size()]);
-	}
-
-	public HashMap<String, ArrayList<String>> getSwitchtypen() {
-		return switchtypen;
+	public ArrayList<String> getSwitchnamen() {
+		return switchnamen;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -30,7 +22,7 @@ public class Switchtyp implements ISwitchtyp{
 		try{
 			FileInputStream fis = new FileInputStream(Verzeichnisse.switchtypDatei);
 			ObjectInputStream ois = new ObjectInputStream(fis);
-	        switchtypen = (HashMap<String, ArrayList<String>>) ois.readObject();
+	        switchnamen = (ArrayList<String>) ois.readObject();
 	        ois.close();
 	        fis.close();
 	        return true;
@@ -45,7 +37,7 @@ public class Switchtyp implements ISwitchtyp{
 		try{
 			FileOutputStream fos = new FileOutputStream(Verzeichnisse.switchtypDatei);
 			ObjectOutputStream oos = new ObjectOutputStream(fos);
-			oos.writeObject(switchtypen);
+			oos.writeObject(switchnamen);
 			oos.close();
 			fos.close();
 			return true;
@@ -55,15 +47,11 @@ public class Switchtyp implements ISwitchtyp{
 	}
 
 	@Override
-	public boolean neuenSwitchTyp(String switchname, String iOSVerison) {
-		if(switchtypen.containsKey(switchname))
-			return switchtypen.get(switchname).add(iOSVerison);
-		else {
-			ArrayList<String> iosVersionen = new ArrayList<String>();
-			iosVersionen.add(iOSVerison);
-			switchtypen.put(switchname, iosVersionen);
-			return !switchtypen.isEmpty();
-		}
+	public boolean switchHinzufügen(String switchname) {
+		if(switchnamen.contains(switchname))
+			return false;
+		else
+			return switchnamen.add(switchname);
 	}
 
 }

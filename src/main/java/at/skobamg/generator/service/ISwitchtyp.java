@@ -9,8 +9,6 @@ public interface ISwitchtyp {
 	 */
 	boolean speichern(); 
 	boolean laden();
-	boolean neuenSwitchTyp(String switchname, String iOSVerison);
-	String[] getIOSVersionen(String switchnamen);
-	String[] getSwitchNamen();
-	HashMap<String, ArrayList<String>> getSwitchtypen();
+	boolean switchHinzufügen(String switchname);
+	ArrayList<String> getSwitchnamen();
 }

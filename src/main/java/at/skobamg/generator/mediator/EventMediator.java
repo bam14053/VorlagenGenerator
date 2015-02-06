@@ -2,6 +2,7 @@
  * 
  */
 package at.skobamg.generator.mediator;
+import java.util.ArrayList;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
@@ -12,13 +13,10 @@ import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.HauptfensterController;
-import at.skobamg.generator.view.SwitchtypController;
-import at.skobamg.generator.view.TemplateAuswahlController;
+import at.skobamg.generator.view.NeuesTemplateController;
 
 /**
  * 
@@ -26,9 +24,7 @@ import at.skobamg.generator.view.TemplateAuswahlController;
  */
 public class EventMediator implements IEventMediator {
 	@Autowired
-	private SwitchtypController switchtypController;
-	@Autowired
-	private TemplateAuswahlController templateAuswahlController;
+	private NeuesTemplateController neuesTemplateController;
 	@Autowired
 	private HauptfensterController hauptfensterController;
 	@Autowired
@@ -37,17 +33,12 @@ public class EventMediator implements IEventMediator {
 
 	public void zumHauptfenster() {
 		stage.getScene().setRoot(hauptfensterController.getView());
-		changeWindow("Vorlagengenerator");
+		changeWindow("Vorlagen Generator");
 	}
 
 	public void zumNeueVorlageFenster() {
-		stage.getScene().setRoot(templateAuswahlController.getView());
+		stage.getScene().setRoot(neuesTemplateController.getView());
 		changeWindow("Neue Vorlage erstellen");
-	}
-
-	public void zumNeuenSwitchtypFenster() {
-		stage.getScene().setRoot(switchtypController.getView());
-		changeWindow("Neuen Switchtyp definieren");
 	}
 
 	public void setStage(Stage stage) {
@@ -57,10 +48,6 @@ public class EventMediator implements IEventMediator {
 	private void changeWindow(String title){
 		stage.setTitle(title);
 		stage.sizeToScene();
-	}
-
-	public boolean neuenSwitchtyp(String switchV, String IOSv) {
-		return switchtyp.neuenSwitchTyp(switchV, IOSv);
 	}
 
 	public void nachrichtAnzeigen(String nachricht) {
@@ -91,13 +78,16 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public String[] getSwitchNamen() {
-		return switchtyp.getSwitchNamen();
+	public void login(String username, String passwort) {
+		if(username.equals("root")&& passwort.equals("root"))
+			zumHauptfenster();
+		else
+			nachrichtAnzeigen("Username/Passwort-Kombination falsch");
 	}
 
 	@Override
-	public String[] getIOSVersionen(String switchnamen) {
-		return switchtyp.getIOSVersionen(switchnamen);
+	public ArrayList<String> getSwitchNamen() {
+		return switchtyp.getSwitchnamen();
 	}
 
 }

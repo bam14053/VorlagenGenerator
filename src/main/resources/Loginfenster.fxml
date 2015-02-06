@@ -5,9 +5,9 @@
 <?import java.lang.*?>
 <?import javafx.scene.layout.*?>
 
-<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.HauptfensterController">
+<Pane fx:id="view" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="223.0" prefWidth="303.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="at.skobamg.generator.view.LoginfensterController">
    <children>
-      <PasswordField layoutX="64.0" layoutY="135.0" promptText="Passwort">
+      <PasswordField layoutX="64.0" layoutY="135.0" promptText="Passwort" fx:id="passwort">
          <font>
             <Font size="14.0" />
          </font>
@@ -22,8 +22,8 @@
             <Font size="24.0" />
          </font>
       </Label>
-      <Button layoutX="212.0" layoutY="179.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="62.0" text="LOGIN" />
-      <TextField layoutX="64.0" layoutY="94.0" prefHeight="30.0" prefWidth="175.0" promptText="Username">
+      <Button layoutX="212.0" layoutY="179.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="62.0" text="Login" onAction="#login"/>
+      <TextField layoutX="64.0" layoutY="94.0" prefHeight="30.0" prefWidth="175.0" promptText="Username" fx:id="username">
          <font>
             <Font size="14.0" />
          </font>
