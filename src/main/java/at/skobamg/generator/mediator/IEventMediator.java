@@ -15,6 +15,7 @@ public interface IEventMediator {
 	 * Navigieren zum Hauptfenster
 	 */
 	void zumHauptfenster();
+	void zumNeuenTemplateFenster();
 	void setStage(Stage stage);
 	/**
 	 * Display a new window displaying an error message

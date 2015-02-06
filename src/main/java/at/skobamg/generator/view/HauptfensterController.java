@@ -25,4 +25,8 @@ public class HauptfensterController implements IScreens{
 		return view;
 	}
 	
+	public void neuesTemplate(){
+		mediator.zumNeuenTemplateFenster();
+	}
+	
 }

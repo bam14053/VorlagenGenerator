@@ -90,4 +90,14 @@ public class EventMediator implements IEventMediator {
 		return switchtyp.getSwitchnamen();
 	}
 
+	@Override
+	public void zumNeuenTemplateFenster() {
+		Stage stage = new Stage();
+		stage.setScene(new Scene(neuesTemplateController.getView()));
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(this.stage);
+		stage.setResizable(false);
+		stage.show();
+	}
+
 }

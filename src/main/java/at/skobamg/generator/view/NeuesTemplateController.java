@@ -36,9 +36,6 @@ public class NeuesTemplateController extends ScreensAbstract {
 		for(String s : mediator.getSwitchNamen())
 			switchname.getItems().add(s);
 		return super.getView();
-	}
-	
-	public void neuerTemplate(){
-	}
+	}		
 	
 }

@@ -17,7 +17,7 @@
                     <menus>
                       <Menu text="_Datei">
                         <items>
-                          <MenuItem text="_Neues Template">
+                          <MenuItem onAction="#neuesTemplate" text="_Neues Template">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
