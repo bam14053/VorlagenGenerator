@@ -12,10 +12,7 @@ import javafx.stage.Stage;
 import org.springframework.beans.factory.annotation.Autowired;
 import at.skobamg.generator.mediator.IEventMediator;
 
-/**
- * @author abi
- *
- */
+
 public class NeuesTemplateController extends ScreensAbstract {
 	@Autowired
 	private IEventMediator mediator;
@@ -25,7 +22,7 @@ public class NeuesTemplateController extends ScreensAbstract {
 	private TextField iosversion;
 
 	public void templateErstellen(){
-		mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
+	mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
 	}
 	
 	public void zumHauptFenster(ActionEvent actionEvent) {

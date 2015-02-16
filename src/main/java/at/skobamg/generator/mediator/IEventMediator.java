@@ -2,6 +2,7 @@
  * 
  */
 package at.skobamg.generator.mediator;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.stage.Stage;
@@ -17,6 +18,8 @@ public interface IEventMediator {
 	void zumHauptfenster();
 	void neuenTemplateErstellen(String switchname, String iosversion);
 	void zumNeuenTemplateFenster();
+	
+	void zumBenutzerhandbuch() throws IOException;
 	void setStage(Stage stage);
 	/**
 	 * Display a new window displaying an error message
@@ -26,4 +29,6 @@ public interface IEventMediator {
 	void login(String username, String passwort);
 	ArrayList<String> getSwitchNamen();
 	void exit();
+	void start(Stage primaryStage);
+	void neuenTemplateErstellen();	
 }
