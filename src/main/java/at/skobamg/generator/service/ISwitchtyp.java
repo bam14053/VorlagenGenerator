@@ -9,6 +9,6 @@ public interface ISwitchtyp {
 	 */
 	boolean speichern(); 
 	boolean laden();
-	boolean switchHinzufügen(String switchname);
+	void switchHinzufügen(String switchname);
 	ArrayList<String> getSwitchnamen();
 }

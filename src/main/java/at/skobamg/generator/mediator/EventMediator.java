@@ -37,6 +37,8 @@ public class EventMediator implements IEventMediator {
 
 	public void zumHauptfenster() {
 		stage.getScene().setRoot(hauptfensterController.getView());
+		stage.setX(20);
+		stage.setY(50);
 		changeWindow("Vorlagen Generator");
 	}
 
@@ -113,7 +115,7 @@ public class EventMediator implements IEventMediator {
 
 	@Override
 	public void neuenTemplateErstellen(String switchname, String iosversion) {		
-		switchtyp.switchHinzufügen(switchname);		
+		switchtyp.switchHinzufügen(switchname);
 	}
 
 }

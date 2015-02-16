@@ -47,11 +47,8 @@ public class Switchtyp implements ISwitchtyp{
 	}
 
 	@Override
-	public boolean switchHinzufügen(String switchname) {
-		if(switchnamen.contains(switchname))
-			return false;
-		else
-			return switchnamen.add(switchname);
+	public void switchHinzufügen(String switchname) {
+		switchnamen.add(switchname);
 	}
 
 }

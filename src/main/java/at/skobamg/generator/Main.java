@@ -3,9 +3,7 @@
  */
 package at.skobamg.generator;
 
-import org.hamcrest.core.IsSame;
 import org.springframework.context.annotation.AnnotationConfigApplicationContext;
-
 import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.service.Verzeichnisse;
@@ -57,7 +55,7 @@ public class Main extends Application{
 		Scene scene = new Scene(mainController.getView());	
 		stage.setScene(scene);
 		stage.setResizable(false);
-		stage.setTitle("Vorlagengenerator"); // Title of program
+		stage.setTitle("Vorlagen Generator"); // Title of program
 		stage.show(); // Show the Mainwindow
 	}
 
