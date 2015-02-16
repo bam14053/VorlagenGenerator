@@ -2,6 +2,9 @@
  * 
  */
 package at.skobamg.generator.mediator;
+import java.awt.Desktop;
+import java.io.File;
+import java.io.IOException;
 import java.util.ArrayList;
 
 import javafx.event.ActionEvent;
@@ -63,7 +66,7 @@ public class EventMediator implements IEventMediator {
 		vbox.setPadding(new Insets(10));
 		//Creating extra controls
 		Button b = new Button("OK");
-		vbox.setAlignment(Pos.BASELINE_RIGHT);
+		vbox.setAlignment(Pos.BASELINE_CENTER);
 		b.setOnAction(new EventHandler<ActionEvent>() {
 			public void handle(ActionEvent arg0) {
 				stage.close();
@@ -110,39 +113,15 @@ public class EventMediator implements IEventMediator {
 
 	@Override
 	public void zumBenutzerhandbuch() throws IOException {   //Benutzerhandbuch öffnen 
-		Runtime.getRuntime().exec("cmd.exe /c start c:/Users/GWD/git/VorlagenGenerator/VorlagenGenerator/PDF-Benutzerhandbuch/Benutzerhandbuch.pdf "); // Verweis auf das PDF
+		ClassLoader classLoader = getClass().getClassLoader();
+		if(Desktop.isDesktopSupported())
+			Desktop.getDesktop().open(new File(classLoader.getResource("Benutzerhandbuch.pdf").getFile()));
 	}
 	  
 	@Override  /// Ausloggen des USERS
 	public void exit() {
 		stage.close();
-	}
-	 /////////////////////////////////////////////////////////////User erhaltet Meldung über erfolgreiches Ausloggen.
-	public void ausloggen(String nachricht) {
-		final Stage stage = new Stage();
-		VBox vbox = new VBox();
-		//Setting vbox properties
-		vbox.setPadding(new Insets(10));
-		//Creating extra controls
-		Button b = new Button("OK");
-		vbox.setAlignment(Pos.BASELINE_CENTER);
-		b.setOnAction(new EventHandler<ActionEvent>() {
-			public void handle(ActionEvent arg0) {
-				stage.close();
-			}
-		});
-		//Adding to pane
-		vbox.getChildren().add(new Label(nachricht));
-		vbox.getChildren().add(b);
-		
-		//Creating scene, setting stage properties
-		Scene scene = new Scene(vbox, 320, 80);
-		stage.setTitle("Logout");
-		stage.setScene(scene);		
-		stage.initModality(Modality.WINDOW_MODAL);
-		stage.initOwner(this.stage);
-		stage.setResizable(false);
-		stage.show();
+		nachrichtAnzeigen("Sie wurden erfolgreich ausgeloggt");
 	}
 
 	@Override

@@ -29,6 +29,4 @@ public interface IEventMediator {
 	void login(String username, String passwort);
 	ArrayList<String> getSwitchNamen();
 	void exit();
-	void start(Stage primaryStage);
-	void neuenTemplateErstellen();	
 }
