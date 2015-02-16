@@ -11,102 +11,7 @@
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
-            <SplitPane dividerPositions="0.5" orientation="VERTICAL">
-              <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0">
-                     <children>
-                        <HBox prefHeight="0.0">
-                           <children>
-                              <MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
-                                <menus>
-                                  <Menu text="_Datei">
-                                    <items>
-                                      <MenuItem onAction="#neuesTemplate" text="_Neues Template">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem text="_Öffnen">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem text="_Speichern">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem mnemonicParsing="false" text="Speichern unter">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem onAction="#programschließen" text="Schließen" />
-                                    </items>
-                                       <accelerator>
-                                          <KeyCodeCombination alt="DOWN" code="D" control="UP" meta="UP" shift="UP" shortcut="UP" />
-                                       </accelerator>
-                                  </Menu>
-                                  <Menu text="_Bearbeiten">
-                                    <items>
-                                          <MenuItem text="_Kopieren">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="C" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem text="_Einfügen">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="V" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                          <MenuItem text="_Duplizieren">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="D" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                      <MenuItem text="_Löschen">
-                                             <accelerator>
-                                                <KeyCodeCombination alt="UP" code="L" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
-                                             </accelerator>
-                                          </MenuItem>
-                                    </items>
-                                  </Menu>
-                                    <Menu text="_Generieren">
-                                      <items>
-                                          <Menu text="Snippet">
-                                            <items>
-                                              <MenuItem mnemonicParsing="false" text="Action 1" />
-                                            </items>
-                                          </Menu>
-                                          <Menu text="Section">
-                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Action 1" />
-                                             </items>
-                                          </Menu>
-                                          <Menu text="Command">
-                                             <items>
-                                                <MenuItem mnemonicParsing="false" text="Action 1" />
-                                             </items>
-                                          </Menu>
-                                      </items>
-                                    </Menu>
-                                  <Menu text="_Hilfe">
-                                    <items>
-                                      <MenuItem text="_Benutzerhandbuch" />
-                                    </items>
-                                  </Menu>
-                                </menus>
-                                 <HBox.margin>
-                                    <Insets />
-                                 </HBox.margin>
-                              </MenuBar>
-                           </children>
-                        </HBox>
-                     </children>
-                  </AnchorPane>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="100.0" prefWidth="160.0" />
-              </items>
-            </SplitPane>
+            <SplitPane orientation="VERTICAL" />
             <HBox prefHeight="0.0">
                <children>
                   <MenuBar maxHeight="-Infinity" maxWidth="1.7976931348623157E308" style="-fx-background-color: gray;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" HBox.hgrow="ALWAYS">
@@ -194,7 +99,13 @@
                   </MenuBar>
                </children>
             </HBox>
+            <SplitPane dividerPositions="0.1767" layoutX="-3.0" layoutY="24.0" orientation="VERTICAL" prefHeight="2000.0" prefWidth="4000.0">
+              <items>
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1500.0" />
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" />
+              </items>
+            </SplitPane>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" fx:id="xmlCode" />
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="455.0" fx:id="xmlCode" />
   </items>
 </SplitPane>
