@@ -29,8 +29,13 @@ public class HauptfensterController implements IScreens{
 	public void neuesTemplate(){
 		mediator.zumNeuenTemplateFenster();
 	}
-	public void Benutzerhandbuch() throws IOException { // Benutzerhandbuch öffnen
-		mediator.zumBenutzerhandbuch();
+	
+	public void Benutzerhandbuch(){ // Benutzerhandbuch öffnen
+		try{
+			mediator.zumBenutzerhandbuch();
+		}catch(IOException e) {
+			mediator.nachrichtAnzeigen("Fehler! Benutzerhandbuch konnte nicht geöffnet werden");
+		}
 	}
 
 	public void programschließen() {

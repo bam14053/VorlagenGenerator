@@ -48,7 +48,8 @@ public class Switchtyp implements ISwitchtyp{
 
 	@Override
 	public void switchHinzufügen(String switchname) {
-		switchnamen.add(switchname);
+		if(!switchnamen.contains(switchname))
+			switchnamen.add(switchname);
 	}
 
 }

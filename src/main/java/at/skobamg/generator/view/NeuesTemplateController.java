@@ -9,7 +9,9 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import at.skobamg.generator.mediator.IEventMediator;
 
 
@@ -22,8 +24,16 @@ public class NeuesTemplateController extends ScreensAbstract {
 	private TextField iosversion;
 
 	public void templateErstellen(){
-	mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
-	}
+		try {
+			if(switchname.getSelectionModel().getSelectedItem().isEmpty() || iosversion.getText().isEmpty())
+				mediator.nachrichtAnzeigen("Bitte geben sie alle erforderlichen Daten ein");
+			else
+				mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
+		}catch(NullPointerException | IndexOutOfBoundsException e){
+			mediator.nachrichtAnzeigen("Bitte geben sie alle erforderlichen Daten ein");
+		}
+		
+	}	
 	
 	public void zumHauptFenster(ActionEvent actionEvent) {
 		((Stage)(((Node)actionEvent.getSource()).getScene().getWindow())).hide();

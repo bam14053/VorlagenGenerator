@@ -18,7 +18,7 @@ public interface IEventMediator {
 	void zumHauptfenster();
 	void neuenTemplateErstellen(String switchname, String iosversion);
 	void zumNeuenTemplateFenster();
-	
+	void zeigeEinschränkungsfenster();
 	void zumBenutzerhandbuch() throws IOException;
 	void setStage(Stage stage);
 	/**

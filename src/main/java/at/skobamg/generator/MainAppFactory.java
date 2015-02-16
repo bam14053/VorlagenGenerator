@@ -16,6 +16,7 @@ import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.service.Switchtyp;
 import at.skobamg.generator.view.HauptfensterController;
+import at.skobamg.generator.view.InterfacedefinitionsController;
 import at.skobamg.generator.view.LoginfensterController;
 import at.skobamg.generator.view.NeuesTemplateController;
 
@@ -37,6 +38,11 @@ public class MainAppFactory {
 	@Bean
 	public HauptfensterController hauptfensterController() {
 		return (HauptfensterController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Hauptfenster.fxml"));
+	}
+	
+	@Bean
+	public InterfacedefinitionsController interfacedefinitionsController() {
+		return (InterfacedefinitionsController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Interfacedefinitionsfenster.fxml"));
 	}
 	
 	@Bean

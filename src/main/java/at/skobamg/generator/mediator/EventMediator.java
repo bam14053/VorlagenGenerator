@@ -14,6 +14,7 @@ import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
@@ -22,6 +23,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.HauptfensterController;
+import at.skobamg.generator.view.InterfacedefinitionsController;
 import at.skobamg.generator.view.NeuesTemplateController;
 
 /**
@@ -34,7 +36,9 @@ public class EventMediator implements IEventMediator {
 	@Autowired
 	private HauptfensterController hauptfensterController;
 	@Autowired
-	private ISwitchtyp switchtyp;
+	private InterfacedefinitionsController interfacedefinitionsController;
+	@Autowired
+	private ISwitchtyp switchtyp;	
 	private Stage tempStage = new Stage();
 	private Stage stage;
 
@@ -43,11 +47,6 @@ public class EventMediator implements IEventMediator {
 		stage.setX(20);
 		stage.setY(50);
 		changeWindow("Vorlagen Generator");
-	}
-
-	public void zumNeueVorlageFenster() {
-		stage.getScene().setRoot(neuesTemplateController.getView());
-		changeWindow("Neue Vorlage erstellen");
 	}
 
 	public void setStage(Stage stage) {
@@ -102,6 +101,7 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public void zumNeuenTemplateFenster() {
 		if(tempStage.getScene() == null) {
+			tempStage.setTitle("Neue Vorlage erstellen");
 			tempStage.setScene(new Scene(neuesTemplateController.getView()));
 			tempStage.initModality(Modality.WINDOW_MODAL);
 			tempStage.initOwner(this.stage);
@@ -112,7 +112,7 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public void zumBenutzerhandbuch() throws IOException {   //Benutzerhandbuch öffnen 
+	public void zumBenutzerhandbuch() throws IOException{   //Benutzerhandbuch öffnen 
 		ClassLoader classLoader = getClass().getClassLoader();
 		if(Desktop.isDesktopSupported())
 			Desktop.getDesktop().open(new File(classLoader.getResource("Benutzerhandbuch.pdf").getFile()));
@@ -125,8 +125,58 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public void neuenTemplateErstellen(String switchname, String iosversion) {		
+	public void neuenTemplateErstellen(String switchname, String iosversion) {
 		switchtyp.switchHinzufügen(switchname);
+		zeigeEinschränkungsfenster();
+	}
+	
+	public void zeigeEinschränkungsfenster() {
+		Stage stage = new Stage();
+		VBox vBox = new VBox();
+		HBox hBox = new HBox();
+		
+		vBox.setPadding(new Insets(20));
+		vBox.setAlignment(Pos.BASELINE_CENTER);
+		hBox.setPadding(new Insets(10));
+		hBox.setAlignment(Pos.CENTER);		
+		
+		Button ja = new Button("Ja");
+		Button nein = new Button("Nein");
+		
+		//Adding actionhandlers
+		ja.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				stage.hide();				
+				tempStage.getScene().setRoot(interfacedefinitionsController.getView());
+				tempStage.sizeToScene();
+			}
+		});
+		
+		nein.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
+			public void handle(ActionEvent arg0) {
+				stage.hide();
+				tempStage.getScene().setRoot(interfacedefinitionsController.getView());
+				tempStage.sizeToScene();
+			}
+		});
+		
+		HBox.setMargin(ja, new Insets(10));
+		
+		hBox.getChildren().add(ja);
+		hBox.getChildren().add(nein);
+		vBox.getChildren().add(new Label("Wollen Sie die Anzahl der konfigurierbaren Ports einstellen ?"));
+		vBox.getChildren().add(hBox);	
+	
+		//Creating scene, setting stage properties
+		Scene scene = new Scene(vBox, 500, 100);
+		stage.setTitle("Wollen sie eine Einschränkung haben");
+		stage.setScene(scene);		
+		stage.initModality(Modality.WINDOW_MODAL);
+		stage.initOwner(this.stage);
+		stage.setResizable(false);
+		stage.show();
 	}
 
 }
