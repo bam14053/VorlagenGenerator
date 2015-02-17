@@ -23,17 +23,17 @@
                                     <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="_Öffnen">
+                              <MenuItem text="_Öffnen" onAction="#öffnen">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="_Speichern">
+                              <MenuItem text="_Speichern" >
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem mnemonicParsing="false" text="Speichern unter">
+                              <MenuItem mnemonicParsing="false" onAction="#speichernunter" text="Speichern unter">
                                  <accelerator>
                                     <KeyCodeCombination alt="DOWN" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
