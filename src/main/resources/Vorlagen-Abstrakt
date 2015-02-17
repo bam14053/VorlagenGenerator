@@ -1,0 +1,13 @@
+<xml version="1.0" encoding="UTF-8"?>
+<template switch-name="" switch-version="" />
+</template>
+
+
+<xml version="1.0" encoding="UTF-8"?>
+<snippet name="Basic configuration">
+	<section name="Security">
+		<command name="Set Password" execcommand="enable password">
+			<parameter name="password" type="String"/>
+		</command>
+		<command name="Set Secret" execcommand="enable secret">
+			
