@@ -107,7 +107,10 @@ public class EventMediator implements IEventMediator {
 			tempStage.initOwner(this.stage);
 			tempStage.setResizable(false);
 		}
-		neuesTemplateController.getView();
+		if(!tempStage.getScene().getRoot().equals(neuesTemplateController.getView())) {			
+			tempStage.setTitle("Neue Vorlage erstellen");
+			tempStage.setScene(new Scene(neuesTemplateController.getView()));
+		}
 		tempStage.show();
 	}
 
@@ -130,6 +133,14 @@ public class EventMediator implements IEventMediator {
 		zeigeEinschränkungsfenster();
 	}
 	
+	public void zumInterfacedefinitionsfenster(boolean portRange) {
+		interfacedefinitionsController.zeigeFenster(portRange);
+		tempStage.setTitle("Definition der Interfaces");		
+		tempStage.getScene().setRoot(interfacedefinitionsController.getView());
+		tempStage.sizeToScene();
+		tempStage.setResizable(true);
+	}
+	
 	public void zeigeEinschränkungsfenster() {
 		Stage stage = new Stage();
 		VBox vBox = new VBox();
@@ -148,8 +159,7 @@ public class EventMediator implements IEventMediator {
 			@Override
 			public void handle(ActionEvent arg0) {
 				stage.hide();				
-				tempStage.getScene().setRoot(interfacedefinitionsController.getView());
-				tempStage.sizeToScene();
+				zumInterfacedefinitionsfenster(true);
 			}
 		});
 		
@@ -157,8 +167,7 @@ public class EventMediator implements IEventMediator {
 			@Override
 			public void handle(ActionEvent arg0) {
 				stage.hide();
-				tempStage.getScene().setRoot(interfacedefinitionsController.getView());
-				tempStage.sizeToScene();
+				zumInterfacedefinitionsfenster(false);
 			}
 		});
 		
@@ -166,12 +175,12 @@ public class EventMediator implements IEventMediator {
 		
 		hBox.getChildren().add(ja);
 		hBox.getChildren().add(nein);
-		vBox.getChildren().add(new Label("Wollen Sie die Anzahl der konfigurierbaren Ports einstellen ?"));
+		vBox.getChildren().add(new Label("Wollen Sie die Anzahl der konfigurierbaren Ports beschränken ?"));
 		vBox.getChildren().add(hBox);	
 	
 		//Creating scene, setting stage properties
 		Scene scene = new Scene(vBox, 500, 100);
-		stage.setTitle("Wollen sie eine Einschränkung haben");
+		stage.setTitle("Wollen sie eine Einschränkung haben?");
 		stage.setScene(scene);		
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.initOwner(this.stage);
