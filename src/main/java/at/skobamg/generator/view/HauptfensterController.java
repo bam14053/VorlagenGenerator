@@ -37,6 +37,14 @@ public class HauptfensterController implements IScreens{
 			mediator.nachrichtAnzeigen("Fehler! Benutzerhandbuch konnte nicht geöffnet werden");
 		}
 	}
+	
+	public void speichernunter(){ // Speichern unter
+			mediator.SpeichernUnter();	
+	}
+	
+	public void öffnen(){ // Speichern unter
+		mediator.Dateiöffnen();	
+}
 
 	public void programschließen() {
 		mediator.exit();

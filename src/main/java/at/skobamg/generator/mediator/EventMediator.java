@@ -16,6 +16,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
@@ -120,12 +121,44 @@ public class EventMediator implements IEventMediator {
 		if(Desktop.isDesktopSupported())
 			Desktop.getDesktop().open(new File(classLoader.getResource("Benutzerhandbuch.pdf").getFile()));
 	}
+	
+	
 	  
 	@Override  /// Ausloggen des USERS
 	public void exit() {
 		stage.close();
 		nachrichtAnzeigen("Sie wurden erfolgreich ausgeloggt");
 	}
+	@Override  /// Speichern unter
+	public void SpeichernUnter() {
+		 FileChooser fileChooser = new FileChooser();
+		  
+         //Set extension filter
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+         fileChooser.getExtensionFilters().add(extFilter);
+         
+         //Show save file dialog
+         File file = fileChooser.showSaveDialog(tempStage);
+         
+         if(file != null);
+             
+	}
+	
+	@Override  /// Öffnen einer Datei
+	public void Dateiöffnen() {
+		 FileChooser fileChooser = new FileChooser();
+		  
+         //Set extension filter
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+         fileChooser.getExtensionFilters().add(extFilter);
+         
+         //Show save file dialog
+         File file = fileChooser.showOpenDialog(tempStage);
+         
+         if(file != null);
+             
+	}
+
 
 	@Override
 	public void neuenTemplateErstellen(String switchname, String iosversion) {
