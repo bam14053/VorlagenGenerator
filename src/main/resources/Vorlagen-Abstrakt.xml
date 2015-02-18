@@ -1,9 +1,4 @@
-<xml version="1.0" encoding="UTF-8"?>
-<template switch-name="" switch-version="" />
-</template>
-
-
-<xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <snippet name="Grundkonfiguration">
 	<section name="Grundeinstellungen">
 		<command name="Hostname" execcommand="hostname" type="String"/>
@@ -56,7 +51,7 @@
 				<parameter name="Passwort" type="String"/>
 			</parameter>
 		</command>
-		<command name="Secret setzen" execcommand="enable secret" type="String"/>
+		<command name="Secret setzen" execcommand="enable secret" type="String">
 			<parameter name="Secret" execcommand="null">
 				<parameter name="Secret" type="String"/>
 			</parameter>
@@ -74,3 +69,4 @@
 			</parameter>
 		</command>
 	</section>
+</snippet>

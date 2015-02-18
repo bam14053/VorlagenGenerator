@@ -72,7 +72,11 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 	}
 	
 	public void weiter(){
-		
+		/*
+		 * <xml version="1.0" encoding="UTF-8"?>
+<template switch-name="" switch-version="" />
+</template>
+		 */
 	}
 	
 	public void neueBezeichnung(ActionEvent actionEvent) {
