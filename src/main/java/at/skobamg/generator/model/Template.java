@@ -2,45 +2,22 @@
  * 
  */
 package at.skobamg.generator.model;
+
+import java.util.ArrayList;
+
 /**
  *
  */
-public class Template{
+public class Template implements ITemplate{
 	private String switchName;
 	private String iOSVersion;
-	private String xmlString;
+	private ArrayList<ISnippet> snippets;
 	
-	public Template(String switchName, String iOSVersion) {
+	public Template(String switchName, String iOSVersion,
+			ArrayList<ISnippet> snippets) {
+		super();
 		this.switchName = switchName;
 		this.iOSVersion = iOSVersion;
-	}
-
-	public String getSwitchName() {
-		return switchName;
-	}
-
-	public void setSwitchName(String switchName) {
-		this.switchName = switchName;
-	}
-
-	public String getIOSVersion() {
-		return iOSVersion;
-	}
-
-	public void setIOSVersion(String iOSVersion) {
-		this.iOSVersion = iOSVersion;
-	}
-	/**
-	 * @return the xmlString
-	 */
-	public String getXmlString() {
-		return xmlString;
-	}
-
-	/**
-	 * @param xmlString the xmlString to set
-	 */
-	public void setXmlString(String xmlString) {
-		this.xmlString = xmlString;
+		this.snippets = snippets;
 	}
 }

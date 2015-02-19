@@ -8,16 +8,13 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import at.skobamg.generator.mediator.IEventMediator;
-import sun.awt.image.GifImageDecoder;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.geometry.Point2D;
 import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
-import javafx.stage.Stage;
 
 /**
  *
@@ -44,9 +41,7 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 	private ArrayList<TextField> portRanges = new ArrayList<>();
 	private ArrayList<TextField> portbezeichnungenlang = new ArrayList<>();
 	private ArrayList<TextField> portbezeichnungenkurz = new ArrayList<>();
-	
 	private boolean portRange;	
-	private ArrayList<String> ports = new ArrayList<String>();
 	private int pos;
 	
 	public void zeigeFenster(boolean portRange) {
@@ -71,12 +66,8 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 		mediator.zumNeuenTemplateFenster();
 	}
 	
-	public void weiter(){
-		/*
-		 * <xml version="1.0" encoding="UTF-8"?>
-<template switch-name="" switch-version="" />
-</template>
-		 */
+	public void weiter(ActionEvent actionEvent){
+		mediator.zumBasisGenerierungsfenster();
 	}
 	
 	public void neueBezeichnung(ActionEvent actionEvent) {

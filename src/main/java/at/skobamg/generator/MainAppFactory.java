@@ -13,8 +13,11 @@ import org.springframework.context.annotation.Configuration;
 
 import at.skobamg.generator.mediator.EventMediator;
 import at.skobamg.generator.mediator.IEventMediator;
+import at.skobamg.generator.model.GeneratorModel;
+import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.service.Switchtyp;
+import at.skobamg.generator.view.BasisGenerierungsController;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.InterfacedefinitionsController;
 import at.skobamg.generator.view.LoginfensterController;
@@ -45,6 +48,12 @@ public class MainAppFactory {
 		return (InterfacedefinitionsController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Interfacedefinitionsfenster.fxml"));
 	}
 	
+	
+	@Bean
+	public BasisGenerierungsController basisGenerierungsController(){
+		return (BasisGenerierungsController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Basisgenerierungsfenster.fxml"));
+	}
+	
 	@Bean
 	public IEventMediator iEventMediator(){
 		return new EventMediator();
@@ -53,6 +62,11 @@ public class MainAppFactory {
 	@Bean
 	public ISwitchtyp iSwitchtyp(){
 		return new Switchtyp();
+	}
+	
+	@Bean
+	public IGeneratorModel getGeneratorModel(){
+		return new GeneratorModel();
 	}
 	
 	protected Object controllerLaden(URL url){

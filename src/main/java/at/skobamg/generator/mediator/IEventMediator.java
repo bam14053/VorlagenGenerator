@@ -4,7 +4,9 @@
 package at.skobamg.generator.mediator;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
+import at.skobamg.generator.model.ISnippet;
 import javafx.stage.Stage;
 
 /**
@@ -31,4 +33,6 @@ public interface IEventMediator {
 	void exit();
 	void SpeichernUnter();
 	void Dateiöffnen();
+	void zumBasisGenerierungsfenster();
+	HashMap<String, ISnippet> getSnippets();
 }

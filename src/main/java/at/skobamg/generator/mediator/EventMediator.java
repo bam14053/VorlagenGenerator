@@ -6,6 +6,7 @@ import java.awt.Desktop;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,7 +23,10 @@ import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import at.skobamg.generator.model.IGeneratorModel;
+import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.service.ISwitchtyp;
+import at.skobamg.generator.view.BasisGenerierungsController;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.InterfacedefinitionsController;
 import at.skobamg.generator.view.NeuesTemplateController;
@@ -39,7 +43,12 @@ public class EventMediator implements IEventMediator {
 	@Autowired
 	private InterfacedefinitionsController interfacedefinitionsController;
 	@Autowired
-	private ISwitchtyp switchtyp;	
+	private BasisGenerierungsController basisGenerierungsController;
+	@Autowired
+	private ISwitchtyp switchtyp;
+	@Autowired
+	private IGeneratorModel generatorModel; 
+	
 	private Stage tempStage = new Stage();
 	private Stage stage;
 
@@ -219,6 +228,19 @@ public class EventMediator implements IEventMediator {
 		stage.initOwner(this.stage);
 		stage.setResizable(false);
 		stage.show();
+	}
+
+	@Override
+	public void zumBasisGenerierungsfenster() {
+		tempStage.setTitle("Wählen sie Basissnippets aus");		
+		tempStage.getScene().setRoot(basisGenerierungsController.getView());
+		tempStage.sizeToScene();
+		tempStage.setResizable(false);
+	}
+
+	@Override
+	public HashMap<String, ISnippet> getSnippets() {
+		return generatorModel.getAllSnippets();
 	}
 
 }
