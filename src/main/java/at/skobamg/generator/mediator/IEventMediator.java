@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 import at.skobamg.generator.model.ISnippet;
+import at.skobamg.generator.model.ITemplate;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.stage.Stage;
 
 /**
@@ -35,4 +37,6 @@ public interface IEventMediator {
 	void Dateiöffnen();
 	void zumBasisGenerierungsfenster();
 	HashMap<String, ISnippet> getSnippets();
+	ISnippet getSnippet(String name);
+	void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems, boolean toFile);
 }

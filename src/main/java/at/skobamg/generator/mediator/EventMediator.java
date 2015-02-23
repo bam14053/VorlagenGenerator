@@ -8,12 +8,14 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
@@ -23,8 +25,13 @@ import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
+import at.skobamg.generator.logic.CreateTemplateCommand;
+import at.skobamg.generator.logic.GenerateXMLStringCommand;
+import at.skobamg.generator.model.GeneratorModel;
 import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.ISnippet;
+import at.skobamg.generator.model.ITemplate;
+import at.skobamg.generator.model.Template;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.BasisGenerierungsController;
 import at.skobamg.generator.view.HauptfensterController;
@@ -48,7 +55,7 @@ public class EventMediator implements IEventMediator {
 	private ISwitchtyp switchtyp;
 	@Autowired
 	private IGeneratorModel generatorModel; 
-	
+	private ITemplate template;
 	private Stage tempStage = new Stage();
 	private Stage stage;
 
@@ -172,6 +179,7 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public void neuenTemplateErstellen(String switchname, String iosversion) {
 		switchtyp.switchHinzufügen(switchname);
+		template = new Template(switchname, iosversion, null);
 		zeigeEinschränkungsfenster();
 	}
 	
@@ -241,6 +249,34 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public HashMap<String, ISnippet> getSnippets() {
 		return generatorModel.getAllSnippets();
+	}
+
+	@Override
+	public ISnippet getSnippet(String name) {
+		return generatorModel.getSnippet(name);
+	}
+
+	@Override
+	public void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems,boolean toFile) {
+		CreateTemplateCommand command = new CreateTemplateCommand(generatorModel, checkedItems, template.getSwitchName(), template.getSwitchVersion());
+		command.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+			@Override
+			public void handle(WorkerStateEvent arg0) {
+				GenerateXMLStringCommand command = new GenerateXMLStringCommand();
+				template = (ITemplate)arg0.getSource().getValue();
+				command.setParameters(template, toFile);
+				command.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
+
+					@Override
+					public void handle(WorkerStateEvent arg0) {						
+						zumHauptfenster();
+					}
+				});
+				command.start();
+			}
+		});
+		command.start();
 	}
 
 }

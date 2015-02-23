@@ -2,7 +2,6 @@
  * 
  */
 package at.skobamg.generator.model;
-import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
