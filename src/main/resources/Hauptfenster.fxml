@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.text.*?>
 <?import javafx.scene.input.*?>
 <?import javafx.scene.effect.*?>
 <?import javafx.geometry.*?>
@@ -23,12 +24,12 @@
                                     <KeyCodeCombination alt="UP" code="N" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="_Öffnen" onAction="#öffnen">
+                              <MenuItem onAction="#öffnen" text="_Öffnen">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="_Speichern" >
+                              <MenuItem text="_Speichern">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
@@ -101,7 +102,77 @@
             </HBox>
             <SplitPane dividerPositions="0.1767" layoutX="-3.0" layoutY="24.0" orientation="VERTICAL" prefHeight="2000.0" prefWidth="4000.0">
               <items>
-                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1500.0" />
+                <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="500.0" prefWidth="1500.0">
+                     <children>
+                        <Label layoutX="28.0" layoutY="24.0" text="Snippet">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="242.0" layoutY="112.0" mnemonicParsing="false" text="Hinzufügen" />
+                        <Label layoutX="28.0" layoutY="64.0" text="Name des Snippets">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="171.0" layoutY="62.0" />
+                        <Label layoutX="28.0" layoutY="148.0" text="Section">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="28.0" layoutY="188.0" text="Name der Sections">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <TextField layoutX="171.0" layoutY="186.0" />
+                        <Button layoutX="242.0" layoutY="234.0" mnemonicParsing="false" text="Hinzufügen" />
+                        <TextField layoutX="539.0" layoutY="62.0" />
+                        <Label layoutX="377.0" layoutY="64.0" prefHeight="20.0" prefWidth="149.0" text="Name des Commands:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="614.0" layoutY="199.0" mnemonicParsing="false" text="Hinzufügen" />
+                        <Label layoutX="377.0" layoutY="24.0" text="Commands">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                        <Label layoutX="376.0" layoutY="102.0" text="Typ des Commands:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ComboBox layoutX="539.0" layoutY="100.0" prefWidth="150.0" promptText="Typauswahl:">
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </ComboBox>
+                        <Label layoutX="376.0" layoutY="138.0" text="Execcommand:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                           <opaqueInsets>
+                              <Insets />
+                           </opaqueInsets>
+                        </Label>
+                        <TextField layoutX="539.0" layoutY="136.0" />
+                        <Label layoutX="378.0" layoutY="176.0" text="Neuer Parameter:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Button layoutX="539.0" layoutY="173.0" mnemonicParsing="false" text="+" />
+                        <Button layoutX="89.0" layoutY="294.0" mnemonicParsing="false" text="Bearbeiten" />
+                        <Button layoutX="182.0" layoutY="294.0" mnemonicParsing="false" text="Löschen" />
+                        <Label layoutX="28.0" layoutY="259.0" text="Bearbeitungs-Bereich:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                     </children></AnchorPane>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" />
               </items>
             </SplitPane>
