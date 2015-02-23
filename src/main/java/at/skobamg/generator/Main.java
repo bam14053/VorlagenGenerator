@@ -48,10 +48,8 @@ public class Main extends Application{
 				iSwitchtyp.laden();
 				try {
 					generatorModel.addSnippets(new SnippetTemplateService().snippetsLaden());
-					generatorModel.getAllSnippets();
-					System.out.println("Finished");
 				} catch (InvalidTypeException e) {
-					mediator.nachrichtAnzeigen(e.getMessage());
+					e.printStackTrace();
 				}
 			}
 		}).start();	

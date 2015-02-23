@@ -24,5 +24,7 @@ public interface ISection {
 		
 	}
 	
-	public String getSectionName();
+	public String getName();	
+	public ArrayList<ICommand> getCommands();
+	public void addCommand(ICommand command);
 }

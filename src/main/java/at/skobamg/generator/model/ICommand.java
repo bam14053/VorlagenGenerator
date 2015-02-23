@@ -1,7 +1,7 @@
 package at.skobamg.generator.model;
 
 import java.util.ArrayList;
-
+import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -27,4 +27,8 @@ public interface ICommand {
 				command.getAttribute(propertyExeccommand), commands, parameters);
 		
 	}
+	
+	public ArrayList<IParameter> getParameters();
+	public ArrayList<ICommand> getCommands();
+	public Element toXMLELement(Document document);
 }

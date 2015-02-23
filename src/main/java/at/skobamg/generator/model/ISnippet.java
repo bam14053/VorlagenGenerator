@@ -7,4 +7,8 @@ public interface ISnippet {
 	public static String propertyName = "name";
 	
 	public ArrayList<ISection> getSections();
+	public ISection getSection(String sectionName);
+	public void addSection(ISection section);
+	public void deleteSection(String sectionName);
+	public String getName();
 }

@@ -31,8 +31,7 @@ public class NeuesTemplateController extends ScreensAbstract {
 				mediator.neuenTemplateErstellen(switchname.getSelectionModel().getSelectedItem(), iosversion.getText());
 		}catch(NullPointerException | IndexOutOfBoundsException e){
 			mediator.nachrichtAnzeigen("Bitte geben sie alle erforderlichen Daten ein");
-		}
-		
+		}		
 	}	
 	
 	public void zumHauptFenster(ActionEvent actionEvent) {

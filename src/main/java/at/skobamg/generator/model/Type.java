@@ -20,6 +20,7 @@ public enum Type {
 		case "Delim": return Delim;
 		case "bool":
 		case "Bool": return Bool;
+		case "": return null;
 		default: throw new InvalidTypeException("Invalid type given: "+type);
 		}
 	}

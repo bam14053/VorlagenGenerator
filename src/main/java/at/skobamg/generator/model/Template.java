@@ -20,4 +20,26 @@ public class Template implements ITemplate{
 		this.iOSVersion = iOSVersion;
 		this.snippets = snippets;
 	}
+
+	@Override
+	public String getSwitchVersion() {
+		return iOSVersion;
+	}
+
+	@Override
+	public String getSwitchName() {
+		return switchName;
+	}
+
+	@Override
+	public ArrayList<ISnippet> getSnippets() {
+		return snippets;
+	}
+
+	@Override
+	public ISnippet getSnippet(String name) {
+		if(snippets.contains(new Snippet(name, null)))
+			return snippets.get(snippets.indexOf(new Snippet(name, null)));
+		return null;
+	}
 }
