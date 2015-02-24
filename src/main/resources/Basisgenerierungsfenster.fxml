@@ -41,7 +41,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="509.0" layoutY="14.0" mnemonicParsing="false" text="Weiter">
+            <Button layoutX="509.0" layoutY="14.0" mnemonicParsing="false" text="Weiter" onAction="#weiter">
                <font>
                   <Font size="14.0" />
                </font>

@@ -69,9 +69,10 @@ public class GenerateXMLStringCommand extends Service<String> {
 				
 				// write the content into xml file
 				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
+				Transformer transformer = transformerFactory.newTransformer(); 
 				DOMSource source = new DOMSource(doc);
 				StreamResult result = new StreamResult(System.out);
+				
 				
 				transformer.transform(source, result);
 				
