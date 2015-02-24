@@ -1,20 +1,22 @@
 package at.skobamg.generator.logic;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.io.StringWriter;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerConfigurationException;
 import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
 
-import org.w3c.dom.Attr;
+import org.hibernate.event.internal.OnUpdateVisitor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
+
+import com.sun.org.apache.xml.internal.serialize.OutputFormat;
+import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 import at.skobamg.generator.model.ICommand;
 import at.skobamg.generator.model.ISection;
@@ -41,7 +43,7 @@ public class GenerateXMLStringCommand extends Service<String> {
 	protected Task<String> createTask() {
 		return new Task<String>() {
 			@Override
-			protected String call() throws ParserConfigurationException, TransformerException{
+			protected String call() throws IOException, ParserConfigurationException{
 				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				
@@ -65,17 +67,22 @@ public class GenerateXMLStringCommand extends Service<String> {
 					}
 					rootElement.appendChild(snippetElement);			
 				}
-				doc.appendChild(rootElement);
+				doc.appendChild(rootElement);				
+				OutputFormat format = new OutputFormat(doc);
+				format.setIndenting(true);
 				
-				// write the content into xml file
-				TransformerFactory transformerFactory = TransformerFactory.newInstance();
-				Transformer transformer = transformerFactory.newTransformer();
-				DOMSource source = new DOMSource(doc);
-				StreamResult result = new StreamResult(System.out);
-				
-				transformer.transform(source, result);
-				
-				return doc.getTextContent();				
+				if(toFile){
+					return "Saved";
+				}
+				else{
+					StringWriter stringOut = new StringWriter();				
+					XMLSerializer xml = new XMLSerializer(stringOut, format);
+					xml.serialize(doc);				
+					System.out.println(stringOut.toString());
+					
+					return stringOut.toString();	
+				}
+						
 			}
 			
 		};

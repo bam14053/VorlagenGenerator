@@ -7,7 +7,6 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -22,12 +21,9 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
 import at.skobamg.generator.logic.CreateTemplateCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
-import at.skobamg.generator.model.GeneratorModel;
 import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
@@ -269,8 +265,8 @@ public class EventMediator implements IEventMediator {
 				command.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
 					@Override
-					public void handle(WorkerStateEvent arg0) {						
-						zumHauptfenster();
+					public void handle(WorkerStateEvent arg0) {
+						hauptfensterController.updateXMLText((String)arg0.getSource().getValue());
 					}
 				});
 				command.start();

@@ -7,6 +7,9 @@ import java.io.IOException;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.SplitPane;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.text.Text;
+import javafx.scene.text.TextFlow;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -20,7 +23,9 @@ public class HauptfensterController implements IScreens{
 	private IEventMediator mediator;
 	@FXML
 	private SplitPane view;
-
+	@FXML
+	private AnchorPane xmlCode;
+	
 	@Override
 	public SplitPane getView() {
 		return view;
@@ -35,7 +40,7 @@ public class HauptfensterController implements IScreens{
 			mediator.zumBenutzerhandbuch();
 		}catch(IOException e) {
 			mediator.nachrichtAnzeigen("Fehler! Benutzerhandbuch konnte nicht geöffnet werden");
-		}
+		}		
 	}
 	
 	public void speichernunter(){ // Speichern unter
@@ -44,9 +49,15 @@ public class HauptfensterController implements IScreens{
 	
 	public void öffnen(){ // Speichern unter
 		mediator.Dateiöffnen();	
-}
+	}
 
 	public void programschließen() {
 		mediator.exit();
+		
+	}
+	
+	public void updateXMLText(String xmlText){
+		xmlCode.getChildren().clear();
+		xmlCode.getChildren().add(new Text(xmlText));
 	}
 }

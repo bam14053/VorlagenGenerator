@@ -5,9 +5,7 @@ package at.skobamg.generator.mediator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import at.skobamg.generator.model.ISnippet;
-import at.skobamg.generator.model.ITemplate;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.stage.Stage;
 

@@ -29,7 +29,7 @@
       </Button>
    </bottom>
    <right>
-      <Button mnemonicParsing="false" text="Weiter" BorderPane.alignment="TOP_CENTER">
+      <Button mnemonicParsing="false" text="Weiter" BorderPane.alignment="TOP_CENTER" onAction="#weiter">
          <font>
             <Font size="14.0" />
          </font>

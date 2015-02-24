@@ -22,8 +22,6 @@ import javafx.scene.layout.VBox;
 public class BasisGenerierungsController extends ScreensAbstract {
 	@Autowired
 	private IEventMediator mediator;
-	private String switchname;
-	private String switchversion;
 	private ArrayList<CheckBoxTreeItem<String>> items;	
 	
 	@Override
@@ -63,6 +61,7 @@ public class BasisGenerierungsController extends ScreensAbstract {
 	}
 	
 	public void weiter(ActionEvent actionEvent){
+		((Node)actionEvent.getSource()).getScene().getWindow().hide();
 		mediator.xmlGenerieren(items, false);
 	}
 	
