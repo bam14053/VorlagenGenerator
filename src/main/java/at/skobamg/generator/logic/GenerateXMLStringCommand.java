@@ -81,10 +81,8 @@ public class GenerateXMLStringCommand extends Service<String> {
 					System.out.println(stringOut.toString());
 					
 					return stringOut.toString();	
-				}
-						
+				}		
 			}
-			
 		};
 	}
 
