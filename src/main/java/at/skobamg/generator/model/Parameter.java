@@ -2,12 +2,7 @@
  * 
  */
 package at.skobamg.generator.model;
-
 import java.util.ArrayList;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 /**
  *
  */
@@ -56,18 +51,29 @@ public class Parameter implements IParameter{
 		return commands;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public String getExeccommand() {
+		return execcommand;
+	}
+
+	public boolean isRequired() {
+		return required;
+	}
+
 	@Override
-	public Element toXMLELement(Document document) {
-		Element comElement = document.createElement(IParameter.name);
-		comElement.setAttribute(IParameter.propertyName, name);
-		if(type != null)
-			comElement.setAttribute(IParameter.propertyType, type.toString());
-		if(execcommand != null || !execcommand.isEmpty())
-			comElement.setAttribute(IParameter.propertyExeccommand, execcommand);
-		for(ICommand command : commands)
-			comElement.appendChild(command.toXMLELement(document));
-		for(IParameter parameter : parameters)
-			comElement.appendChild(parameter.toXMLELement(document));
-		return comElement;
+	public ViewTyp getViewTyp() {
+		return ViewTyp.IParameter;
+	}
+
+	@Override
+	public String toString() {
+		return IParameter.name+": "+name;
 	}
 }

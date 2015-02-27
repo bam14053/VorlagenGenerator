@@ -36,5 +36,6 @@ public interface IEventMediator {
 	void zumBasisGenerierungsfenster();
 	HashMap<String, ISnippet> getSnippets();
 	ISnippet getSnippet(String name);
-	void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems, boolean toFile);
+	void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems);
+	void setInterfaceDefinition(String[][] inputText, boolean portRange);
 }

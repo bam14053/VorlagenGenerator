@@ -115,7 +115,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="171.0" layoutY="62.0" />
+                        <TextField fx:id="snippetName" layoutX="171.0" layoutY="62.0" />
                         <Label layoutX="28.0" layoutY="148.0" text="Section">
                            <font>
                               <Font size="18.0" />
@@ -126,9 +126,9 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="171.0" layoutY="186.0" />
+                        <TextField fx:id="sectionName" layoutX="171.0" layoutY="186.0" />
                         <Button layoutX="242.0" layoutY="234.0" mnemonicParsing="false" text="Hinzufügen" />
-                        <TextField layoutX="539.0" layoutY="62.0" />
+                        <TextField fx:id="commandName" layoutX="539.0" layoutY="62.0" />
                         <Label layoutX="377.0" layoutY="64.0" prefHeight="20.0" prefWidth="149.0" text="Name des Commands:">
                            <font>
                               <Font size="14.0" />
@@ -145,7 +145,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="539.0" layoutY="100.0" prefWidth="150.0" promptText="Typauswahl:">
+                        <ComboBox fx:id="commandType" layoutX="539.0" layoutY="100.0" prefWidth="150.0" promptText="Typauswahl:">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
@@ -158,13 +158,13 @@
                               <Insets />
                            </opaqueInsets>
                         </Label>
-                        <TextField layoutX="539.0" layoutY="136.0" />
+                        <TextField fx:id="execcommand" layoutX="539.0" layoutY="136.0" />
                         <Label layoutX="378.0" layoutY="176.0" text="Neuer Parameter:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Button layoutX="539.0" layoutY="173.0" mnemonicParsing="false" text="+" />
+                        <Button fx:id="newParamButton" layoutX="539.0" layoutY="173.0" mnemonicParsing="false" text="+" />
                         <Button layoutX="89.0" layoutY="294.0" mnemonicParsing="false" text="Bearbeiten" />
                         <Button layoutX="182.0" layoutY="294.0" mnemonicParsing="false" text="Löschen" />
                         <Label layoutX="28.0" layoutY="259.0" text="Bearbeitungs-Bereich:">
@@ -173,13 +173,10 @@
                            </font>
                         </Label>
                      </children></AnchorPane>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" />
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" fx:id="xmlView" />
               </items>
             </SplitPane>
          </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="455.0" fx:id="xmlCode">
-         <children>
-            <ScrollBar layoutX="396.0" layoutY="-1.0" orientation="VERTICAL" prefHeight="800.0" prefWidth="18.0" />
-         </children></AnchorPane>
+    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="798.0" prefWidth="455.0" fx:id="xmlCode" />
   </items>
 </SplitPane>

@@ -1,6 +1,7 @@
 package at.skobamg.generator.logic;
 
 import java.util.ArrayList;
+import java.util.function.Predicate;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -17,28 +18,23 @@ import javafx.concurrent.Task;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 
-public class CreateTemplateCommand extends Service<ITemplate> {
-	@Autowired
+public class GenerateSnippetsCommand extends Service<ArrayList<ISnippet>> {
 	private IGeneratorModel generatorModel;
 	private ArrayList<CheckBoxTreeItem<String>> checkedItems;
-	private String switchname;
-	private String switchversion;
 	
-	public CreateTemplateCommand(IGeneratorModel generatorModel, ArrayList<CheckBoxTreeItem<String>> checkedItems, String name, String version){
+	public GenerateSnippetsCommand(IGeneratorModel generatorModel, ArrayList<CheckBoxTreeItem<String>> checkedItems){
 		this.generatorModel = generatorModel;
 		this.checkedItems = checkedItems;
-		switchname = name;
-		switchversion = version;
 	}
 
 	@Override
-	protected Task<ITemplate> createTask() {
-		return new Task<ITemplate>() {
+	protected Task<ArrayList<ISnippet>> createTask() {
+		return new Task<ArrayList<ISnippet>>() {
 
 			@Override
-			protected ITemplate call() throws Exception {
+			protected ArrayList<ISnippet> call() throws Exception {
 				ArrayList<ISnippet> snippets = new ArrayList<>();
-				for(int i = 0; i < checkedItems.size();i++){
+				for(int i = 0; i < checkedItems.size();){
 					if(checkedItems.get(i).getChildren().size() > 0){
 						snippets.add(new Snippet(checkedItems.get(i).getValue()));
 						i++;
@@ -46,12 +42,19 @@ public class CreateTemplateCommand extends Service<ITemplate> {
 							if(checkedItems.get(i).isSelected()){
 								ISnippet snippet = generatorModel.getSnippet(snippets.get(snippets.size()-1).getName());
 								ISection section = snippet.getSection(checkedItems.get(i).getValue());
-//								ISection section = generatorModel.getSnippet(snippets.get(snippets.size()-1).getName()).getSection(checkedItems.get(i).getValue());
 								snippets.get(snippets.size()-1).addSection(section);
-							}
-					}
+							}						
+					}					
 				}
-				return new Template(switchname, switchversion, snippets);
+				snippets.removeIf(new Predicate<ISnippet>() {
+					@Override
+					public boolean test(ISnippet t) {
+						if(t.getSections().isEmpty())
+							return true;
+						return false;
+					}					
+				});
+				return snippets;
 			}
 		};		
 	}

@@ -62,7 +62,7 @@ public class BasisGenerierungsController extends ScreensAbstract {
 	
 	public void weiter(ActionEvent actionEvent){
 		((Node)actionEvent.getSource()).getScene().getWindow().hide();
-		mediator.xmlGenerieren(items, false);
+		mediator.xmlGenerieren(items);
 	}
 	
 }

@@ -1,11 +1,14 @@
 package at.skobamg.generator.model;
 
 import java.util.ArrayList;
+
+import javafx.scene.control.TreeItem;
+
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
-public interface ICommand {		
+public interface ICommand extends IViewElement{		
 	public static String name="command";
 	public static String propertyName = "name";
 	public static String propertyType = "type";
@@ -30,5 +33,8 @@ public interface ICommand {
 	
 	public ArrayList<IParameter> getParameters();
 	public ArrayList<ICommand> getCommands();
-	public Element toXMLELement(Document document);
+	public String getName();
+	public Type getType();
+	public String getExeccommand();
+	public ViewTyp getViewTyp();
 }

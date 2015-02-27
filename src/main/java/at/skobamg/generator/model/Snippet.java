@@ -26,6 +26,19 @@ public class Snippet implements ISnippet {
 	public ArrayList<ISection> getSections() {
 		return sections;
 	}
+	
+	@Override
+	public String toString() {
+		return ISnippet.name+": "+name;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if(((IViewElement)obj).getViewTyp().equals(ViewTyp.ISnippet))
+			if(((Snippet)obj).name.equals(name))
+				return true;
+		return false;
+	}
 
 	@Override
 	public ISection getSection(String sectionName) {
@@ -47,5 +60,10 @@ public class Snippet implements ISnippet {
 	@Override
 	public String getName() {
 		return name;
+	}
+
+	@Override
+	public ViewTyp getViewTyp() {
+		return ViewTyp.ISnippet;
 	}
 }

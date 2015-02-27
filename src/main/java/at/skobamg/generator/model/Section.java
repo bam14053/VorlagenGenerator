@@ -10,7 +10,7 @@ import org.w3c.dom.Element;
 /**
  *
  */
-public class Section implements ISection {
+public class Section implements ISection {	
 	private String name;
 	private ArrayList<ICommand> commands;
 	
@@ -27,8 +27,9 @@ public class Section implements ISection {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(((Section)obj).name.equals(name))
-			return true;
+		if(((IViewElement)obj).getViewTyp().equals(ViewTyp.ISection))	
+			if(((ISection)obj).getName().equals(name))
+				return true;
 		return false;
 	}
 
@@ -40,5 +41,15 @@ public class Section implements ISection {
 	@Override
 	public void addCommand(ICommand command) {
 		commands.add(command);
+	}
+
+	@Override
+	public ViewTyp getViewTyp() {
+		return ViewTyp.ISection;
+	}
+	
+	@Override
+	public String toString() {
+		return ISection.name+": "+name;
 	}
 }
