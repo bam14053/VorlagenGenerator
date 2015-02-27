@@ -48,7 +48,6 @@ public class MainAppFactory {
 		return (InterfacedefinitionsController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Interfacedefinitionsfenster.fxml"));
 	}
 	
-	
 	@Bean
 	public BasisGenerierungsController basisGenerierungsController(){
 		return (BasisGenerierungsController)controllerLaden(Thread.currentThread().getContextClassLoader().getResource("Basisgenerierungsfenster.fxml"));

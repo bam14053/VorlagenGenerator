@@ -5,12 +5,6 @@ package at.skobamg.generator.model;
 
 import java.util.ArrayList;
 
-import javax.print.Doc;
-import javax.xml.parsers.DocumentBuilder;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-
 /**
  *
  */
@@ -41,18 +35,25 @@ public class Command implements ICommand {
 		return commands;
 	}
 
+	public String getName() {
+		return name;
+	}
+
+	public Type getType() {
+		return type;
+	}
+
+	public String getExeccommand() {
+		return execcommand;
+	}
+
 	@Override
-	public Element toXMLELement(Document document) {
-		Element comElement = document.createElement(ICommand.name);
-		comElement.setAttribute(ICommand.propertyName, name);
-		if(type != null)
-			comElement.setAttribute(ICommand.propertyType, type.toString());
-		if(execcommand != null || !execcommand.isEmpty())
-			comElement.setAttribute(ICommand.propertyExeccommand, execcommand);
-		for(IParameter parameter : parameters)
-			comElement.appendChild(parameter.toXMLELement(document));
-		for(ICommand command : commands)
-			comElement.appendChild(command.toXMLELement(document));		
-		return comElement;
+	public ViewTyp getViewTyp() {
+		return ViewTyp.ICommand;
+	}
+	
+	@Override
+	public String toString(){
+		return ICommand.name+": "+name;		
 	}
 }

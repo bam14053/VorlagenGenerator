@@ -15,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
+import javafx.scene.layout.Pane;
 
 /**
  *
@@ -36,14 +37,13 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 	private Button weiter;
 	@FXML
 	private Label portrangeTitle;
-	@Autowired
 	private IEventMediator mediator;
 	private ArrayList<TextField> portRanges = new ArrayList<>();
 	private ArrayList<TextField> portbezeichnungenlang = new ArrayList<>();
 	private ArrayList<TextField> portbezeichnungenkurz = new ArrayList<>();
 	private boolean portRange;	
 	private int pos;
-	
+
 	public void zeigeFenster(boolean portRange) {
 		pos = GridPane.getRowIndex(portbezeichnunglang);
 		if(portRange)
@@ -66,11 +66,42 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 		mediator.zumNeuenTemplateFenster();
 	}
 	
-	public void weiter(ActionEvent actionEvent){
-		mediator.zumBasisGenerierungsfenster();
+	public void setMediator(IEventMediator mediator){
+		this.mediator = mediator;
 	}
 	
-	public void neueBezeichnung(ActionEvent actionEvent) {
+	public void weiter(ActionEvent actionEvent){		
+		if(portbezeichnunglang.getText().isEmpty() || portbezeichnungkurz.getText().isEmpty() || portRange && portrange.getText().isEmpty()){
+			mediator.nachrichtAnzeigen("Geben sie bitte die Arten der Ports an oder definieren Sie eine Portrange");
+			return;
+		}
+		portbezeichnungenkurz.add(portbezeichnungkurz);
+		portbezeichnungenlang.add(portbezeichnunglang);
+		portRanges.add(portrange);
+		//Starting to extract information				
+		String inputText[][] = new String[portbezeichnungenlang.size()][3];
+		for(int i = 0; i < portbezeichnungenlang.size(); i++){
+
+			if(portbezeichnungenlang.get(i).getText().isEmpty())
+				inputText[i][0] = inputText[i-1][0];
+			else	
+				inputText[i][0] = portbezeichnungenlang.get(i).getText();
+			
+			if(portbezeichnungenkurz.get(i).getText().isEmpty())
+				inputText[i][1] = inputText[i-1][1];
+			else
+				inputText[i][1] = portbezeichnungenkurz.get(i).getText();
+			
+			if(portRange)
+				if(portRanges.get(i).getText().isEmpty())
+					inputText[i][2] = "-";
+				else
+					inputText[i][2] = portRanges.get(i).getText();
+		}
+		mediator.setInterfaceDefinition(inputText, portRange);
+	}
+	
+	public void neueBezeichnung(ActionEvent actionEvent) {		
 		GridPane.setRowIndex(weiter, GridPane.getRowIndex(weiter)+1);
 		GridPane.setRowIndex(zurueck, GridPane.getRowIndex(zurueck)+1);
 		++pos;

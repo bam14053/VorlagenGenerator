@@ -6,12 +6,7 @@ import java.io.StringWriter;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerException;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
 
-import org.hibernate.event.internal.OnUpdateVisitor;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
@@ -19,6 +14,8 @@ import com.sun.org.apache.xml.internal.serialize.OutputFormat;
 import com.sun.org.apache.xml.internal.serialize.XMLSerializer;
 
 import at.skobamg.generator.model.ICommand;
+import at.skobamg.generator.model.IInterface;
+import at.skobamg.generator.model.IParameter;
 import at.skobamg.generator.model.ISection;
 import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
@@ -27,16 +24,10 @@ import javafx.concurrent.Task;
 
 public class GenerateXMLStringCommand extends Service<String> {
 	private ITemplate template;
-	private boolean toFile;
-	private String file;
+	Document doc;
 	
-	public final void setParameters(ITemplate template, boolean toFile){
+	public GenerateXMLStringCommand(ITemplate template){
 		this.template = template;
-		this.toFile = toFile;
-	}
-	
-	public final void setFile(String file){
-		this.file = file;
 	}
 	
 	@Override
@@ -47,12 +38,21 @@ public class GenerateXMLStringCommand extends Service<String> {
 				DocumentBuilderFactory docFactory = DocumentBuilderFactory.newInstance();
 				DocumentBuilder docBuilder = docFactory.newDocumentBuilder();
 				
-				Document doc = docBuilder.newDocument();
+				doc = docBuilder.newDocument();
 				
 				//Setting templates properties
 				Element rootElement = doc.createElement(ITemplate.name);				
 				rootElement.setAttribute(ITemplate.propertySwitchname, template.getSwitchName());
 				rootElement.setAttribute(ITemplate.propertySwitchversion, template.getSwitchVersion());
+				
+				for(IInterface interf : template.getInterfaces()){
+					Element interfElement = doc.createElement(IInterface.name);
+					interfElement.setAttribute(IInterface.propertyPortBezeichnunglang, interf.getPortBezeichnunglang());
+					interfElement.setAttribute(IInterface.propertyPortBezeichnungkurz, interf.getPortBezeichnungkurz());
+					if(!interf.getPortRange().equals("-"))
+						interfElement.setAttribute(IInterface.propertyPortRange, interf.getPortRange());
+					rootElement.appendChild(interfElement);
+				}
 				
 				//Moving on to Snippets
 				for(ISnippet snippet : template.getSnippets()){
@@ -62,7 +62,7 @@ public class GenerateXMLStringCommand extends Service<String> {
 						Element sectionElement = doc.createElement(ISection.name);
 						sectionElement.setAttribute(ISection.propertyName, section.getName());						
 						for(ICommand command : section.getCommands())
-							sectionElement.appendChild(command.toXMLELement(doc));	
+							sectionElement.appendChild(parseCommand(command));	
 						snippetElement.appendChild(sectionElement);
 					}
 					rootElement.appendChild(snippetElement);			
@@ -71,19 +71,42 @@ public class GenerateXMLStringCommand extends Service<String> {
 				OutputFormat format = new OutputFormat(doc);
 				format.setIndenting(true);
 				
-				if(toFile){
-					return "Saved";
-				}
-				else{
-					StringWriter stringOut = new StringWriter();				
-					XMLSerializer xml = new XMLSerializer(stringOut, format);
-					xml.serialize(doc);				
-					System.out.println(stringOut.toString());
-					
-					return stringOut.toString();	
-				}		
+				StringWriter stringOut = new StringWriter();				
+				XMLSerializer xml = new XMLSerializer(stringOut, format);
+				xml.serialize(doc);				
+				
+				return stringOut.toString();		
 			}
 		};
+	}
+	
+	private Element parseCommand(ICommand command){
+		Element comElement = doc.createElement(ICommand.name);
+		comElement.setAttribute(ICommand.propertyName, command.getName());
+		if(command.getType() != null)
+			comElement.setAttribute(ICommand.propertyType, command.getType().toString());
+		if(command.getExeccommand() != null && !command.getExeccommand().isEmpty())
+			comElement.setAttribute(ICommand.propertyExeccommand, command.getExeccommand());
+		for(IParameter parameter : command.getParameters())
+			comElement.appendChild(parseParameter(parameter));
+		for(ICommand com : command.getCommands())
+			comElement.appendChild(parseCommand(com));		
+		return comElement;
+		
+	}
+	
+	private Element parseParameter(IParameter parameter){
+		Element comElement = doc.createElement(IParameter.name);
+		comElement.setAttribute(IParameter.propertyName, parameter.getName());
+		if(parameter.getType() != null)
+			comElement.setAttribute(IParameter.propertyType, parameter.getType().toString());
+		if(parameter.getExeccommand() != null && !parameter.getExeccommand().isEmpty())
+			comElement.setAttribute(IParameter.propertyExeccommand, parameter.getExeccommand());
+		for(ICommand command : parameter.getCommands())
+			comElement.appendChild(parseCommand(command));
+		for(IParameter param : parameter.getParameters())
+			comElement.appendChild(parseParameter(param));
+		return comElement;
 	}
 
 }

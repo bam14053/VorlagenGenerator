@@ -7,6 +7,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -21,12 +22,19 @@ import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import org.springframework.beans.factory.annotation.Autowired;
-import at.skobamg.generator.logic.CreateTemplateCommand;
+
+import at.skobamg.generator.MainAppFactory;
+import at.skobamg.generator.logic.GenerateSnippetsCommand;
+import at.skobamg.generator.logic.GenerateTemplateViewCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
 import at.skobamg.generator.model.IGeneratorModel;
+import at.skobamg.generator.model.IInterface;
 import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
+import at.skobamg.generator.model.Interface;
+import at.skobamg.generator.model.Interface.InvalidPortRangeException;
 import at.skobamg.generator.model.Template;
 import at.skobamg.generator.service.ISwitchtyp;
 import at.skobamg.generator.view.BasisGenerierungsController;
@@ -42,15 +50,14 @@ public class EventMediator implements IEventMediator {
 	@Autowired
 	private NeuesTemplateController neuesTemplateController;
 	@Autowired
-	private HauptfensterController hauptfensterController;
-	@Autowired
-	private InterfacedefinitionsController interfacedefinitionsController;
+	private HauptfensterController hauptfensterController;	
 	@Autowired
 	private BasisGenerierungsController basisGenerierungsController;
 	@Autowired
 	private ISwitchtyp switchtyp;
 	@Autowired
-	private IGeneratorModel generatorModel; 
+	private IGeneratorModel generatorModel;
+	private InterfacedefinitionsController interfacedefinitionsController;
 	private ITemplate template;
 	private Stage tempStage = new Stage();
 	private Stage stage;
@@ -89,21 +96,22 @@ public class EventMediator implements IEventMediator {
 		vbox.getChildren().add(b);
 		
 		//Creating scene, setting stage properties
-		Scene scene = new Scene(vbox, 320, 80);
+		Scene scene = new Scene(vbox, vbox.getPrefWidth(), 80);
+		stage.sizeToScene();
 		stage.setTitle("Information!!!");
 		stage.setScene(scene);		
 		stage.initModality(Modality.WINDOW_MODAL);
 		stage.initOwner(this.stage);
-		stage.setResizable(false);
+		stage.setResizable(false);		
 		stage.show();
 	}
 
 	@Override
 	public void login(String username, String passwort) {
-		if(username.equals("root")&& passwort.equals("root"))
+//		if(username.equals("root")&& passwort.equals("root"))
 			zumHauptfenster();
-		else
-			nachrichtAnzeigen("Username/Passwort-Kombination falsch");
+//		else
+//			nachrichtAnzeigen("Username/Passwort-Kombination falsch");
 	}
 
 	@Override
@@ -122,7 +130,8 @@ public class EventMediator implements IEventMediator {
 		}
 		if(!tempStage.getScene().getRoot().equals(neuesTemplateController.getView())) {			
 			tempStage.setTitle("Neue Vorlage erstellen");
-			tempStage.setScene(new Scene(neuesTemplateController.getView()));
+			tempStage.getScene().setRoot(neuesTemplateController.getView());
+			tempStage.setResizable(false);
 		}
 		tempStage.show();
 	}
@@ -175,11 +184,13 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public void neuenTemplateErstellen(String switchname, String iosversion) {
 		switchtyp.switchHinzufügen(switchname);
-		template = new Template(switchname, iosversion, null);
+		template = new Template(switchname, iosversion, null, null);
 		zeigeEinschränkungsfenster();
 	}
 	
 	public void zumInterfacedefinitionsfenster(boolean portRange) {
+		interfacedefinitionsController = new MainAppFactory().interfacedefinitionsController();
+		interfacedefinitionsController.setMediator(this);
 		interfacedefinitionsController.zeigeFenster(portRange);
 		tempStage.setTitle("Definition der Interfaces");		
 		tempStage.getScene().setRoot(interfacedefinitionsController.getView());
@@ -253,26 +264,50 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems,boolean toFile) {
-		CreateTemplateCommand command = new CreateTemplateCommand(generatorModel, checkedItems, template.getSwitchName(), template.getSwitchVersion());
+	public void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems) {
+		GenerateSnippetsCommand command = new GenerateSnippetsCommand(generatorModel, checkedItems);
 		command.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
 
+			@SuppressWarnings("unchecked")
 			@Override
 			public void handle(WorkerStateEvent arg0) {
-				GenerateXMLStringCommand command = new GenerateXMLStringCommand();
-				template = (ITemplate)arg0.getSource().getValue();
-				command.setParameters(template, toFile);
-				command.setOnSucceeded(new EventHandler<WorkerStateEvent>() {
-
-					@Override
-					public void handle(WorkerStateEvent arg0) {
-						hauptfensterController.updateXMLText((String)arg0.getSource().getValue());
-					}
-				});
+				if(arg0.getSource().getValue() instanceof ArrayList<?>)
+					template.setSnippets((ArrayList<ISnippet>) arg0.getSource().getValue());
+				
+				//Start the command for the XMLString 
+				GenerateXMLStringCommand command = new GenerateXMLStringCommand(template);				
+				command.setOnSucceeded(hauptfensterController);
+				
+				//Start the command for the XML View
+				GenerateTemplateViewCommand command2 = new GenerateTemplateViewCommand(template);
+				command2.setOnSucceeded(hauptfensterController);
+				
+				//Starting both commands
 				command.start();
+				command2.start();
 			}
 		});
 		command.start();
+	}
+
+	@Override
+	public void setInterfaceDefinition(String[][] inputText, boolean portRange){
+		ArrayList<IInterface> interfaces = new ArrayList<IInterface>();
+		for(String[] line: inputText){
+			if(portRange)
+				try {
+					if(line[2].equals("-"))
+						interfaces.add(new Interface(line[0], line[1]));
+					else
+						interfaces.add(new Interface(line[0], line[1], line[2].split("-")[0], line[2].split("-")[1]));
+				} catch (InvalidPortRangeException e) {
+					nachrichtAnzeigen(e.getMessage());
+				}
+			else
+				interfaces.add(new Interface(line[0], line[1]));
+		}
+		template.setInterfaces(interfaces);
+		zumBasisGenerierungsfenster();
 	}
 
 }

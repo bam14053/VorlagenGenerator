@@ -2,7 +2,7 @@ package at.skobamg.generator.model;
 
 import java.util.ArrayList;
 
-public interface ISnippet {
+public interface ISnippet extends IViewElement{
 	public static String name="snippet";
 	public static String propertyName = "name";
 	
@@ -11,4 +11,5 @@ public interface ISnippet {
 	public void addSection(ISection section);
 	public void deleteSection(String sectionName);
 	public String getName();
+	public String toString();
 }

@@ -35,12 +35,14 @@ public class NeuesTemplateController extends ScreensAbstract {
 	}	
 	
 	public void zumHauptFenster(ActionEvent actionEvent) {
-		((Stage)(((Node)actionEvent.getSource()).getScene().getWindow())).hide();
+		((Stage)(((Node)actionEvent.getSource()).getScene().getWindow())).close();
 	}
 
 	@Override
 	public Pane getView() {
 		switchname.getItems().clear();
+		switchname.setValue(null);
+		
 		iosversion.setText("");
 		switchname.setVisibleRowCount(4);
 		for(String s : mediator.getSwitchNamen())

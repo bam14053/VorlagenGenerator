@@ -65,7 +65,6 @@ public class Main extends Application{
 		//Start the window
 		Scene scene = new Scene(mainController.getView());	
 		stage.setScene(scene);
-		stage.setResizable(false);
 		stage.setTitle("Vorlagen Generator"); // Title of program
 		stage.show(); // Show the Mainwindow
 	}

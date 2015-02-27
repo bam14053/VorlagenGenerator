@@ -6,7 +6,7 @@ import org.w3c.dom.Element;
 import org.w3c.dom.Node;
 import org.w3c.dom.NodeList;
 
-public interface ISection {
+public interface ISection extends IViewElement{
 	//Property for each field	
 	public static String name = "section";
 	public static String propertyName = "name";
