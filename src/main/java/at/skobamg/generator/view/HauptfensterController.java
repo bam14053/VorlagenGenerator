@@ -46,6 +46,15 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private AnchorPane xmlView;
 	@FXML
 	private TextField snippetName;
+	/*
+	 * interfaceNameLang
+	 * interfaceNameKurz
+	 * interfacePortRange
+	 * neuerParameterButton
+	 * commandLabel
+	 * commandNameLabel
+	 * commandTypLabel
+	 */
 	@FXML 
 	private TextField sectionName;
 	@FXML

@@ -114,7 +114,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="171.0" layoutY="39.0" />
+                        <TextField fx:id="snippetName" layoutX="171.0" layoutY="39.0" />
                         <Label layoutX="25.0" layoutY="207.0" text="Section">
                            <font>
                               <Font size="18.0" />
@@ -125,29 +125,29 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="172.0" layoutY="249.0" />
-                        <TextField layoutX="539.0" layoutY="62.0" />
-                        <Label fx:id="name" layoutX="377.0" layoutY="64.0" prefHeight="20.0" prefWidth="149.0" text="Name des Commands:">
+                        <TextField fx:id="sectionName" layoutX="172.0" layoutY="249.0" />
+                        <TextField fx:id="commandName" layoutX="539.0" layoutY="62.0" />
+                        <Label fx:id="commandNameLabel" layoutX="377.0" layoutY="64.0" prefHeight="20.0" prefWidth="149.0" text="Name des Commands:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <Label fx:id="command" layoutX="377.0" layoutY="24.0" text="Commands">
+                        <Label fx:id="commandLabel" layoutX="377.0" layoutY="24.0" text="Commands">
                            <font>
                               <Font size="18.0" />
                            </font>
                         </Label>
-                        <Label fx:id="typ" layoutX="376.0" layoutY="102.0" text="Typ des Commands:">
+                        <Label fx:id="commandTypLabel" layoutX="376.0" layoutY="102.0" text="Typ des Commands:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <ComboBox layoutX="539.0" layoutY="100.0" prefWidth="150.0" promptText="Typauswahl:">
+                        <ComboBox fx:id="commandType" layoutX="539.0" layoutY="100.0" prefWidth="150.0" promptText="Typauswahl:">
                            <opaqueInsets>
                               <Insets />
                            </opaqueInsets>
                         </ComboBox>
-                        <Label fx:id="exxeccommand" layoutX="376.0" layoutY="138.0" text="Execcommand:">
+                        <Label layoutX="376.0" layoutY="138.0" text="Execcommand:">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -155,7 +155,7 @@
                               <Insets />
                            </opaqueInsets>
                         </Label>
-                        <TextField layoutX="539.0" layoutY="136.0" />
+                        <TextField fx:id="execcommand" layoutX="539.0" layoutY="136.0" />
                         <Button layoutX="113.0" layoutY="326.0" mnemonicParsing="false" text="Bearbeiten" />
                         <Button layoutX="194.0" layoutY="326.0" mnemonicParsing="false" text="Löschen" />
                         <Label layoutX="29.0" layoutY="291.0" text="Bearbeitungs-Bereich:">
@@ -182,7 +182,7 @@
                                     <Insets left="16.0" />
                                  </padding>
                               </Label>
-                              <Button mnemonicParsing="false" text="+">
+                              <Button fx:id="neuerParameterButton" mnemonicParsing="false" text="+">
                                  <opaqueInsets>
                                     <Insets />
                                  </opaqueInsets>
@@ -194,7 +194,7 @@
                         </GridPane>
                         <Button layoutX="261.0" layoutY="326.0" mnemonicParsing="false" text="Abbrechen" />
                         <Button layoutX="29.0" layoutY="326.0" mnemonicParsing="false" text="Hinzufügen" />
-                        <TextField layoutX="171.0" layoutY="101.0" />
+                        <TextField fx:id="interfaceNameLang" layoutX="171.0" layoutY="101.0" />
                         <Label layoutX="25.0" layoutY="74.0" text="Interface">
                            <font>
                               <Font size="18.0" />
@@ -210,15 +210,15 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="171.0" layoutY="136.0" />
+                        <TextField fx:id="interfaceNameKurz" layoutX="171.0" layoutY="136.0" />
                         <Label layoutX="28.0" layoutY="174.0" text="Portrange:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <TextField layoutX="171.0" layoutY="171.0" />
+                        <TextField fx:id="interfacePortRange" layoutX="171.0" layoutY="171.0" />
                      </children></AnchorPane>
-                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" />
+                <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="220.0" prefWidth="300.0" fx:id="xmlView" />
               </items>
             </SplitPane>
          </children></AnchorPane>
