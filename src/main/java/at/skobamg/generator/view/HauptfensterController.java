@@ -10,7 +10,9 @@ import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.Label;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
@@ -45,16 +47,15 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	@FXML
 	private AnchorPane xmlView;
 	@FXML
-	private TextField snippetName;
-	/*
-	 * interfaceNameLang
-	 * interfaceNameKurz
-	 * interfacePortRange
-	 * neuerParameterButton
-	 * commandLabel
-	 * commandNameLabel
-	 * commandTypLabel
-	 */
+	private Button neuerParameterButton;
+	@FXML
+	private TextField interfaceNameLang;
+	@FXML
+	private TextField interfaceNameKurz;
+	@FXML
+	private TextField interfacePortRange;
+	@FXML
+	private TextField snippetName;	
 	@FXML 
 	private TextField sectionName;
 	@FXML
@@ -63,6 +64,12 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private TextField execcommand;
 	@FXML
 	private ComboBox<Type> commandType;
+	@FXML
+	private Label commandLabel;
+	@FXML
+	private Label commandNameLabel;
+	@FXML
+	private Label commandTypLabel;	
 	private IViewElement selectedElement;
 	private TextArea text = new TextArea();
 	private TreeView<IViewElement> xmlTree = new TreeView<IViewElement>();
@@ -199,6 +206,13 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			case IInterface:
 				break;
 			case IParameter:				
+				//Setting the labels correctly
+				commandLabel.setText(parameterPrompt);
+				commandNameLabel.setText(parameterNamePrompt);
+				commandTypLabel.setText(parameterTypPrompt);	
+				//Setting the parameter values
+				
+				
 				sectionName.setText(((ISection)selectedElement).getName());
 				snippetName.setText(((ISnippet)newValue.getParent().getValue()).getName());
 				break;
