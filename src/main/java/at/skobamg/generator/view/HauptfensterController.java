@@ -18,9 +18,8 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
-import javafx.scene.input.MouseButton;
-import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.GridPane;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -28,8 +27,11 @@ import at.skobamg.generator.logic.GenerateTemplateViewCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
 import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.model.ICommand;
+import at.skobamg.generator.model.IInterface;
+import at.skobamg.generator.model.IParameter;
 import at.skobamg.generator.model.ISection;
 import at.skobamg.generator.model.ISnippet;
+import at.skobamg.generator.model.ITemplate;
 import at.skobamg.generator.model.IViewElement;
 import at.skobamg.generator.model.Type;
 import at.skobamg.generator.model.ViewTyp;
@@ -70,6 +72,8 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private Label commandNameLabel;
 	@FXML
 	private Label commandTypLabel;	
+	@FXML
+	private GridPane parameterGridPane;
 	private IViewElement selectedElement;
 	private TextArea text = new TextArea();
 	private TreeView<IViewElement> xmlTree = new TreeView<IViewElement>();
@@ -112,9 +116,11 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 					Number arg1, Number arg2) {
 				xmlTree.setPrefHeight(xmlView.getHeight());
 			}
-		});
+		});		
 		xmlView.getChildren().add(xmlTree);
+		xmlTree.setShowRoot(false);
 		xmlTree.getSelectionModel().selectedItemProperty().addListener(new TreeItemChangeListener());
+
 		//Filling commandtype
 		commandType.getItems().addAll(Type.values());
 
@@ -201,43 +207,129 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		@Override
 		public void changed(ObservableValue<? extends TreeItem<IViewElement>> arg0,
 				TreeItem<IViewElement> oldValue, TreeItem<IViewElement> newValue) {
+			if(newValue == null) return;
+			if(oldValue != null) resetTextFields();
+			//Start the logic
+			scrolltoElement(newValue.getValue());
 			selectedElement = newValue.getValue();
+			TreeItem<IViewElement> parent = newValue.getParent();
 			switch(selectedElement.getViewTyp()){						
 			case IInterface:
+				interfaceNameKurz.setText(((IInterface)selectedElement).getPortBezeichnungkurz());
+				interfaceNameLang.setText(((IInterface)selectedElement).getPortBezeichnunglang());
+				interfacePortRange.setText(((IInterface)selectedElement).getPortRange());
 				break;
-			case IParameter:				
+			case IParameter:		
+				resetGridPane();
 				//Setting the labels correctly
 				commandLabel.setText(parameterPrompt);
 				commandNameLabel.setText(parameterNamePrompt);
 				commandTypLabel.setText(parameterTypPrompt);	
+				
 				//Setting the parameter values
+				commandName.setText(((IParameter)selectedElement).getName());
+				commandType.getSelectionModel().select(((IParameter)selectedElement).getType());
+				execcommand.setText(((IParameter)selectedElement).getExeccommand());
 				
-				
-				sectionName.setText(((ISection)selectedElement).getName());
-				snippetName.setText(((ISnippet)newValue.getParent().getValue()).getName());
+				//Parent attributes
+ 				for(;!parent.getValue().getViewTyp().equals(ViewTyp.ISection);parent = parent.getParent());
+				sectionName.setText(((ISection)parent.getValue()).getName());
+				snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());				
 				break;
 			case ICommand:
+				resetGridPane();
+				//Setting labels correctly
+				commandLabel.setText(commandPrompt);
+				commandNameLabel.setText(commandNamePrompt);
+				commandTypLabel.setText(commandTypPrompt);	
+				
 				//Command attributes
 				commandName.setText(((ICommand)selectedElement).getName());
 				commandType.getSelectionModel().select(((ICommand)selectedElement).getType());
 				execcommand.setText(((ICommand)selectedElement).getExeccommand());
 				//Parameter attriubtes
-				
 				//Parent attributes
-				TreeItem<IViewElement> parent = newValue.getParent();
+				parent = newValue.getParent();
 				for(;!parent.getValue().getViewTyp().equals(ViewTyp.ISection);parent = parent.getParent());				
-				sectionName.setText(((ISection)newValue.getParent().getValue()).getName());
-				snippetName.setText(((ISnippet)newValue.getParent().getParent().getValue()).getName());
+				sectionName.setText(((ISection)parent.getValue()).getName());
+				snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());
 				break;
 			case ISection:
 				sectionName.setText(((ISection)selectedElement).getName());
 				snippetName.setText(((ISnippet)newValue.getParent().getValue()).getName());
+				break;
 			case ISnippet:
 				snippetName.setText(((ISnippet)selectedElement).getName());
 				break;
 			default:
 				break;
 			}
+		}
+		
+		private void scrolltoElement(IViewElement element){
+			String[] lines = text.getText().split("\n");
+			switch(element.getViewTyp()){
+			case ICommand:								
+				for(String line : lines)
+					if(line.contains(ICommand.name))
+						if(line.contains(((ICommand)element).getName())){
+							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+							break;
+						}
+				break;
+			case IInterface:			
+				for(String line : lines)
+					if(line.contains(IInterface.name))
+						if(line.contains(((IInterface)element).getPortBezeichnunglang())
+								&& ((IInterface)element).getPortRange().equals("-") || line.contains(((IInterface)element).getPortRange())){								
+							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+							break;
+						}
+				break;
+			case IParameter:
+				for(String line : lines)
+					if(line.contains(IParameter.name))
+						if(line.contains(((IParameter)element).getName())){
+							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+							break;
+						}
+				break;
+			case ISection:
+				for(String line : lines)
+					if(line.contains(ISection.name))
+						if(line.contains(((ISection)element).getName())){
+							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+							break;
+						}
+				break;
+			case ISnippet:
+				for(String line : lines)
+					if(line.contains(ISnippet.name))
+						if(line.contains(((ISnippet)element).getName())){
+							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+							break;
+						}
+				break;
+			default:
+				break;		
+			}
+		}
+
+		private void resetTextFields() {
+			snippetName.setText("");
+			sectionName.setText("");
+			commandName.setText("");
+			commandType.getSelectionModel().select(null);	
+			execcommand.setText("");
+			interfaceNameKurz.setText("");
+			interfaceNameLang.setText("");
+			interfacePortRange.setText("");
+			resetGridPane();
+		}
+
+		private void resetGridPane() {
+			for(int i=2;i<parameterGridPane.getChildren().size();i++)
+				parameterGridPane.getChildren().remove(i);
 		}	
 	}
 }
