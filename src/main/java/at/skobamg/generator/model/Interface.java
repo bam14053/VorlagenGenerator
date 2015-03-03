@@ -13,6 +13,10 @@ public class Interface implements IInterface {
 	}
 	
 	public void setPortRange(String first, String last) throws InvalidPortRangeException{
+		if(first.isEmpty()){
+			this.portRange = "-";
+			return;
+		}
 		try{				
 			if(first.contains("/") || last.contains("/"))		
 				if(Integer.parseInt(first.split("/")[2]) > Integer.parseInt(last.split("/")[2]))
@@ -20,7 +24,7 @@ public class Interface implements IInterface {
 			else if(first.contains("/"))
 				if(Integer.parseInt(first.split("/")[2]) > Integer.parseInt(last))
 					throw new InvalidPortRangeException("Die angegebene Portrange stimmt nicht: Endport muss größer sein als Anfangsport");
-			else 
+			else
 				if(Integer.parseInt(first) > Integer.parseInt(last))
 					throw new InvalidPortRangeException("Die angegebene Portrange stimmt nicht: Endport muss größer sein als Anfangsport");
 			this.portRange = first+"-"+last;
@@ -35,6 +39,13 @@ public class Interface implements IInterface {
 		this.portBezeichnungkurz = portBezeichnungkurz;		
 	}
 	
+	public Interface(String portBezeichnunglang, String portBezeichnungkurz,
+			String portRange) {
+		this.portBezeichnunglang = portBezeichnunglang;
+		this.portBezeichnungkurz = portBezeichnungkurz;		
+		this.portRange = portRange;
+	}
+
 	public String getPortBezeichnunglang() {
 		return portBezeichnunglang;
 	}

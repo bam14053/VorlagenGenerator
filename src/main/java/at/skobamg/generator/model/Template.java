@@ -2,9 +2,10 @@
  * 
  */
 package at.skobamg.generator.model;
-
 import java.util.ArrayList;
 
+import at.skobamg.generator.model.Interface.InvalidPortRangeException;
+import javafx.scene.control.TreeItem;
 /**
  *
  */
@@ -68,5 +69,54 @@ public class Template implements ITemplate{
 	@Override
 	public String toString() {
 		return switchName+":"+iOSVersion;
+	}
+
+	@Override
+	public void deleteElement(TreeItem<IViewElement> element) {
+		TreeItem<IViewElement> parent = element;
+		switch(element.getValue().getViewTyp()){
+		case IInterface:
+			interfaces.remove(element.getValue());
+			break;
+		case ISnippet:
+			snippets.remove(element.getValue());
+			break;
+		case ISection:
+			snippets.get(snippets.indexOf(element.getParent().getValue())).deleteSection((ISection) element.getValue());
+			break;
+		case ICommand:
+			while((parent = parent.getParent()).getValue().getViewTyp() != ViewTyp.ISection );
+			snippets.get(snippets.indexOf(parent.getParent().getValue())).
+				getSection(((ISection) parent.getValue()).getName()).
+					removeCommand((ICommand) element.getValue());			
+			break;
+		case IParameter:
+			while((parent = parent.getParent()).getValue().getViewTyp() != ViewTyp.ISection );
+			snippets.get(snippets.indexOf(parent.getParent().getValue())).
+				getSection(((ISection) parent.getValue()).getName()).
+					removeParameter((IParameter) element.getValue());
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public void addSnippet(String snippetName) {
+		snippets.add(new Snippet(snippetName));
+	}
+
+	@Override
+	public void addSection(String sectionName, ISnippet snippet) {
+		snippets.get(snippets.indexOf(snippet)).addSection(new Section(sectionName));
+	}
+
+	@Override
+	public void addInterface(String portbezeichnunglang,
+			String portbezeichnungkurz, String portRange) throws InvalidPortRangeException {
+		if(portRange.isEmpty() || portRange.equals("-"))
+			interfaces.add(new Interface(portbezeichnunglang, portbezeichnungkurz));
+		else
+			interfaces.add(new Interface(portbezeichnungkurz, portbezeichnungkurz, portRange.split("-")[0], portRange.split("-")[1]));
 	}
 }

@@ -17,6 +17,8 @@ import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.Label;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.stage.FileChooser;
@@ -33,7 +35,10 @@ import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.IInterface;
 import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
+import at.skobamg.generator.model.IViewElement;
 import at.skobamg.generator.model.Interface;
+import at.skobamg.generator.model.Type;
+import at.skobamg.generator.model.ViewTyp;
 import at.skobamg.generator.model.Interface.InvalidPortRangeException;
 import at.skobamg.generator.model.Template;
 import at.skobamg.generator.service.ISwitchtyp;
@@ -308,6 +313,64 @@ public class EventMediator implements IEventMediator {
 		}
 		template.setInterfaces(interfaces);
 		zumBasisGenerierungsfenster();
+	}
+
+	@Override
+	public void applyChange(TreeView<IViewElement> xmlTree) {
+		template = (ITemplate)xmlTree.getRoot().getValue();		
+		updateHauptFenster();
+	}
+	
+	private void updateHauptFenster(){
+		GenerateXMLStringCommand xmlStringCommand = new GenerateXMLStringCommand(template);
+		xmlStringCommand.setOnSucceeded(hauptfensterController);
+
+		GenerateTemplateViewCommand xmlViewCommand = new GenerateTemplateViewCommand(template);
+		xmlViewCommand.setOnSucceeded(hauptfensterController);
+
+		xmlStringCommand.start();
+		xmlViewCommand.start();
+	}
+
+	@Override
+	public void deleteElement(TreeItem<IViewElement> selectedElement) {
+		template.deleteElement(selectedElement);
+		updateHauptFenster();
+	}
+
+	@Override
+	public void addSnippet(String name) {
+		template.addSnippet(name);
+		updateHauptFenster();
+	}
+
+	@Override
+	public void addSection(String name, TreeItem<IViewElement> snippet) {
+		template.addSection(name, (ISnippet) snippet.getValue());
+		updateHauptFenster();
+	}
+
+	@Override
+	public void addCommand(String name, String execcommand, Type type,
+			TreeItem<IViewElement> parent) {
+	}
+
+	@Override
+	public void addInterface(String portbezeichnunglang,
+			String portbezeichnungkurz, String portRange) {
+		try {
+			template.addInterface(portbezeichnunglang, portbezeichnungkurz, portRange);
+			updateHauptFenster();
+		} catch (InvalidPortRangeException e) {
+			nachrichtAnzeigen(e.getMessage());
+		}
+	}
+
+	@Override
+	public void addParameter(String name, String execcommand, Type type,
+			boolean required, TreeItem<IViewElement> parent) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }

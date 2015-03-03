@@ -9,7 +9,8 @@ public interface ISnippet extends IViewElement{
 	public ArrayList<ISection> getSections();
 	public ISection getSection(String sectionName);
 	public void addSection(ISection section);
-	public void deleteSection(String sectionName);
+	public void deleteSection(ISection section);
+	public void setName(String name);
 	public String getName();
 	public String toString();
 }

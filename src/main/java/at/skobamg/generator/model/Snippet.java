@@ -42,9 +42,7 @@ public class Snippet implements ISnippet {
 
 	@Override
 	public ISection getSection(String sectionName) {
-		if(sections.contains(new Section(sectionName, null)))			
-			return sections.get(sections.indexOf(new Section(sectionName, null)));
-		return null;
+		return sections.get(sections.indexOf(new Section(sectionName)));
 	}
 
 	@Override
@@ -53,8 +51,8 @@ public class Snippet implements ISnippet {
 	}
 
 	@Override
-	public void deleteSection(String sectionName) {
-		sections.remove(new Section(sectionName, null));
+	public void deleteSection(ISection section) {
+		sections.remove(section);
 	}
 
 	@Override
@@ -66,4 +64,9 @@ public class Snippet implements ISnippet {
 	public ViewTyp getViewTyp() {
 		return ViewTyp.ISnippet;
 	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
 }

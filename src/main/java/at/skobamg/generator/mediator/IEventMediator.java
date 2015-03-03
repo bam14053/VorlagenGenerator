@@ -5,8 +5,15 @@ package at.skobamg.generator.mediator;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+
 import at.skobamg.generator.model.ISnippet;
+import at.skobamg.generator.model.IViewElement;
+import at.skobamg.generator.model.Type;
 import javafx.scene.control.CheckBoxTreeItem;
+import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextField;
+import javafx.scene.control.TreeItem;
+import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
 
 /**
@@ -38,4 +45,13 @@ public interface IEventMediator {
 	ISnippet getSnippet(String name);
 	void xmlGenerieren(ArrayList<CheckBoxTreeItem<String>> checkedItems);
 	void setInterfaceDefinition(String[][] inputText, boolean portRange);
+	void applyChange(TreeView<IViewElement> xmlTree);
+	void deleteElement(TreeItem<IViewElement> selectedElement);
+	void addSnippet(String name);
+	void addSection(String name, TreeItem<IViewElement> snippet);
+	void addCommand(String name, String execcommand, Type type,
+			TreeItem<IViewElement> parent);
+	void addInterface(String portbezeichnunglang, String portbezeichnungkurz, String portRange);
+	void addParameter(String name, String execcommand, Type type, boolean required,
+			TreeItem<IViewElement> parent);
 }

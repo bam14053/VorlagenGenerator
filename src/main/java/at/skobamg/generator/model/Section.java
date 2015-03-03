@@ -4,6 +4,7 @@
 package at.skobamg.generator.model;
 
 import java.util.ArrayList;
+import java.util.Random;
 
 import org.w3c.dom.Element;
 
@@ -13,6 +14,12 @@ import org.w3c.dom.Element;
 public class Section implements ISection {	
 	private String name;
 	private ArrayList<ICommand> commands;
+	
+	public Section(String name){
+		super();
+		this.name = name;
+		commands = new ArrayList<ICommand>();
+	}
 	
 	public Section(String name, ArrayList<ICommand> commands) {
 		super();
@@ -27,9 +34,8 @@ public class Section implements ISection {
 	
 	@Override
 	public boolean equals(Object obj) {
-		if(((IViewElement)obj).getViewTyp().equals(ViewTyp.ISection))	
-			if(((ISection)obj).getName().equals(name))
-				return true;
+		if(obj instanceof ISection && ((ISection)obj).getName().equals(name))
+			return true;
 		return false;
 	}
 
@@ -51,5 +57,27 @@ public class Section implements ISection {
 	@Override
 	public String toString() {
 		return ISection.name+": "+name;
+	}
+	
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	@Override
+	public void removeCommand(ICommand command) {
+		if(commands.remove(command))
+			return;
+		else{
+			for(ICommand tempCommand : commands)
+				if(tempCommand.removeCommand(command))
+					return;
+		}
+	}
+
+	@Override
+	public void removeParameter(IParameter parameter) {
+		for(ICommand command : commands)
+			if(command.removeParameter(parameter))
+				return;
 	}
 }
