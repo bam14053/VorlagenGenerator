@@ -43,6 +43,7 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 	private ArrayList<TextField> portbezeichnungenkurz = new ArrayList<>();
 	private boolean portRange;	
 	private int pos;
+	
 
 	public void zeigeFenster(boolean portRange) {
 		pos = GridPane.getRowIndex(portbezeichnunglang);
@@ -121,6 +122,7 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 		portbezkurz.setPromptText("fa ... gi");
 		portbezeichnungenkurz.add(portbezkurz);
 		((GridPane)view).add(portbezkurz, GridPane.getColumnIndex(portbezeichnungkurz), pos);
+		
 				
 		((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
 	}
