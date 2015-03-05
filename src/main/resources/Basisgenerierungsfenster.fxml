@@ -27,16 +27,6 @@
          </font>
       </Button>
    </bottom>
-   <right>
-      <Button mnemonicParsing="false" text="Weiter" BorderPane.alignment="TOP_CENTER" onAction="#weiter">
-         <font>
-            <Font size="14.0" />
-         </font>
-         <BorderPane.margin>
-            <Insets right="40.0" top="310.0" />
-         </BorderPane.margin>
-      </Button>
-   </right>
    <center>
       <GridPane prefHeight="311.0" prefWidth="570.0" BorderPane.alignment="CENTER">
         <columnConstraints>
@@ -61,7 +51,7 @@
                   <Font size="14.0" />
                </font>
             </Button>
-            <Button layoutX="509.0" layoutY="14.0" mnemonicParsing="false" text="Weiter" onAction="#weiter">
+            <Button layoutX="509.0" layoutY="14.0" mnemonicParsing="false" onAction="#weiter" text="Weiter">
                <font>
                   <Font size="14.0" />
                </font>

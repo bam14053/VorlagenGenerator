@@ -44,7 +44,7 @@
             <Insets />
          </GridPane.margin>
       </TextField>
-      <Button fx:id="zurueck" alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="58.0" text="Zurück" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3" onAction="#zurueck">
+      <Button fx:id="zurueck" alignment="CENTER" mnemonicParsing="false" onAction="#zurueck" prefHeight="32.0" prefWidth="58.0" text="Zurück" GridPane.columnIndex="1" GridPane.columnSpan="2" GridPane.halignment="LEFT" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="10.0" />
          </GridPane.margin>
@@ -67,7 +67,7 @@
             <Font size="14.0" />
          </font>
       </Label>
-      <Button fx:id="weiter" alignment="CENTER" mnemonicParsing="false" prefHeight="32.0" prefWidth="58.0" text="Weiter" GridPane.columnIndex="11" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3" onAction="#weiter">
+      <Button fx:id="weiter" alignment="CENTER" mnemonicParsing="false" onAction="#weiter" prefHeight="32.0" prefWidth="58.0" text="Weiter" GridPane.columnIndex="11" GridPane.columnSpan="3" GridPane.halignment="CENTER" GridPane.rowIndex="3">
          <GridPane.margin>
             <Insets left="30.0" />
          </GridPane.margin>
