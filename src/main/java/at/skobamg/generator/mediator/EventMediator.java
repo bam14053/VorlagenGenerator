@@ -373,4 +373,11 @@ public class EventMediator implements IEventMediator {
 		
 	}
 
+	@Override
+	public void zurueckZumInterfacedefinitionsfenster() {
+		tempStage.setTitle("Definition der Interfaces");		
+		tempStage.getScene().setRoot(interfacedefinitionsController.getView());
+		tempStage.sizeToScene();
+	}
+
 }

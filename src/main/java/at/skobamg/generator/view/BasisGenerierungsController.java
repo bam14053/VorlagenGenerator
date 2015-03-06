@@ -9,8 +9,10 @@ import at.skobamg.generator.mediator.IEventMediator;
 import at.skobamg.generator.model.ISection;
 import at.skobamg.generator.model.ISnippet;
 import javafx.event.ActionEvent;
+import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
+import javafx.scene.control.Button;
 import javafx.scene.control.CheckBoxTreeItem;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
@@ -23,6 +25,8 @@ public class BasisGenerierungsController extends ScreensAbstract {
 	@Autowired
 	private IEventMediator mediator;
 	private ArrayList<CheckBoxTreeItem<String>> items;	
+	@FXML
+	private Button zurueck;
 	
 	@Override
 	public Pane getView() {
@@ -56,8 +60,9 @@ public class BasisGenerierungsController extends ScreensAbstract {
 	}
 	
 	public void zurueck(ActionEvent actionEvent){
-		((Node)actionEvent.getSource()).getScene().getWindow().hide();
-		mediator.zumNeuenTemplateFenster();
+		mediator.zurueckZumInterfacedefinitionsfenster();
+		
+		
 	}
 	
 	public void weiter(ActionEvent actionEvent){
