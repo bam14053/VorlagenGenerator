@@ -16,6 +16,7 @@ import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
+import javafx.scene.layout.RowConstraints;
 
 /**
  *
@@ -102,7 +103,7 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 		mediator.setInterfaceDefinition(inputText, portRange);
 	}
 	
-	public void neueBezeichnung(ActionEvent actionEvent) {		
+	public void neueBezeichnung(ActionEvent actionEvent) {	
 		GridPane.setRowIndex(weiter, GridPane.getRowIndex(weiter)+1);
 		GridPane.setRowIndex(zurueck, GridPane.getRowIndex(zurueck)+1);
 		++pos;
@@ -110,18 +111,21 @@ public class InterfacedefinitionsController extends ScreensAbstract{
 			TextField range = new TextField();
 			range.setPromptText("1-24 ... 0/1 - 0/24");
 			portRanges.add(range);
-			((GridPane)view).add(range, GridPane.getColumnIndex(portrange), pos);			
+			((GridPane)view).add(range, GridPane.getColumnIndex(portrange), pos);	
+			GridPane.setColumnSpan(range, 2);//Breite der generierten Fenster  
 		}
 		//Einfügen eines neuen Textfield für Portbezeichnung lang
 		TextField portbezlang = new TextField();
 		portbezlang.setPromptText("FastEthernet ... GigabitEthernet");
 		portbezeichnungenlang.add(portbezlang);
 		((GridPane)view).add(portbezlang, GridPane.getColumnIndex(portbezeichnunglang), pos);
+		GridPane.setColumnSpan(portbezlang, 4);//Breite der generierten Fenster 
 		//Einfügen eines neuen Textfield für Portbezeichnung kurz
 		TextField portbezkurz = new TextField();
 		portbezkurz.setPromptText("fa ... gi");
 		portbezeichnungenkurz.add(portbezkurz);
 		((GridPane)view).add(portbezkurz, GridPane.getColumnIndex(portbezeichnungkurz), pos);
+		GridPane.setColumnSpan(portbezkurz, 3);//Breite der generierten Fenster 
 		
 				
 		((Node)actionEvent.getSource()).getScene().getWindow().sizeToScene();
