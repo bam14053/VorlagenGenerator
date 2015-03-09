@@ -17,8 +17,4 @@ import at.skobamg.generator.model.InvalidTypeException;
  */
 public interface ISnippetTemplateService {
 	HashMap<String, ISnippet> snippetsLaden() throws InvalidTypeException;	
-	ArrayList<ISection> parseSnippet(Element snippet) throws InvalidTypeException;
-	public ISection parseSection(Element section) throws InvalidTypeException;
-	public ICommand parseCommand(Element command) throws InvalidTypeException;
-	public IParameter parseParameter(Element parameter) throws InvalidTypeException;
 }

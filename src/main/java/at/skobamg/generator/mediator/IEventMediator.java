@@ -38,8 +38,7 @@ public interface IEventMediator {
 	void login(String username, String passwort);
 	ArrayList<String> getSwitchNamen();
 	void exit();
-	void SpeichernUnter();
-	void Dateiöffnen();
+	void dateiöffnen();
 	void zumBasisGenerierungsfenster();
 	HashMap<String, ISnippet> getSnippets();
 	ISnippet getSnippet(String name);
@@ -55,4 +54,6 @@ public interface IEventMediator {
 	void addParameter(String name, String execcommand, Type type, boolean required,
 			TreeItem<IViewElement> parent);
 	void zurueckZumInterfacedefinitionsfenster();
+	void dateiSpeichernUnter(String xmlString);
+	void dateiSpeichern(String xmlString);
 }

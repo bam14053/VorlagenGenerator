@@ -85,6 +85,10 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private Label commandTypLabel;	
 	@FXML
 	private GridPane parameterGridPane;
+	@FXML
+	private Label requiredLabel;
+	@FXML
+	private CheckBox required;
 	private TreeItem<IViewElement> selectedElement;
 	private TextArea text = new TextArea();
 	private TreeView<IViewElement> xmlTree = new TreeView<IViewElement>();
@@ -250,7 +254,8 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			IParameter parameter = (IParameter)selectedElement.getValue();
 			parameter.setName(commandName.getText());
 			parameter.setType(commandType.getValue());
-			parameter.setExeccommand(execcommand.getText());				
+			parameter.setExeccommand(execcommand.getText());		
+			parameter.setRequired(required.isSelected());
 			break;
 		case ISection:
 			ISection section = (ISection)selectedElement.getValue();
@@ -286,6 +291,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			commandName.setText(parameter.getName());
 			execcommand.setText(parameter.getExeccommand());
 			commandType.setValue(parameter.getType());	
+			required.setSelected(parameter.isRequired());
 			break;
 		case ISection:
 			ISection section = (ISection)selectedElement.getValue();
@@ -300,12 +306,16 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		}
 	}
 	
+	public void speichern() {
+		mediator.dateiSpeichern(text.getText());
+	}
+	
 	public void speichernunter(){ // Speichern unter
-		mediator.SpeichernUnter();	
+		mediator.dateiSpeichernUnter(text.getText());	
 	}
 	
 	public void öffnen(){ // Speichern unter
-		mediator.Dateiöffnen();	
+		mediator.dateiöffnen();	
 	}
 
 	public void programschließen() {
@@ -315,9 +325,6 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	
 	private void updateXMLView(TreeItem<IViewElement> xmlTree){
 		this.xmlTree.setRoot(xmlTree);
-		xmlTree.setExpanded(true);
-		if(selectedElement != null)
-			selectedElement.setExpanded(true);
 	}
 	
 	private void updateXMLText(String xmlText){		
@@ -359,7 +366,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			updateXMLView((TreeItem<IViewElement>)arg0.getSource().getValue());
 	}
 	
-	private void disableInputFields(){
+	private void disableInputFields(){		
 		snippetName.setDisable(true);
 		interfaceNameLang.setDisable(true);
 		interfaceNameKurz.setDisable(true);
@@ -368,6 +375,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		commandName.setDisable(true);
 		commandType.setDisable(true);
 		execcommand.setDisable(true);
+		required.setDisable(true);
 		neuerParameterButton.setDisable(true);
 	}
 	
@@ -392,7 +400,9 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		interfaceNameKurz.setText("");
 		interfaceNameLang.setText("");
 		interfacePortRange.setText("");
-		resetGridPane();
+		required.setDisable(true);
+		required.setSelected(false);		
+		resetGridPane();		
 	}
 	
 	public void setSelectedElementParameters(){
@@ -404,7 +414,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			interfacePortRange.setText(((IInterface)selectedElement.getValue()).getPortRange());
 			break;
 		case IParameter:		
-			resetGridPane();
+			required.setDisable(false);
 			//Setting the labels correctly
 			commandLabel.setText(parameterPrompt);
 			commandNameLabel.setText(parameterNamePrompt);
@@ -414,6 +424,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			commandName.setText(((IParameter)selectedElement.getValue()).getName());
 			commandType.getSelectionModel().select(((IParameter)selectedElement.getValue()).getType());
 			execcommand.setText(((IParameter)selectedElement.getValue()).getExeccommand());
+			required.setSelected(((IParameter)selectedElement.getValue()).isRequired());
 			
 			//Parent attributes
 				for(;!parent.getValue().getViewTyp().equals(ViewTyp.ISection);parent = parent.getParent());
@@ -421,7 +432,6 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());				
 			break;
 		case ICommand:
-			resetGridPane();
 			//Setting labels correctly
 			commandLabel.setText(commandPrompt);
 			commandNameLabel.setText(commandNamePrompt);

@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
+import javax.xml.parsers.ParserConfigurationException;
+
 import javafx.concurrent.WorkerStateEvent;
 import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
@@ -26,6 +28,7 @@ import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.xml.sax.SAXException;
 
 import at.skobamg.generator.MainAppFactory;
 import at.skobamg.generator.logic.GenerateSnippetsCommand;
@@ -37,11 +40,14 @@ import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
 import at.skobamg.generator.model.IViewElement;
 import at.skobamg.generator.model.Interface;
+import at.skobamg.generator.model.InvalidTypeException;
 import at.skobamg.generator.model.Type;
+import at.skobamg.generator.model.Verzeichnisse;
 import at.skobamg.generator.model.ViewTyp;
 import at.skobamg.generator.model.Interface.InvalidPortRangeException;
 import at.skobamg.generator.model.Template;
 import at.skobamg.generator.service.ISwitchtyp;
+import at.skobamg.generator.service.TemplateService;
 import at.skobamg.generator.view.BasisGenerierungsController;
 import at.skobamg.generator.view.HauptfensterController;
 import at.skobamg.generator.view.InterfacedefinitionsController;
@@ -66,6 +72,7 @@ public class EventMediator implements IEventMediator {
 	private ITemplate template;
 	private Stage tempStage = new Stage();
 	private Stage stage;
+	File file;
 
 	public void zumHauptfenster() {
 		stage.getScene().setRoot(hauptfensterController.getView());
@@ -156,35 +163,55 @@ public class EventMediator implements IEventMediator {
 		nachrichtAnzeigen("Sie wurden erfolgreich ausgeloggt");
 	}
 	@Override  /// Speichern unter
-	public void SpeichernUnter() {
+	public void dateiSpeichernUnter(String xmlString) {
 		 FileChooser fileChooser = new FileChooser();
 		  
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML Datein (*.xml)", "*.xml");
          fileChooser.getExtensionFilters().add(extFilter);
          
          //Show save file dialog
-         File file = fileChooser.showSaveDialog(tempStage);
+         file = fileChooser.showSaveDialog(tempStage);
          
-         if(file != null);
+         if(file == null) return;     
+         if(!file.getName().endsWith(".xml"))
+        	 file = new File(file.getAbsolutePath()+".xml");
+         if(new TemplateService().saveTemplate(file, xmlString))
+        	 nachrichtAnzeigen("Die Datei wurde erfolgreich gespeichert");
+         else
+        	 nachrichtAnzeigen("Fehler! Datei konnte nicht gespeichert werden");
              
 	}
 	
 	@Override  /// Öffnen einer Datei
-	public void Dateiöffnen() {
+	public void dateiöffnen() {
 		 FileChooser fileChooser = new FileChooser();
 		  
          //Set extension filter
-         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("TXT files (*.txt)", "*.txt");
+         FileChooser.ExtensionFilter extFilter = new FileChooser.ExtensionFilter("XML Datein (*.xml)", "*.xml");
          fileChooser.getExtensionFilters().add(extFilter);
          
-         //Show save file dialog
-         File file = fileChooser.showOpenDialog(tempStage);
+         //Show open file dialog
+         file = fileChooser.showOpenDialog(tempStage);
          
-         if(file != null);
-             
+         if(file == null) return;
+         try {
+			template = new TemplateService().openTemplate(file);
+			updateHauptFenster();
+		} catch (ParserConfigurationException | SAXException | IOException | InvalidTypeException e) {
+			nachrichtAnzeigen("Die ausgewählte Datei ist ungültig und kann daher nicht geöffnet werden");
+		}             
 	}
 
+	@Override
+	public void dateiSpeichern(String xmlString) {
+		if(file == null) 
+			file = new File(Verzeichnisse.vorlagenVerzeichnis+"/"+template.getSwitchName()+"-"+template.getSwitchVersion());
+		if(new TemplateService().saveTemplate(file, xmlString))
+       	 nachrichtAnzeigen("Die Datei wurde erfolgreich gespeichert");
+        else
+       	 nachrichtAnzeigen("Fehler! Datei konnte nicht gespeichert werden");
+	}
 
 	@Override
 	public void neuenTemplateErstellen(String switchname, String iosversion) {

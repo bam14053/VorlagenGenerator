@@ -29,7 +29,7 @@
                                     <KeyCodeCombination alt="UP" code="O" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
                               </MenuItem>
-                              <MenuItem text="_Speichern">
+                              <MenuItem text="_Speichern" onAction="#speichern">
                                  <accelerator>
                                     <KeyCodeCombination alt="UP" code="S" control="UP" meta="UP" shift="UP" shortcut="DOWN" />
                                  </accelerator>
@@ -221,12 +221,12 @@
                            </font>
                         </Label>
                         <TextField fx:id="interfacePortRange" layoutX="171.0" layoutY="171.0" />
-                        <Label fx:id="commandTypLabel1" layoutX="376.0" layoutY="175.0" text="Requiered:">
+                        <Label fx:id="requiredLabel" layoutX="376.0" layoutY="175.0" text="Required:">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <CheckBox layoutX="539.0" layoutY="175.0" mnemonicParsing="false" />
+                        <CheckBox layoutX="539.0" layoutY="175.0" mnemonicParsing="false" fx:id="required"/>
                      </children></AnchorPane>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" fx:id="xmlView" />
               </items>
