@@ -13,8 +13,8 @@ public class Command implements ICommand {
 	private String name;
 	private Type type;
 	private String execcommand;
-	private ArrayList<ICommand> commands;
-	private ArrayList<IParameter> parameters;
+	private ArrayList<ICommand> commands = new ArrayList<ICommand>();
+	private ArrayList<IParameter> parameters = new ArrayList<IParameter>();	
 	private final float id = new Random().nextFloat()+Float.MAX_VALUE;
 	
 	public Command(String name, Type type, String execcommand,
@@ -25,6 +25,13 @@ public class Command implements ICommand {
 		this.execcommand = execcommand;
 		this.commands = commands;
 		this.parameters = parameters;
+	}
+	
+	public Command(String name, Type type, String execcommand) {
+		super();
+		this.name = name;
+		this.type = type;
+		this.execcommand = execcommand;
 	}
 
 	@Override
@@ -80,13 +87,13 @@ public class Command implements ICommand {
 	}
 
 	@Override
-	public void addParameter(IParameter parameter) {
-		parameters.add(parameter);
+	public boolean addParameter(IParameter parameter) {
+		return parameters.add(parameter);
 	}
 
 	@Override
-	public void addCommand(ICommand command) {
-		commands.add(command);
+	public boolean addCommand(ICommand command) {
+		return commands.add(command);
 	}
 	
 	@Override
@@ -118,6 +125,64 @@ public class Command implements ICommand {
 				return true;
 		for(ICommand command : commands)
 			if(command.removeParameter(parameter))
+				return true;
+		return false;
+	}
+
+	@Override
+	public boolean addCommandtoCommand(String commandName, String execcommand,
+			Type type, ICommand parentCommand) {
+		if(commands.contains(parentCommand))
+			return commands.get(commands.indexOf(parentCommand)).addCommand(new Command(commandName, type, execcommand));
+		for(ICommand command : commands)
+			if(command.addCommandtoCommand(commandName, execcommand, type, parentCommand))
+				return true;
+		for(IParameter parameter : parameters)
+			if(parameter.addCommandToCommand(commandName, execcommand, type, parentCommand))
+				return true;
+		return false;
+	}
+
+	@Override
+	public boolean addCommandtoParameter(String commandName,
+			String execcommand, Type type, IParameter parentParameter) {
+		if(parameters.contains(parentParameter))
+			return parameters.get(parameters.indexOf(parentParameter)).addCommand(new Command(commandName, type, execcommand));		
+		for(ICommand command : commands)
+			if(command.addCommandtoParameter(commandName, execcommand, type, parentParameter))
+				return true;
+		for(IParameter parameter : parameters)
+			if(parameter.addCommandtoParameter(commandName, execcommand, type, parentParameter))
+				return true;
+		return false;
+	}
+
+	@Override
+	public boolean addParametertoCommand(String parameterName,
+			String execcommand, Type type, boolean required,
+			ICommand parentCommand) {
+		if(commands.contains(parentCommand))
+			return commands.get(commands.indexOf(parentCommand)).addParameter(new Parameter(parameterName, execcommand, type, required));
+		for(ICommand command : commands)
+			if(command.addParametertoCommand(parameterName, execcommand, type, required, parentCommand))
+				return true;
+		for(IParameter parameter : parameters)
+			if(parameter.addParameterToCommand(parameterName, execcommand, type, required, parentCommand))
+				return true;
+		return false;
+	}
+
+	@Override
+	public boolean addParametertoParameter(String parameterName,
+			String execcommand, Type type, boolean required,
+			IParameter parentParameter) {
+		if(parameters.contains(parentParameter))
+			return parameters.get(parameters.indexOf(parentParameter)).addParameter(new Parameter(parameterName, execcommand, type, required));		
+		for(ICommand command : commands)
+			if(command.addParametertoParameter(parameterName, execcommand, type, required, parentParameter))
+				return true;
+		for(IParameter parameter : parameters)
+			if(parameter.addParametertoParameter(parameterName, execcommand, type, required, parentParameter))
 				return true;
 		return false;
 	}

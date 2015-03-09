@@ -93,8 +93,8 @@ public class SnippetTemplateService implements ISnippetTemplateService {
 			if(parameterList.item(i).getParentNode().equals(parameter))
 				parameters.add(parseParameter((Element)parameterList.item(i)));		
 
-		return new Parameter(parameter.getAttribute(IParameter.propertyName), Type.getType(parameter.getAttribute(IParameter.propertyType)),
-				parameter.getAttribute(IParameter.propertyExeccommand), Boolean.parseBoolean(parameter.getAttribute(IParameter.propertyRequired)), commands, parameters);
+		return new Parameter(parameter.getAttribute(IParameter.propertyName), parameter.getAttribute(IParameter.propertyExeccommand),
+				Type.getType(parameter.getAttribute(IParameter.propertyType)), Boolean.parseBoolean(parameter.getAttribute(IParameter.propertyRequired)), commands, parameters);
 		
 	}
 

@@ -16,8 +16,8 @@ public interface ICommand extends IViewElement{
 	public void setName(String name);
 	public void setType(Type type);
 	public void setExeccommand(String command);
-	public void addParameter(IParameter parameter);
-	public void addCommand(ICommand command);
+	public boolean addParameter(IParameter parameter);
+	public boolean addCommand(ICommand command);
 	public ArrayList<IParameter> getParameters();
 	public ArrayList<ICommand> getCommands();
 	public String getName();
@@ -27,4 +27,14 @@ public interface ICommand extends IViewElement{
 	public float getID();
 	public boolean removeCommand(ICommand command);
 	public boolean removeParameter(IParameter parameter);
+	public boolean addCommandtoCommand(String commandName, String execcommand,
+			Type type, ICommand parentCommand);
+	public boolean addCommandtoParameter(String commandName,
+			String execcommand, Type type, IParameter parentParameter);
+	public boolean addParametertoCommand(String parameterName,
+			String execcommand, Type type, boolean required,
+			ICommand parentCommand);
+	public boolean addParametertoParameter(String parameterName,
+			String execcommand, Type type, boolean required,
+			IParameter parentParameter);
 }

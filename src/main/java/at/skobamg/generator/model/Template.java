@@ -119,4 +119,36 @@ public class Template implements ITemplate{
 		else
 			interfaces.add(new Interface(portbezeichnungkurz, portbezeichnungkurz, portRange.split("-")[0], portRange.split("-")[1]));
 	}
+
+	@Override
+	public void addCommand(String commandName, String execcommand, Type type,
+			TreeItem<IViewElement> parent) {
+		if(parent.getValue().getViewTyp().equals(ViewTyp.ISection))
+			snippets.get(snippets.indexOf(parent.getParent().getValue())).getSection(((ISection)parent.getValue()).getName()).
+				addCommand(new Command(commandName, type, execcommand));
+		else{
+			TreeItem<IViewElement> sectionParent = parent;
+			while(!(sectionParent = sectionParent.getParent()).getValue().getViewTyp().equals(ViewTyp.ISection));
+			if(parent.getValue().getViewTyp().equals(ViewTyp.ICommand))
+				snippets.get(snippets.indexOf(sectionParent.getParent().getValue())).getSection(((ISection)sectionParent.getValue()).getName()).
+					addCommandtoCommand(commandName, execcommand, type, (ICommand)parent.getValue());
+			else
+				snippets.get(snippets.indexOf(sectionParent.getParent().getValue())).
+					getSection(((ISection)sectionParent.getValue()).getName()).
+						addCommandtoParameter(commandName, execcommand, type, (IParameter)parent.getValue());			
+		}
+	}
+
+	@Override
+	public void addParameter(String parameterName, String execcommand,
+			Type type, boolean required, TreeItem<IViewElement> parent) {
+		TreeItem<IViewElement> sectionParent = parent;
+		while(!(sectionParent = sectionParent.getParent()).getValue().getViewTyp().equals(ViewTyp.ISection));
+		if(parent.getValue().getViewTyp().equals(ViewTyp.ICommand))
+			snippets.get(snippets.indexOf(sectionParent.getParent().getValue())).getSection(((ISection)sectionParent.getValue()).getName()).
+				addParametertoCommand(parameterName, execcommand, type, required, (ICommand)parent.getValue());
+		else
+			snippets.get(snippets.indexOf(sectionParent.getParent().getValue())).getSection(((ISection)sectionParent.getValue()).getName()).
+				addParametertoParameter(parameterName, execcommand, type, required, (IParameter)parent.getValue());
+	}
 }

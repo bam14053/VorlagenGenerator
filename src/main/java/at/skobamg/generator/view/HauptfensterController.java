@@ -5,7 +5,6 @@ package at.skobamg.generator.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
-
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
@@ -14,7 +13,6 @@ import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.scene.Node;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
@@ -29,17 +27,13 @@ import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
-import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
-
 import org.springframework.beans.factory.annotation.Autowired;
-
-import com.sun.org.apache.bcel.internal.generic.FNEG;
-
 import at.skobamg.generator.logic.GenerateTemplateViewCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
 import at.skobamg.generator.mediator.IEventMediator;
@@ -155,6 +149,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	}
 	
 	public void hinzufuegen(ActionEvent actionEvent){
+		if(text.getText().isEmpty()) return;
 		Stage stage = new Stage();
 		BorderPane bp = new BorderPane();
 		VBox vBox = new VBox(5);		
@@ -215,16 +210,19 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		bp.setBottom(anchorPane);
 		stage.setScene(new Scene(bp, 500, 150));
 		stage.setResizable(false);
+		stage.setAlwaysOnTop(true);
+		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.sizeToScene();
 		stage.showAndWait();
 	}
 	
 	public void loeschen(){
+		if(selectedElement == null) return;
 		mediator.deleteElement(selectedElement);		
 	}
 	
 	public void uebernehmen(){
-		if(selectedElement == null) return;
+		if(selectedElement == null) return;				
 		switch(selectedElement.getValue().getViewTyp()){
 		case IInterface:
 			IInterface interface1 = (IInterface) selectedElement.getValue();
@@ -303,7 +301,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	}
 	
 	public void speichernunter(){ // Speichern unter
-			mediator.SpeichernUnter();	
+		mediator.SpeichernUnter();	
 	}
 	
 	public void öffnen(){ // Speichern unter
@@ -317,10 +315,13 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	
 	private void updateXMLView(TreeItem<IViewElement> xmlTree){
 		this.xmlTree.setRoot(xmlTree);
+		xmlTree.setExpanded(true);
+		if(selectedElement != null)
+			selectedElement.setExpanded(true);
 	}
 	
 	private void updateXMLText(String xmlText){		
-		text.setText(xmlText);
+		text.setText(xmlText);		
 //		for(String line : xmlText.split("\n")){
 //			if(line.contains(ISnippet.name)){
 //				Text t = new Text(line+"\n");
@@ -532,7 +533,10 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			((Node) arg0.getSource()).getScene().getWindow().hide();
 			stage = new Stage();
 			stage.setResizable(false);
+			stage.setAlwaysOnTop(true);
 			stage.setScene(new Scene(getRoot()));
+			stage.initModality(Modality.APPLICATION_MODAL);
+			stage.setAlwaysOnTop(true);
 			stage.sizeToScene();
 			stage.show();
 		}
@@ -609,6 +613,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 					@Override
 					public void handle(ActionEvent arg0) {
 						mediator.addCommand(name.getText(), execcommand.getText(), typ.getValue(), selectedElement);
+						stage.close();
 					}
 				});
 				break;
@@ -624,6 +629,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 					@Override
 					public void handle(ActionEvent arg0) {
 						mediator.addInterface(portbezeichnunglang.getText(), portbezeichnungkurz.getText(), portRange.getText());
+						stage.close();
 					}
 				});
 				break;
@@ -638,6 +644,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 					@Override
 					public void handle(ActionEvent arg0) {
 						mediator.addParameter(name.getText(), execcommand1.getText(), typ1.getValue(), required.isSelected(), selectedElement);
+						stage.close();
 					}
 				});
 				break;

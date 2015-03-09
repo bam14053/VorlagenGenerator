@@ -2,10 +2,6 @@ package at.skobamg.generator.model;
 
 import java.util.ArrayList;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.Node;
-import org.w3c.dom.NodeList;
-
 public interface ISection extends IViewElement{
 	//Property for each field	
 	public static String name = "section";
@@ -17,4 +13,12 @@ public interface ISection extends IViewElement{
 	public void setName(String name);
 	public void removeCommand(ICommand command);
 	public void removeParameter(IParameter value);
+	public void addCommandtoCommand(String commandName, String execcommand,
+			Type type, ICommand parentCommand);
+	public void addCommandtoParameter(String commandName, String execcommand,
+			Type type, IParameter parentParameter);
+	public void addParametertoCommand(String parameterName, String execcommand,
+			Type type, boolean required, ICommand parentCommand);
+	public void addParametertoParameter(String parameterName,
+			String execcommand, Type type, boolean required, IParameter parentParameter);
 }

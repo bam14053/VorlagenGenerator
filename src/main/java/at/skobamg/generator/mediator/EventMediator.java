@@ -278,18 +278,7 @@ public class EventMediator implements IEventMediator {
 			public void handle(WorkerStateEvent arg0) {
 				if(arg0.getSource().getValue() instanceof ArrayList<?>)
 					template.setSnippets((ArrayList<ISnippet>) arg0.getSource().getValue());
-				
-				//Start the command for the XMLString 
-				GenerateXMLStringCommand command = new GenerateXMLStringCommand(template);				
-				command.setOnSucceeded(hauptfensterController);
-				
-				//Start the command for the XML View
-				GenerateTemplateViewCommand command2 = new GenerateTemplateViewCommand(template);
-				command2.setOnSucceeded(hauptfensterController);
-				
-				//Starting both commands
-				command.start();
-				command2.start();
+				updateHauptFenster();
 			}
 		});
 		command.start();
@@ -333,7 +322,7 @@ public class EventMediator implements IEventMediator {
 	}
 
 	@Override
-	public void deleteElement(TreeItem<IViewElement> selectedElement) {
+	public void deleteElement(TreeItem<IViewElement> selectedElement) {		
 		template.deleteElement(selectedElement);
 		updateHauptFenster();
 	}
@@ -346,13 +335,18 @@ public class EventMediator implements IEventMediator {
 
 	@Override
 	public void addSection(String name, TreeItem<IViewElement> snippet) {
-		template.addSection(name, (ISnippet) snippet.getValue());
+		if(snippet.getValue().getViewTyp().equals(ViewTyp.ISnippet))
+			template.addSection(name, (ISnippet) snippet.getValue());
+		else
+			template.addSection(name, (ISnippet) snippet.getParent().getValue());
 		updateHauptFenster();
 	}
 
 	@Override
 	public void addCommand(String name, String execcommand, Type type,
 			TreeItem<IViewElement> parent) {
+		template.addCommand(name, execcommand, type, parent);
+		updateHauptFenster();
 	}
 
 	@Override
@@ -369,8 +363,8 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public void addParameter(String name, String execcommand, Type type,
 			boolean required, TreeItem<IViewElement> parent) {
-		// TODO Auto-generated method stub
-		
+		template.addParameter(name, execcommand, type, required, parent);
+		updateHauptFenster();
 	}
 
 }

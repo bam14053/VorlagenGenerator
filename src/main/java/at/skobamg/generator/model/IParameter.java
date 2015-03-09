@@ -1,5 +1,6 @@
 package at.skobamg.generator.model;
 import java.util.ArrayList;
+
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
 
@@ -13,8 +14,8 @@ public interface IParameter extends IViewElement{
 	public void setType(Type type);
 	public void setExeccommand(String execcommand);
 	public void setRequired(boolean required);
-	public void addParameter(IParameter parameter);
-	public void addCommand(ICommand command);
+	public boolean addParameter(IParameter parameter);
+	public boolean addCommand(ICommand command);
 	public ArrayList<IParameter> getParameters();
 	public ArrayList<ICommand> getCommands();
 	public String getName();
@@ -24,4 +25,14 @@ public interface IParameter extends IViewElement{
 	public float getID();
 	public boolean removeCommand(ICommand command);
 	public boolean removeParameter(IParameter parameter);
+	public boolean addCommandToCommand(String commandName, String execcommand,
+			Type type, ICommand parentCommand);
+	public boolean addCommandtoParameter(String commandName,
+			String execcommand, Type type, IParameter parentParameter);
+	public boolean addParameterToCommand(String parameterName,
+			String execcommand, Type type, boolean required,
+			ICommand parentCommand);
+	public boolean addParametertoParameter(String parameterName,
+			String execcommand, Type type, boolean required,
+			IParameter parentParameter);
 }

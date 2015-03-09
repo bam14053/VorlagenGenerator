@@ -80,4 +80,40 @@ public class Section implements ISection {
 			if(command.removeParameter(parameter))
 				return;
 	}
+
+	@Override
+	public void addCommandtoCommand(String commandName, String execcommand,
+			Type type, ICommand parentCommand) {
+		if(commands.contains(parentCommand))
+			commands.get(commands.indexOf(parentCommand)).addCommand(new Command(commandName, type, execcommand));
+		else for(ICommand command : commands)
+				if(command.addCommandtoCommand(commandName, execcommand, type, parentCommand))
+					return;
+	}
+
+	@Override
+	public void addCommandtoParameter(String commandName, String execcommand,
+			Type type, IParameter parentParameter) {
+		for(ICommand command : commands)
+			if(command.addCommandtoParameter(commandName, execcommand, type, parentParameter))
+				return;
+	}
+
+	@Override
+	public void addParametertoCommand(String parameterName, String execcommand,
+			Type type, boolean required, ICommand parentCommand) {
+		if(commands.contains(parentCommand))
+			commands.get(commands.indexOf(parentCommand)).addParameter(new Parameter(parameterName, execcommand, type, required));
+		else for(ICommand command : commands)
+				if(command.addParametertoCommand(parameterName, execcommand, type, required, parentCommand))
+					return;
+	}
+
+	@Override
+	public void addParametertoParameter(String parameterName,
+			String execcommand, Type type, boolean required, IParameter parentParameter) {
+		for(ICommand command : commands)
+			if(command.addParametertoParameter(parameterName, execcommand, type, required, parentParameter))
+				return;
+	}
 }

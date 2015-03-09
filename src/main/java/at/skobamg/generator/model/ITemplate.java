@@ -22,4 +22,8 @@ public interface ITemplate extends IViewElement{
 	public void addSection(String sectionName, ISnippet snippet);
 	public void addInterface(String portbezeichnunglang,
 			String portbezeichnungkurz, String portRange) throws InvalidPortRangeException;
+	public void addCommand(String commandName, String execcommand, Type type,
+			TreeItem<IViewElement> parent);
+	public void addParameter(String parameterName, String execcommand, Type type,
+			boolean required, TreeItem<IViewElement> parent);
 }
