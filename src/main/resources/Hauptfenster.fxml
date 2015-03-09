@@ -226,12 +226,7 @@
                               <Font size="14.0" />
                            </font>
                         </Label>
-                        <RadioButton layoutX="539.0" layoutY="177.0" mnemonicParsing="false" text="JA">
-                           <toggleGroup>
-                              <ToggleGroup fx:id="req" />
-                           </toggleGroup>
-                        </RadioButton>
-                        <RadioButton layoutX="580.0" layoutY="177.0" mnemonicParsing="false" text="NEIN" toggleGroup="$req" />
+                        <CheckBox layoutX="539.0" layoutY="175.0" mnemonicParsing="false" />
                      </children></AnchorPane>
                 <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" fx:id="xmlView" />
               </items>

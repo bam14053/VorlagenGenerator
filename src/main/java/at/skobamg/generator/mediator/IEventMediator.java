@@ -54,4 +54,5 @@ public interface IEventMediator {
 	void addInterface(String portbezeichnunglang, String portbezeichnungkurz, String portRange);
 	void addParameter(String name, String execcommand, Type type, boolean required,
 			TreeItem<IViewElement> parent);
+	void zurueckZumInterfacedefinitionsfenster();
 }
