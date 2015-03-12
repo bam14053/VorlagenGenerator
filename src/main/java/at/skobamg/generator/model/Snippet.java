@@ -65,6 +65,7 @@ public class Snippet implements ISnippet {
 		return ViewTyp.ISnippet;
 	}
 
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

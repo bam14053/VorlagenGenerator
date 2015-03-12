@@ -5,6 +5,7 @@ package at.skobamg.generator.view;
 
 import java.io.IOException;
 import java.util.ArrayList;
+
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.concurrent.WorkerStateEvent;
@@ -18,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
+import javafx.scene.control.Menu;
+import javafx.scene.control.MenuItem;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.TextArea;
@@ -33,7 +36,9 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+
 import org.springframework.beans.factory.annotation.Autowired;
+
 import at.skobamg.generator.logic.GenerateTemplateViewCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
 import at.skobamg.generator.mediator.IEventMediator;
@@ -59,8 +64,6 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private AnchorPane xmlCode;
 	@FXML
 	private AnchorPane xmlView;
-	@FXML
-	private Button neuerParameterButton;
 	@FXML
 	private TextField interfaceNameLang;
 	@FXML
@@ -89,7 +92,12 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	private Label requiredLabel;
 	@FXML
 	private CheckBox required;
+	@FXML
+	private Menu snippetMenu;
+	@FXML
+	private Menu sectionMenu;
 	private TreeItem<IViewElement> selectedElement;
+	private TreeItem<IViewElement> selectedElementForCopy;
 	private TextArea text = new TextArea();
 	private TreeView<IViewElement> xmlTree = new TreeView<IViewElement>();
 	
@@ -135,7 +143,17 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		xmlTree.setShowRoot(false);
 		xmlTree.getSelectionModel().selectedItemProperty().addListener(new TreeItemChangeListener());		
 		//Filling commandtype
-		commandType.getItems().addAll(Type.values());		
+		for(String snippet : mediator.getGeneratorSnippets()) {
+			MenuItem menuItem = new MenuItem(snippet);
+			menuItem.setOnAction(new MenuItemHandler(snippet));
+			snippetMenu.getItems().add(menuItem);
+		}
+		for(String section : mediator.getGeneratorSections()) {
+			MenuItem menuItem = new MenuItem(section);
+			menuItem.setOnAction(new MenuItemHandler(section));
+			sectionMenu.getItems().add(menuItem);
+		}
+		commandType.getItems().addAll(Type.values());				
 		disableInputFields();
 		return view;
 	}
@@ -172,14 +190,19 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			buttons.add(new RadioButton("Snippet"));
 		}else{
 			if(selectedElement.getValue().getViewTyp().equals(ViewTyp.ISnippet)){
+				buttons.add(new RadioButton("Interface"));
 				buttons.add(new RadioButton("Snippet"));
 				buttons.add(new RadioButton("Section"));
 			}
 			else if(selectedElement.getValue().getViewTyp().equals(ViewTyp.ISection)){
+				buttons.add(new RadioButton("Interface"));
+				buttons.add(new RadioButton("Snippet"));
 				buttons.add(new RadioButton("Section"));
 				buttons.add(new RadioButton("Command"));
 			}
 			else{
+				buttons.add(new RadioButton("Interface"));
+				buttons.add(new RadioButton("Snippet"));
 				buttons.add(new RadioButton("Command"));
 				buttons.add(new RadioButton("Parameter"));
 			}
@@ -212,12 +235,21 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		bp.setTop(title);
 		bp.setCenter(vBox);
 		bp.setBottom(anchorPane);
-		stage.setScene(new Scene(bp, 500, 150));
+		stage.setScene(new Scene(bp));
 		stage.setResizable(false);
 		stage.setAlwaysOnTop(true);
 		stage.initModality(Modality.APPLICATION_MODAL);
 		stage.sizeToScene();
 		stage.showAndWait();
+	}
+	
+	public void einfuegen() {
+		if(selectedElementForCopy == null) return;
+		mediator.elementEinfuegen(selectedElementForCopy, selectedElement);
+	}
+	
+	public void kopieren() {
+		selectedElementForCopy = selectedElement;
 	}
 	
 	public void loeschen(){
@@ -307,10 +339,12 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	}
 	
 	public void speichern() {
+		if(text.getText().isEmpty()) return;
 		mediator.dateiSpeichern(text.getText());
 	}
 	
 	public void speichernunter(){ // Speichern unter
+		if(text.getText().isEmpty()) return;
 		mediator.dateiSpeichernUnter(text.getText());	
 	}
 	
@@ -328,7 +362,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	}
 	
 	private void updateXMLText(String xmlText){		
-		text.setText(xmlText);		
+		text.setText(xmlText);				
 //		for(String line : xmlText.split("\n")){
 //			if(line.contains(ISnippet.name)){
 //				Text t = new Text(line+"\n");
@@ -376,7 +410,6 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		commandType.setDisable(true);
 		execcommand.setDisable(true);
 		required.setDisable(true);
-		neuerParameterButton.setDisable(true);
 	}
 	
 	private void enableInputFields(){
@@ -388,7 +421,62 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 		commandName.setDisable(false);
 		commandType.setDisable(false);
 		execcommand.setDisable(false);
-		neuerParameterButton.setDisable(false);
+	}
+	
+	private void showParameters() {		
+		resetGridPane();
+		int i = 1;
+		if(selectedElement.getValue().getViewTyp().equals(ViewTyp.ICommand)) {
+			for (int i2 = 0; i2 < ((ICommand)selectedElement.getValue()).getParameters().size(); i2++) {
+				IParameter parameter = ((ICommand)selectedElement.getValue()).getParameters().get(i2);
+				Button button = new Button(parameter.getName());
+				button.setUserData(i2);
+				button.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent arg0) {
+						//Reset all the input fields
+						resetGridPane();
+						resetInputFields();
+
+						//Start the logic
+						selectedElement = selectedElement.getChildren().get((int) ((Button)arg0.getSource()).getUserData());
+						xmlTree.getSelectionModel().select(selectedElement);
+						selectedElement.setExpanded(true);
+						
+						scrolltoElement((IViewElement)parameter);						
+						setSelectedElementParameters();
+					}
+				});				
+				GridPane.setMargin(button, new Insets(5, 0, 0, 0));
+				parameterGridPane.add(button, 1, i++);
+			}
+		}else {
+			for (int i2 = 0; i2 < ((IParameter)selectedElement.getValue()).getParameters().size(); i2++) {
+				IParameter parameter = ((IParameter)selectedElement.getValue()).getParameters().get(i2);
+				Button button = new Button(parameter.getName());
+				button.setUserData(i2);
+				button.setOnAction(new EventHandler<ActionEvent>() {
+
+					@Override
+					public void handle(ActionEvent arg0) {
+						//Reset all input fields
+						resetGridPane();
+						resetInputFields();
+						
+						//Start the logic
+						selectedElement = selectedElement.getChildren().get((int) ((Button)arg0.getSource()).getUserData());						
+						xmlTree.getSelectionModel().select(selectedElement);
+						selectedElement.setExpanded(true);
+						
+						scrolltoElement((IViewElement) parameter);
+						setSelectedElementParameters();
+					}
+				});		
+				GridPane.setMargin(button, new Insets(5, 0, 0, 0));
+				parameterGridPane.add(button, 1, i++);
+			}
+		}
 	}
 	
 	private void resetInputFields() {
@@ -429,7 +517,8 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			//Parent attributes
 				for(;!parent.getValue().getViewTyp().equals(ViewTyp.ISection);parent = parent.getParent());
 			sectionName.setText(((ISection)parent.getValue()).getName());
-			snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());				
+			snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());		
+			showParameters();
 			break;
 		case ICommand:
 			//Setting labels correctly
@@ -445,6 +534,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			for(;!parent.getValue().getViewTyp().equals(ViewTyp.ISection);parent = parent.getParent());				
 			sectionName.setText(((ISection)parent.getValue()).getName());
 			snippetName.setText(((ISnippet)parent.getParent().getValue()).getName());
+			showParameters();
 			break;
 		case ISection:
 			sectionName.setText(((ISection)selectedElement.getValue()).getName());
@@ -459,8 +549,57 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 	}
 
 	private void resetGridPane() {
-		for(int i=2;i<parameterGridPane.getChildren().size();i++)
-			parameterGridPane.getChildren().remove(i);
+		for(int i=1;i<parameterGridPane.getChildren().size();i++)
+			parameterGridPane.getChildren().remove(i);		
+	}
+	
+	private void scrolltoElement(IViewElement element){
+		String[] lines = text.getText().split("\n");
+		switch(element.getViewTyp()){
+		case ICommand:								
+			for(String line : lines)
+				if(line.contains(ICommand.name))
+					if(line.contains(((ICommand)element).getName()+"\"")){
+						text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+						break;
+					}
+			break;
+		case IInterface:			
+			for(String line : lines)
+				if(line.contains(IInterface.name))
+					if(line.contains(((IInterface)element).getPortBezeichnunglang())
+							&& ((IInterface)element).getPortRange().equals("-") || line.contains(((IInterface)element).getPortRange())){								
+						text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+						break;
+					}
+			break;
+		case IParameter:
+			for(String line : lines)
+				if(line.contains(IParameter.name))
+					if(line.contains(((IParameter)element).getName()+"\"")){
+						text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+						break;
+					}
+			break;
+		case ISection:
+			for(String line : lines)
+				if(line.contains(ISection.name))
+					if(line.contains(((ISection)element).getName()+"\"")){
+						text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+						break;
+					}
+			break;
+		case ISnippet:
+			for(String line : lines)
+				if(line.contains(ISnippet.name))
+					if(line.contains(((ISnippet)element).getName()+"\"")){
+						text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
+						break;
+					}
+			break;
+		default:
+			break;		
+		}
 	}
 	
 	class TreeItemChangeListener implements ChangeListener<TreeItem<IViewElement>>{
@@ -472,58 +611,28 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			if(oldValue != null) resetInputFields();
 
 			//Start the logic
+			resetGridPane();
 			scrolltoElement(newValue.getValue());
 			selectedElement = newValue;
 			setSelectedElementParameters();
-		}
+		}			
 		
-		private void scrolltoElement(IViewElement element){
-			String[] lines = text.getText().split("\n");
-			switch(element.getViewTyp()){
-			case ICommand:								
-				for(String line : lines)
-					if(line.contains(ICommand.name))
-						if(line.contains(((ICommand)element).getName())){
-							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
-							break;
-						}
-				break;
-			case IInterface:			
-				for(String line : lines)
-					if(line.contains(IInterface.name))
-						if(line.contains(((IInterface)element).getPortBezeichnunglang())
-								&& ((IInterface)element).getPortRange().equals("-") || line.contains(((IInterface)element).getPortRange())){								
-							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
-							break;
-						}
-				break;
-			case IParameter:
-				for(String line : lines)
-					if(line.contains(IParameter.name))
-						if(line.contains(((IParameter)element).getName())){
-							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
-							break;
-						}
-				break;
-			case ISection:
-				for(String line : lines)
-					if(line.contains(ISection.name))
-						if(line.contains(((ISection)element).getName())){
-							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
-							break;
-						}
-				break;
-			case ISnippet:
-				for(String line : lines)
-					if(line.contains(ISnippet.name))
-						if(line.contains(((ISnippet)element).getName())){
-							text.selectRange(text.getText().indexOf(line), text.getText().indexOf(line)+line.length());
-							break;
-						}
-				break;
-			default:
-				break;		
-			}
+	}
+	
+	class MenuItemHandler implements EventHandler<ActionEvent>{
+		private String menuName;
+		
+		public MenuItemHandler(String menuName) {
+			this.menuName = menuName;
+		}
+
+		@Override
+		public void handle(ActionEvent arg0) {
+			if(menuName.contains(":")){
+				if(selectedElement == null || !selectedElement.getValue().getViewTyp().equals(ViewTyp.ISnippet)) return;
+				mediator.addGeneratedSection(menuName.split(":")[0], menuName.split(":")[1], ((ISnippet)selectedElement.getValue()).getName());
+			}else
+				mediator.addGeneratedSnippet(menuName);
 		}
 		
 	}
@@ -542,7 +651,7 @@ public class HauptfensterController implements IScreens, EventHandler<WorkerStat
 			selected = (String) toggleGroup.getSelectedToggle().getUserData();
 			((Node) arg0.getSource()).getScene().getWindow().hide();
 			stage = new Stage();
-			stage.setResizable(false);
+			stage.setResizable(true);
 			stage.setAlwaysOnTop(true);
 			stage.setScene(new Scene(getRoot()));
 			stage.initModality(Modality.APPLICATION_MODAL);

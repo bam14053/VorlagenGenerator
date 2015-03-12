@@ -7,6 +7,8 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
+import java.util.Map.Entry;
 
 import javax.xml.parsers.ParserConfigurationException;
 
@@ -34,13 +36,17 @@ import at.skobamg.generator.MainAppFactory;
 import at.skobamg.generator.logic.GenerateSnippetsCommand;
 import at.skobamg.generator.logic.GenerateTemplateViewCommand;
 import at.skobamg.generator.logic.GenerateXMLStringCommand;
+import at.skobamg.generator.model.ICommand;
 import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.IInterface;
+import at.skobamg.generator.model.IParameter;
+import at.skobamg.generator.model.ISection;
 import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.ITemplate;
 import at.skobamg.generator.model.IViewElement;
 import at.skobamg.generator.model.Interface;
 import at.skobamg.generator.model.InvalidTypeException;
+import at.skobamg.generator.model.Snippet;
 import at.skobamg.generator.model.Type;
 import at.skobamg.generator.model.Verzeichnisse;
 import at.skobamg.generator.model.ViewTyp;
@@ -74,6 +80,7 @@ public class EventMediator implements IEventMediator {
 	private Stage stage;
 	File file;
 
+	@Override
 	public void zumHauptfenster() {
 		stage.getScene().setRoot(hauptfensterController.getView());
 		stage.setX(20);
@@ -81,6 +88,7 @@ public class EventMediator implements IEventMediator {
 		changeWindow("Vorlagen Generator");
 	}
 
+	@Override
 	public void setStage(Stage stage) {
 		this.stage = stage;
 	}
@@ -90,6 +98,7 @@ public class EventMediator implements IEventMediator {
 		stage.sizeToScene();
 	}
 
+	@Override
 	public void nachrichtAnzeigen(String nachricht) {
 		final Stage stage = new Stage();
 		VBox vbox = new VBox();
@@ -99,6 +108,7 @@ public class EventMediator implements IEventMediator {
 		Button b = new Button("OK");
 		vbox.setAlignment(Pos.BASELINE_CENTER);
 		b.setOnAction(new EventHandler<ActionEvent>() {
+			@Override
 			public void handle(ActionEvent arg0) {
 				stage.close();
 			}
@@ -230,6 +240,7 @@ public class EventMediator implements IEventMediator {
 		tempStage.setResizable(true);
 	}
 	
+	@Override
 	public void zeigeEinschränkungsfenster() {
 		Stage stage = new Stage();
 		VBox vBox = new VBox();
@@ -399,6 +410,66 @@ public class EventMediator implements IEventMediator {
 		tempStage.setTitle("Definition der Interfaces");		
 		tempStage.getScene().setRoot(interfacedefinitionsController.getView());
 		tempStage.sizeToScene();
+	}
+
+	@Override
+	public void elementEinfuegen(TreeItem<IViewElement> selectedElementForCopy,
+			TreeItem<IViewElement> parent) {
+		switch (selectedElementForCopy.getValue().getViewTyp()) {
+		case ICommand:
+			ICommand command = (ICommand) selectedElementForCopy.getValue();
+			addCommand(command.getName(), command.getExeccommand(), command.getType(), parent);
+			break;
+		case IInterface:
+			IInterface interf = (IInterface) selectedElementForCopy.getValue();
+			addInterface(interf.getPortBezeichnunglang(), interf.getPortBezeichnungkurz(), interf.getPortRange());
+			break;
+		case IParameter:
+			IParameter parameter = (IParameter) selectedElementForCopy.getValue();
+			addParameter(parameter.getName(), parameter.getExeccommand(), parameter.getType(), parameter.isRequired(), parent);
+			break;
+		case ISection:
+			ISection section = (ISection) selectedElementForCopy.getValue();
+			addSection(section.getName(), parent);
+			break;
+		case ISnippet:
+			ISnippet snippet = (ISnippet) selectedElementForCopy.getValue();
+			addSnippet(snippet.getName());
+			break;
+		default:
+			break;
+		}
+	}
+
+	@Override
+	public String[] getGeneratorSnippets() {
+		return generatorModel.getAllSnippets().keySet().toArray(new String[generatorModel.getAllSnippets().size()]);
+	}
+
+	@Override
+	public String[] getGeneratorSections() {
+		ArrayList<String> sections = new ArrayList<String>();
+		Iterator<Entry<String, ISnippet>> iterator = generatorModel.getAllSnippets().entrySet().iterator();
+		while(iterator.hasNext()) {
+			ISnippet snippet = iterator.next().getValue(); 
+			for(ISection section : snippet.getSections())	
+				sections.add(snippet.getName()+":"+section.getName());
+		}
+		return sections.toArray(new String[sections.size()]);
+	}
+
+	@Override
+	public void addGeneratedSection(String snippetName, String sectionName, String parentSnippet) {
+		if(template == null || template.getSnippets() == null) return;
+		template.getSnippet(parentSnippet).addSection(generatorModel.getSnippet(snippetName).getSection(sectionName));
+		updateHauptFenster();
+	}
+
+	@Override
+	public void addGeneratedSnippet(String snippetName) {
+		if(template == null || template.getSnippets() == null) return;
+		template.getSnippets().add(new Snippet(snippetName, generatorModel.getSnippet(snippetName).getSections()));
+		updateHauptFenster();
 	}
 
 }

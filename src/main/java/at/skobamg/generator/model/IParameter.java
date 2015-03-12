@@ -1,9 +1,6 @@
 package at.skobamg.generator.model;
 import java.util.ArrayList;
 
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 public interface IParameter extends IViewElement{
 	public static String name="parameter";
 	public static String propertyName = "name";

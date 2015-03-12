@@ -10,8 +10,6 @@ import at.skobamg.generator.model.ISnippet;
 import at.skobamg.generator.model.IViewElement;
 import at.skobamg.generator.model.Type;
 import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.ComboBox;
-import javafx.scene.control.TextField;
 import javafx.scene.control.TreeItem;
 import javafx.scene.control.TreeView;
 import javafx.stage.Stage;
@@ -48,12 +46,15 @@ public interface IEventMediator {
 	void deleteElement(TreeItem<IViewElement> selectedElement);
 	void addSnippet(String name);
 	void addSection(String name, TreeItem<IViewElement> snippet);
-	void addCommand(String name, String execcommand, Type type,
-			TreeItem<IViewElement> parent);
+	void addGeneratedSection(String snippetName, String sectionName, String parentSnippet);
+	void addCommand(String name, String execcommand, Type type, TreeItem<IViewElement> parent);
 	void addInterface(String portbezeichnunglang, String portbezeichnungkurz, String portRange);
-	void addParameter(String name, String execcommand, Type type, boolean required,
-			TreeItem<IViewElement> parent);
+	void addParameter(String name, String execcommand, Type type, boolean required, TreeItem<IViewElement> parent);
 	void zurueckZumInterfacedefinitionsfenster();
 	void dateiSpeichernUnter(String xmlString);
 	void dateiSpeichern(String xmlString);
+	void elementEinfuegen(TreeItem<IViewElement> selectedElementForCopy, TreeItem<IViewElement> parent);
+	String[] getGeneratorSnippets();
+	String[] getGeneratorSections();
+	void addGeneratedSnippet(String snippetName);	
 }

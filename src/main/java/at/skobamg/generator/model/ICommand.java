@@ -2,12 +2,6 @@ package at.skobamg.generator.model;
 
 import java.util.ArrayList;
 
-import javafx.scene.control.TreeItem;
-
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-
 public interface ICommand extends IViewElement{		
 	public static String name="command";
 	public static String propertyName = "name";
@@ -23,6 +17,7 @@ public interface ICommand extends IViewElement{
 	public String getName();
 	public Type getType();
 	public String getExeccommand();
+	@Override
 	public ViewTyp getViewTyp();
 	public float getID();
 	public boolean removeCommand(ICommand command);

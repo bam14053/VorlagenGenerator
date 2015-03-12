@@ -44,14 +44,17 @@ public class Command implements ICommand {
 		return commands;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public Type getType() {
 		return type;
 	}
 
+	@Override
 	public String getExeccommand() {
 		return execcommand;
 	}

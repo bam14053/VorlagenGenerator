@@ -4,9 +4,6 @@
 package at.skobamg.generator.model;
 
 import java.util.ArrayList;
-import java.util.Random;
-
-import org.w3c.dom.Element;
 
 /**
  *
@@ -59,6 +56,7 @@ public class Section implements ISection {
 		return ISection.name+": "+name;
 	}
 	
+	@Override
 	public void setName(String name) {
 		this.name = name;
 	}

@@ -12,6 +12,7 @@ public class Interface implements IInterface {
 		setPortRange(first.trim(), last.trim());
 	}
 	
+	@Override
 	public void setPortRange(String first, String last) throws InvalidPortRangeException{
 		if(first.isEmpty()){
 			this.portRange = "-";
@@ -46,22 +47,27 @@ public class Interface implements IInterface {
 		this.portRange = portRange;
 	}
 
+	@Override
 	public String getPortBezeichnunglang() {
 		return portBezeichnunglang;
 	}
 
+	@Override
 	public void setPortBezeichnunglang(String portBezeichnunglang) {
 		this.portBezeichnunglang = portBezeichnunglang;
 	}
 
+	@Override
 	public String getPortBezeichnungkurz() {
 		return portBezeichnungkurz;
 	}
 
+	@Override
 	public void setPortBezeichnungkurz(String portBezeichnungkurz) {
 		this.portBezeichnungkurz = portBezeichnungkurz;
 	}
 
+	@Override
 	public String getPortRange() {
 		return portRange;
 	}

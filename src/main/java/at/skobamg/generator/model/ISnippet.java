@@ -12,5 +12,6 @@ public interface ISnippet extends IViewElement{
 	public void deleteSection(ISection section);
 	public void setName(String name);
 	public String getName();
+	@Override
 	public String toString();
 }

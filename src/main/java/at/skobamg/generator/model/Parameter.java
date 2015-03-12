@@ -62,18 +62,22 @@ public class Parameter implements IParameter{
 		return commands;
 	}
 
+	@Override
 	public String getName() {
 		return name;
 	}
 
+	@Override
 	public Type getType() {
 		return type;
 	}
 
+	@Override
 	public String getExeccommand() {
 		return execcommand;
 	}
 
+	@Override
 	public boolean isRequired() {
 		return required;
 	}

@@ -3,20 +3,13 @@ package at.skobamg.generator.logic;
 import java.util.ArrayList;
 import java.util.function.Predicate;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import at.skobamg.generator.model.GeneratorModel;
 import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.ISection;
 import at.skobamg.generator.model.ISnippet;
-import at.skobamg.generator.model.ITemplate;
-import at.skobamg.generator.model.Section;
 import at.skobamg.generator.model.Snippet;
-import at.skobamg.generator.model.Template;
 import javafx.concurrent.Service;
 import javafx.concurrent.Task;
 import javafx.scene.control.CheckBoxTreeItem;
-import javafx.scene.control.TreeItem;
 
 public class GenerateSnippetsCommand extends Service<ArrayList<ISnippet>> {
 	private IGeneratorModel generatorModel;

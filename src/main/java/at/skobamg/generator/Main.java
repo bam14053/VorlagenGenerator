@@ -10,7 +10,6 @@ import at.skobamg.generator.model.IGeneratorModel;
 import at.skobamg.generator.model.InvalidTypeException;
 import at.skobamg.generator.model.Verzeichnisse;
 import at.skobamg.generator.service.ISwitchtyp;
-import at.skobamg.generator.service.ISnippetTemplateService;
 import at.skobamg.generator.service.SnippetTemplateService;
 import at.skobamg.generator.view.LoginfensterController;
 import javafx.application.Application;
@@ -33,16 +32,18 @@ public class Main extends Application{
 	}
 
 	
+	@Override
 	public void start(Stage stage) throws Exception {
 		//Get all the bean components
 		AnnotationConfigApplicationContext context = new AnnotationConfigApplicationContext(MainAppFactory.class);
-		LoginfensterController mainController = context.getBean(LoginfensterController.class);
+		LoginfensterController loginfensterController = context.getBean(LoginfensterController.class);
 		IEventMediator mediator = context.getBean(IEventMediator.class);	
 		final ISwitchtyp iSwitchtyp = context.getBean(ISwitchtyp.class);		
 		final IGeneratorModel generatorModel = context.getBean(IGeneratorModel.class);
 		//Load the switchtypes into the program
 		new Thread(new Runnable() {			
 			
+			@Override
 			public void run() {
 				Verzeichnisse.verzeichnisseErstellen();
 				iSwitchtyp.laden();
@@ -55,6 +56,7 @@ public class Main extends Application{
 		}).start();	
 		//Save all the data in memory before closing
 		stage.setOnCloseRequest(new EventHandler<WindowEvent>() {			
+			@Override
 			public void handle(WindowEvent arg0) {
 				iSwitchtyp.speichern();
 			}
@@ -63,7 +65,7 @@ public class Main extends Application{
 		context.close();
 		mediator.setStage(stage);		
 		//Start the window
-		Scene scene = new Scene(mainController.getView());	
+		Scene scene = new Scene(loginfensterController.getView());	
 		stage.setScene(scene);
 		stage.setTitle("Vorlagen Generator"); // Title of program
 		stage.show(); // Show the Mainwindow

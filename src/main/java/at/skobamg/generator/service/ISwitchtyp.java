@@ -1,7 +1,6 @@
 package at.skobamg.generator.service;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public interface ISwitchtyp {
 	/**

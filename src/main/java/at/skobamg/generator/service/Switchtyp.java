@@ -6,17 +6,17 @@ import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.util.ArrayList;
-import java.util.HashMap;
-
 import at.skobamg.generator.model.Verzeichnisse;
 
 public class Switchtyp implements ISwitchtyp{
 	ArrayList<String> switchnamen = new ArrayList<String>();
 
+	@Override
 	public ArrayList<String> getSwitchnamen() {
 		return switchnamen;
 	}
 
+	@Override
 	@SuppressWarnings("unchecked")
 	public boolean laden() {
 		if(!Verzeichnisse.checkSwitchtypDateiExists())
@@ -35,6 +35,7 @@ public class Switchtyp implements ISwitchtyp{
 		
 	}
 
+	@Override
 	public boolean speichern() {
 		try{
 			FileOutputStream fos = new FileOutputStream(Verzeichnisse.switchtypDatei);
