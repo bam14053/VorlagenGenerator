@@ -72,6 +72,8 @@ public class ElementParseService{
 	
 	protected static ISnippet parseSnippet(Element snippetElement) throws InvalidTypeException {
 		ISnippet snippet = new Snippet(snippetElement.getAttribute(ISnippet.propertyName));		
+		if(snippetElement.hasAttribute(ISnippet.propertyBindInterface))
+			snippet.setBindInterface(Boolean.parseBoolean(snippetElement.getAttribute(ISnippet.propertyBindInterface)));
 		NodeList nodeList = snippetElement.getElementsByTagName(ISection.name);
 		
 		for(int i = 0; i < nodeList.getLength(); i++)

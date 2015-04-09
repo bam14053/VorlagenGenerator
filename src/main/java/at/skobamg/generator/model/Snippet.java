@@ -10,6 +10,7 @@ import java.util.ArrayList;
  */
 public class Snippet implements ISnippet {
 	private String name;
+	private boolean bindInterface = false;
 	private ArrayList<ISection> sections = new ArrayList<>();
 	
 	public Snippet(String name){
@@ -68,6 +69,16 @@ public class Snippet implements ISnippet {
 	@Override
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public void setBindInterface(boolean binding) {
+		this.bindInterface = binding;
+	}
+
+	@Override
+	public boolean isBindInterface() {
+		return bindInterface;
 	}
 
 }

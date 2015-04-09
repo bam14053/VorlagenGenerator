@@ -58,6 +58,8 @@ public class GenerateXMLStringCommand extends Service<String> {
 				for(ISnippet snippet : template.getSnippets()){
 					Element snippetElement = doc.createElement(ISnippet.name);
 					snippetElement.setAttribute(ISnippet.propertyName, snippet.getName());
+					if(snippet.isBindInterface())
+						snippetElement.setAttribute(ISnippet.propertyBindInterface,  ""+snippet.isBindInterface());
 					for(ISection section : snippet.getSections()){
 						Element sectionElement = doc.createElement(ISection.name);
 						sectionElement.setAttribute(ISection.propertyName, section.getName());						
@@ -102,6 +104,8 @@ public class GenerateXMLStringCommand extends Service<String> {
 			comElement.setAttribute(IParameter.propertyType, parameter.getType().toString());
 		if(parameter.getExeccommand() != null && !parameter.getExeccommand().isEmpty())
 			comElement.setAttribute(IParameter.propertyExeccommand, parameter.getExeccommand());
+		if(parameter.isRequired())
+			comElement.setAttribute(IParameter.propertyRequired, "true");
 		for(ICommand command : parameter.getCommands())
 			comElement.appendChild(parseCommand(command));
 		for(IParameter param : parameter.getParameters())

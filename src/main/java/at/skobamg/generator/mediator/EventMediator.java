@@ -216,7 +216,7 @@ public class EventMediator implements IEventMediator {
 	@Override
 	public void dateiSpeichern(String xmlString) {
 		if(file == null) 
-			file = new File(Verzeichnisse.vorlagenVerzeichnis+"/"+template.getSwitchName()+"-"+template.getSwitchVersion());
+			file = new File(Verzeichnisse.vorlagenVerzeichnis+"/"+template.getSwitchName()+"-"+template.getSwitchVersion()+".xml");
 		if(new TemplateService().saveTemplate(file, xmlString))
        	 nachrichtAnzeigen("Die Datei wurde erfolgreich gespeichert");
         else
