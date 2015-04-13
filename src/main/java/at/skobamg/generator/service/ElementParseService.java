@@ -21,7 +21,7 @@ import at.skobamg.generator.model.Type;
 public class ElementParseService{
 	protected static IInterface parseInterface(Element element) {
 		if(element.hasAttribute(IInterface.propertyPortRange))
-			return new Interface(element.getAttribute(IInterface.propertyPortBezeichnunglang), IInterface.propertyPortBezeichnungkurz, IInterface.propertyPortRange);
+			return new Interface(element.getAttribute(IInterface.propertyPortBezeichnunglang), element.getAttribute(IInterface.propertyPortBezeichnungkurz), element.getAttribute(IInterface.propertyPortRange));
 		else
 			return new Interface(element.getAttribute(IInterface.propertyPortBezeichnunglang), element.getAttribute(IInterface.propertyPortBezeichnungkurz));
 	}
